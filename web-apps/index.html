@@ -459,7 +459,7 @@
 
             </section>
 
-            <section>
+            <section data-visibility="hidden">
                 <h3>Ways to deploy to Azure</h3>
 
                 <ul>
@@ -475,6 +475,19 @@
 
                 <p>
                 <img src="flaskdb.drawio.png" alt="Flask app architecture diagram: App Service, App Service Plan, PostGreSQL server, Log Analytics workspace">
+                </p>
+
+                <p>Using the <a target="_blank" href=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview?WT.mc_id=python-79461-pamelafox">Azure Dev CLI</a>:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                azd up
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Hosting the Django quiz on Azure</h3>
+
+                <p>
+                <img src="djangodb.drawio.png" alt="Flask app architecture diagram: App Service, App Service Plan, PostGreSQL server, Log Analytics workspace, Virtual network, DNS Zone">
                 </p>
 
                 <p>Using the <a target="_blank" href=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview?WT.mc_id=python-79461-pamelafox">Azure Dev CLI</a>:</p>
