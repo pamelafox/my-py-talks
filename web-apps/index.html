@@ -105,7 +105,7 @@
 
             <section class="heading-only" style="padding-top:5%">
                 <h1>Web Apps</h1>
-
+                <h2>tinyurl.com/61a-webapps</h2>
                 <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
                     Tips for navigating the slides:
                     <ul>
@@ -127,7 +127,7 @@
                 <ul style="margin-top:20px; font-size:44px; line-height: 2em;">
                     <li>How the web works
                     <li>Python for web apps
-                    <li>Deploying web apps
+                    <li>Hosting web apps
                 </ul>
             </section>
 
@@ -214,39 +214,46 @@
             <section>
                 <h3>Simple HTTP server</h3>
 
-                <p>From the standard library, <a target="_blank" href="https://docs.python.org/3/library/http.server.html">the http module</a>
-                    can run a basic server. It is <strong>not</strong> recommended for production.
+                <p>The <a target="_blank" href="https://docs.python.org/3/library/http.server.html">http module</a>
+                    in the Python standard library can run a basic server.
                 </p>
                 <br>
-                <p>Run a simple file server:</p>
+                <p>⚠️ It is <strong>not</strong> recommended for production.</p>
+                <br>
+                <p>It's handy for learning and local development, however...</p>
+            </section>
+
+            <section>
+                <h3>Example: Simple file server</h3>
+
+                <p>A file server serves up files and folders according to their path in the file system.
+                    Also known as a static server.</p>
+
+                <p class="padded">Run a file server from any folder:</p>
 
                 <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
                 python3 -m http.server 8080
                 </code></pre>
-                <p>A file server serves up files and folders according to their path in the file system.
-                Also known as a static server.</p>
 
-                <br><br>
-                <p></p>
+                
+
             </section>
 
             <section>
-                <h3>Demo: Simple dynamic server</h3>
+                <h3>Example: Simple dynamic server</h3>
 
-                <p>Uses the <code>http</code> module to dynamically generate responses.</p>
+                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-simple-server">tinyurl.com/python-simple-server</a></p>
 
-                <p class="padded">The server code: 
-                <a target="_blank" href="https://github.com/pamelafox/python-simple-server-example/blob/main/server.py">server.py</a>
+                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" class="smaller" href="https://github.com/pamelafox/python-simple-server-example/">github.com/pamelafox/python-simple-server-example/</a></p>
+
+                <p class="padded">The server code is in <a target="_blank" href="https://github.com/pamelafox/python-simple-server-example/blob/main/server.py">server.py</a>.
+                Uses the <code>http</code> module to dynamically generate responses.
                 </p>
                 
                 <p class="padded">Run the server:</p>
                 <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
                 python3 server.py
                 </code></pre>
-
-                <br>
-                <p>To try yourself: <a href="https://github.com/codespaces/new?hide_repo_select=true&amp;repo=pamelafox%2Fpython-simple-server-example">Open in Github Codespaces</a></p>
-
             </section>
 
             <section>
@@ -265,22 +272,20 @@
             </section>
 
             <section>
-                <h3>Demo: Simple Flask website</h3>
+                <h3>Example: Simple Flask website</h3>
 
-                <p>Uses Flask to generate responses for each route.</p>
+                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-flask-website">tinyurl.com/python-flask-website</a></p>
 
-                <p class="padded">The main server code: 
-                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example/blob/main/main.py">main.py</a>
+                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" class="smaller" href="https://github.com/pamelafox/simple-flask-server-example/">github.com/pamelafox/simple-flask-server-example/</a></p>
+                
+                <p>Most of the server code is in <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example/blob/main/main.py">main.py</a>.
+                    Uses Flask to generate responses for each route
                 </p>
                 
                 <p class="padded">Run the server:</p>
                 <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
                 python3 main.py
                 </code></pre>
-
-
-                <br>
-                <p>To try yourself: <a href="https://github.com/codespaces/new?hide_repo_select=true&amp;repo=pamelafox%2Fsimple-flask-server-example">Open in Github Codespaces</a></p>
 
             </section>
 
@@ -294,7 +299,7 @@
 
 
             <section>
-                <h3>Example App: Flask Quiz</h3>
+                <h3>Example: Flask Quiz</h3>
 
                 <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-flask-quiz">tinyurl.com/python-flask-quiz</a></p>
 
@@ -313,7 +318,7 @@
             <section>
                 <h3>Django framework</h3>
 
-                <p>An external library, Django is a fairly heavyweight/opinionated 
+                <p>Django, an external library, is a fairly "opinionated"
                     framework for server-side code. Includes an ORM for database interaction.</p>
                 
                 <p>Apps written in Django:</p>
@@ -327,7 +332,7 @@
 
 
             <section>
-                <h3>Demo App: Django Quiz</h3>
+                <h3>Example: Django Quiz</h3>
 
 
                 <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-flask-quiz">tinyurl.com/python-flask-quiz</a></p>
@@ -356,18 +361,19 @@
             </section>
 
             <section>
-                <h3>Deploying</h3>
+                <h3>Hosting options</h3>
 
-                <p><strong>Deploying: putting your web app on an Internet-connected computer
-                    in a way that other clients can reach it.</strong>
+                <p>When your website is <strong>hosted</strong> on a server,
+                    it means other users on the Internet can access it.
                 </p>
 
-                <p>Many options:
-                spectrum from raspberrypi in your house
-                rented computer
-                virtual machines
-                app service (paas)
-                </p>
+                <p>Many possible hosts:
+                <ul>
+                    <li>A Raspberry Pi in your house
+                    <li>A rented computer in a data center
+                    <li>A virtual machine
+                    <li>A PaaS (platform as a service)
+                    </ul>
 
                 <p>Consider:
                 <ul>
@@ -428,8 +434,28 @@
             <section>
                 <h3>But wait, there's more!</h3>
 
-                <img src="arch.png">
-                DB, key vault, virtual net, etc
+                <table>
+                    <tr>
+                        <th>Databases
+                        <td>PostGreSQL, MySQL, CosmosDB, ...
+                    <tr>
+                        <th>Storage
+                        <td>Blob Storage, Files, Archive Storage, ...
+                    <tr>
+                        <th>Networking
+                        <td>DNS Zone, Virtual Network, VPN Gateway, ...
+                    <tr>
+                        <th>Caching
+                        <td>CDN, Front Door, ...
+                    <tr>
+                        <th>Security
+                        <td>Key Vault, Security Center, ...
+                    <tr>
+                        <th>Machine Learning
+                        <td>Translator, Bot Service, Computer Vision, ...
+                    <tr>
+                        <th colspan="2">...and more!
+                </table>
 
             </section>
 
