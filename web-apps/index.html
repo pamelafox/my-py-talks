@@ -1,0 +1,513 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Web Apps</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:10%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1>Web Apps</h1>
+
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+
+            <section>
+                <h3>We'll talk about...</h3>
+
+                <img src="BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
+                <ul style="margin-top:20px; font-size:44px; line-height: 2em;">
+                    <li>How the web works
+                    <li>Python for web apps
+                    <li>Deploying web apps
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>How the web works</h2>
+                <img src="BIT_DEV.svg" alt="Bit (the raccoon) in front of monitors with browsers and analytics" width="400">
+
+            </section>
+
+            <section>
+                <h3>Clients and servers</h3>
+
+                <img src="client_server_HTTP.png" alt="Diagram of browser sending HTTP request to server and receiving HTTP response"/>
+            </section>
+
+            <section>
+                <h3 style="font-size:48px;">HTTP</h3>
+
+                <p>A client sends an HTTP request:</p>
+
+                <pre style="font-size:0.7em; margin-top: 0px;"><code data-trim data-noescape class="text">
+                GET /index.html HTTP/1.1
+                Host: www.example.com
+                </code></pre>
+
+                <p>The server sends back an HTTP response:</p>
+                <pre style="font-size:0.7em; margin-top: 0px;"><code data-trim data-noescape class="html">
+                HTTP/1.1 200 OK
+                Content-Type: text/html; charset=UTF-8
+                Content-Length: 208
+                &lt;!DOCTYPE html&gt;
+                    &lt;html&gt;
+                    &lt;head&gt;
+                        &lt;title&gt;Example Domain&lt;/title&gt;
+                    &lt;/head&gt;
+                    &lt;body&gt;
+                    &lt;h1&gt;Example Domain&lt;/h1&gt;
+                    &lt;p&gt;This domain is to be used for illustrative examples in documents.&lt;/p&gt;
+                    &lt;/body&gt;
+                &lt;/html&gt;
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Webpages</h3>
+
+                <p>Webpages are made up of three languages:</p>
+
+                <ul>
+                    <li><strong>HTML</strong>: Contains the content and uses tags to 
+                        break it into semantic chunks (headings, paragraphs, etc)</li>
+                    <li><strong>CSS</strong>: Contains style rules that apply
+                        properties to elements on a page.</li>
+                    <li><strong>JavaScript</strong>: Contains code that dynamically
+                        accesses and updates the page content to make it more interactive.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>What does a server do?</h3>
+
+                <p>The most basic server just serves up HTML and multimedia files
+                    from a file system.
+                </p>
+
+                <p>Server-side code is also useful for anything that requires access
+                    to persistent data or needs an additional layer of security than
+                    allowed in the client.</p>
+                
+                <ul>
+                    <li>User authentication
+                    <li>Database fetches/updates
+                    <li>Caching
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Server-side Python</h2>
+
+                <img src="BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" width="400">
+
+            </section>
+
+            <section>
+                <h3>Simple HTTP server</h3>
+
+                <p>From the standard library, <a target="_blank" href="https://docs.python.org/3/library/http.server.html">the http module</a>
+                    can run a basic server. It is <strong>not</strong> recommended for production.
+                </p>
+                <br>
+                <p>Run a simple file server:</p>
+
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 -m http.server 8080
+                </code></pre>
+                <p>A file server serves up files and folders according to their path in the file system.
+                Also known as a static server.</p>
+
+                <br><br>
+                <p></p>
+            </section>
+
+            <section>
+                <h3>Demo: Simple dynamic server</h3>
+
+                <p>Uses the <code>http</code> module to dynamically generate responses.</p>
+
+                <p class="padded">The server code: 
+                <a target="_blank" href="https://github.com/pamelafox/python-simple-server-example/blob/main/server.py">server.py</a>
+                </p>
+                
+                <p class="padded">Run the server:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 server.py
+                </code></pre>
+
+                <br>
+                <p>To try yourself: <a href="https://github.com/codespaces/new?hide_repo_select=true&amp;repo=pamelafox%2Fpython-simple-server-example">Open in Github Codespaces</a></p>
+
+            </section>
+
+            <section>
+                <h3>Flask framework</h3>
+
+                <p><a target="_blank" href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a>, an external package,
+                    is a lightweight framework for server requests and responses.</p>
+
+                <p>Apps written in Flask:</p>
+                <ul>
+                    <li>cs61a.org
+                    <li>Khan Academy (originally)
+                    <li>Reddit
+                    <li>Netflix
+                </ul>
+            </section>
+
+            <section>
+                <h3>Demo: Simple Flask website</h3>
+
+                <p>Uses Flask to generate responses for each route.</p>
+
+                <p class="padded">The main server code: 
+                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example/blob/main/main.py">main.py</a>
+                </p>
+                
+                <p class="padded">Run the server:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 main.py
+                </code></pre>
+
+
+                <br>
+                <p>To try yourself: <a href="https://github.com/codespaces/new?hide_repo_select=true&amp;repo=pamelafox%2Fsimple-flask-server-example">Open in Github Codespaces</a></p>
+
+            </section>
+
+            <section>
+                <h3>Webapps with Databases</h3>
+
+                <p>Web apps store any data in databases that needs to be shared across multiple users/computers. </p>
+                
+                <img src="app_with_sql.png" alt="Diagram using SQL to update and query a database storing data for a web application"/>
+            </section>
+
+
+            <section>
+                <h3>Example App: Flask Quiz</h3>
+
+                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-flask-quiz">tinyurl.com/python-flask-quiz</a></p>
+
+                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/">github.com/pamelafox/flask-db-quiz-example/</a></p>
+
+                <p>Most of the server code is in <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/blob/main/main.py">main.py</a>. Uses <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy</a> for database interaction.
+                </p>
+                
+                <p class="padded">Run the server:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 main.py
+                </code></pre>
+
+            </section>
+
+            <section>
+                <h3>Django framework</h3>
+
+                <p>An external library, Django is a fairly heavyweight/opinionated 
+                    framework for server-side code. Includes an ORM for database interaction.</p>
+                
+                <p>Apps written in Django:</p>
+                <ul>
+                    <li>Coursera (originally, now Scala+Play)
+                    <li>Instagram
+                    <li>Pinterest (originally, now Flask)
+                    <li>Eventbrite
+                </ul>
+            </section>
+
+
+            <section>
+                <h3>Demo App: Django Quiz</h3>
+
+
+                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/python-flask-quiz">tinyurl.com/python-flask-quiz</a></p>
+
+                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/">github.com/pamelafox/flask-db-quiz-example/</a></p>
+
+                <p class="padded">Important server files:<br>
+                    <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/models.py">models.py</a>
+                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/urls.py">urls.py</a>
+                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/views.py">views.py</a>
+                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/admin.py">admin.py</a>
+                </p>
+                
+                <p class="padded">Run DB migrations and server:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python manage.py migrate
+                python manage.py runserver
+                </code></pre>
+
+            </section>
+
+            <section class="heading-only">
+                <h2>Hosting web apps</h2>
+                <img src="BIT_AZURE.png" alt="Bit (the raccoon) on a cloud with the Azure logo" width="400">
+
+            </section>
+
+            <section>
+                <h3>Deploying</h3>
+
+                <p><strong>Deploying: putting your web app on an Internet-connected computer
+                    in a way that other clients can reach it.</strong>
+                </p>
+
+                <p>Many options:
+                spectrum from raspberrypi in your house
+                rented computer
+                virtual machines
+                app service (paas)
+                </p>
+
+                <p>Consider:
+                <ul>
+                    <li>How much control do you want?
+                    <li>How much do you enjoy administering systems?
+                    <li>Do you need it to scale up/out?
+                </ul>
+            </section>
+
+            <section>
+                <h3>Azure hosting options</h3>
+                
+                <style>
+                table.deploy-stack {
+                    border-spacing: 30px; 
+                    border-collapse: separate;
+                    border: 0px;
+                }
+
+                table.deploy-stack th, table.deploy-stack td {
+                    font-size: 20px;
+                    border-bottom: 0px none;
+                    border-radius: 12px;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 8px;
+                }
+                </style>
+                <table class="deploy-stack">
+                    <tr>
+                        <th>
+                        <td>
+                        <td style="background-color: #00bc70; color: white;">Azure Container Apps
+                        <td>
+                        <td style="background-color: #00bc70; color: white;">Azure Functions
+                    </tr> 
+                    <tr>
+                        <th>
+                        <td style="background-color: #00bc70; color: white;">Azure Kubernetes Service
+                        <td style="background-color: #0070c0; color: white;">Container Management
+                        <td style="background-color: #00bc70; color: white;">Azure App Service
+                        <td style="background-color: #0070c0; color: white;">Serverless
+                        
+                    </tr>
+                    <tr>
+                        <th>Environment
+                        <td colspan="2" style="background-color:#0070c0; color: white;">Containers
+                        <td colspan="2" style="background-color:#0070c0; color: white;">PaaS
+                    </tr>
+                    <tr>
+                        <th>Cloud
+                        <td colspan="4" style="background-color:#ccc;">Azure
+                    </tr>
+                </table>
+                <p class="fragment smaller">For Flask/Django, App Service is easiest way to get started.</p>
+            </section>
+
+            <section>
+                <h3>But wait, there's more!</h3>
+
+                <img src="arch.png">
+                DB, key vault, virtual net, etc
+
+            </section>
+
+            <section>
+                <h3>Ways to deploy to Azure</h3>
+
+                <ul>
+                    <li>Azure Portal
+                    <li>Azure Tools VS Code extension
+                    <li>Azure CLI (Command Line Interface)
+                    <li>Bicep (Infrastructure-as-code)
+                </ul>
+            </section>
+
+            <section>
+                <h3>Hosting the Flask quiz on Azure</h3>
+
+                <p>
+                <img src="flaskdb.drawio.png" alt="Flask app architecture diagram: App Service, App Service Plan, PostGreSQL server, Log Analytics workspace">
+                </p>
+
+                <p>Using the <a target="_blank" href=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview?WT.mc_id=python-79461-pamelafox">Azure Dev CLI</a>:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                azd up
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>More Azure resources</h3>
+
+                <img src="BIT_COWORKING.png" alt="Raccoons with laptops" width="35%" style="float:right;">
+
+                <ul style="float:left; width: 60%; display: grid; gap: 18px;">
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/app-service/quickstart-python?WT.mc_id=python-79461-pamelafox">Deploy a Python (Django or Flask) web app to Azure App Service</a>
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/app-service/tutorial-python-postgresql-app?WT.mc_id=python-79461-pamelafox">Deploy a Python (Django or Flask) web app with PostgreSQL in Azure</a>
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/quickstarts-app-hosting">Hosting Python apps on Azure</a>
+                    <li><a target="_blank" href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a>
+                    <li><a target="_blank" href="https://aka.ms/python-discord">MS Python Discord: aka.ms/python-discord</a>
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Any questions?</h2>
+                <img src="BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+
+        // add HighlightJS-badge (options are optional)
+        var options = {
+            copyIconContent: "📄",
+            checkIconContent: "✅"
+        };
+        window.highlightJsBadge();
+
+        if (window.location.search == "?print-pdf") {
+            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+            uncounted.forEach(node => {
+                node.parentNode.classList.add("no-print")
+            })
+        }
+    </script>
+    </body>
+</html>
