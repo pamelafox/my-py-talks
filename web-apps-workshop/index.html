@@ -28,6 +28,10 @@
 				box-shadow: none;
 			}
 
+            .reveal section li {
+                margin-bottom: 12px;
+            }
+
 			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
 				font-family: "Roboto", sans-serif;
 				color: #0072c1;
@@ -105,7 +109,7 @@
 
             <section class="heading-only" style="padding-top:5%">
                 <h1>Web Apps</h1>
-                <h2>tinyurl.com/61a-webapps</h2>
+                <h2 style="font-size: 60px;">tinyurl.com/web-apps-workshop</h2>
                 <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
                     Tips for navigating the slides:
                     <ul>
@@ -289,13 +293,20 @@
             </section>
 
             <section>
-                <h3>Exercise Time: Flask Site</h3>
+                <h3>Exercise: Flask Templating</h3>
 
-                <ul>
-                    <li>Get the app running
-                    <li>Add a new route
-                    <li>Test the new route works
-                </ul>
+                <p>Using this repo:<br>
+                    <a  target="_blank" class="smaller" href="https://github.com/pamelafox/simple-flask-server-example/">github.com/pamelafox/simple-flask-server-example/</a>
+                </p>
+                <ol>
+                    <li>Follow the readme steps to get the app running.
+                    <li>Add a new route for "/about" that uses a new "about.html" template.
+                    <li>Check the new route works.
+                    <li>Learn about <a target="_blank" href="https://flask.palletsprojects.com/en/1.1.x/patterns/templateinheritance/">template inheritance</a>,
+                        then refactor all the templates to extend a base template instead.
+                    <li>Change the 404 handler to render a template as well.
+                </ol>
+                <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
             <section class="heading-only">
@@ -305,7 +316,7 @@
             <section>
                 <h3>Webapps with Databases</h3>
 
-                <p>Web apps store any data in databases that needs to be shared across multiple users/computers. </p>
+                <p>Web apps store data in databases that needs to be shared across multiple users/computers. </p>
                 
                 <img src="app_with_sql.png" alt="Diagram using SQL to update and query a database storing data for a web application"/>
             </section>
@@ -367,16 +378,20 @@
             </section>
 
             <section>
-                <h3>Exercise time: Django app</h3>
+                <h3>Exercise: Django app</h3>
+
+                <p>Using this repo:<br>
+                    <a  target="_blank" href="https://github.com/pamelafox/django-quiz-app/">github.com/pamelafox/django-quiz-app/</a></p>
 
                 <ol>
-                    <li>Get the Django quiz app running
-                    <li>Create a superuser
-                    <li>Login to /admin
-                    <li>Add a new question to the quiz
-                    <li>Add a new route that shows a list of all questions.
-                        (Hint: Look at the route that shows a list of all quizzes)
+                    <li>Follow the readme steps to get the app running.
+                    <li>Follow the readme steps to get into the Django admin.
+                    <li>Add a new quiz using the Django admin.
+                    <li>Add a new question using the Django admin.
+                    <li>Add a new route that shows a list of all questions.<br>
+                        (Hint: Look at the route that lists the quizzes.)
                 </ol>
+                <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
             <section class="heading-only">
@@ -394,7 +409,6 @@
 
                 <p>Many possible hosts:
                 <ul>
-                    <li>A Raspberry Pi in your house
                     <li>A rented computer in a data center
                     <li>A virtual machine
                     <li>A PaaS (platform as a service)
@@ -453,7 +467,7 @@
                         <td colspan="4" style="background-color:#ccc;">Azure
                     </tr>
                 </table>
-                <p class="fragment smaller">For Flask/Django, App Service is easiest way to get started.</p>
+                <p class="fragment smaller">For Flask/Django, <span style="background-color: #00bc70; color: white; padding-left: 8px; padding-right: 8px; border-radius: 8px;">App Service</span> is easiest way to get started.</p>
             </section>
 
             <section>
@@ -511,7 +525,7 @@
             </section>
 
             <section>
-                <h3>Exercise time: Deploying an app</h3>
+                <h3>Exercise: Deploying an app</h3>
 
                 <ol>
                     <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/en-in/free/">free Azure account</a>
