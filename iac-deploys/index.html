@@ -1,0 +1,696 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Easy deploys of Python web apps to Azure</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+        <style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+            .reveal section li {
+                margin-bottom: 12px;
+            }
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:10%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1 style="font-size:2.5em;">1-click deploys<br> of Python web apps<br>to Azure
+                </h1>
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                    *click = command
+                </aside>
+            </section>
+
+            <section>
+                <h3>About me</h3>
+
+                <p>I've been deploying web apps for a long time:</p>
+
+                <table class="smaller">
+                    <thead>
+                        <tr>
+                            <th>When
+                            <th>What
+                            <th>Where
+                    <tbody>
+                    <tr>
+                        <td>High school
+                        <td>LAMP stack
+                        <td>VPS
+                    <tr>
+                        <td>Google
+                        <td>Python apps 
+                        <td>Google App Engine
+                    <tr>
+                        <td>Coursera
+                        <td>Django website
+                        <td>AWS EC2
+                    <tr>
+                        <td>Khan Academy
+                        <td>Flask website
+                        <td>Google App Engine
+                    <tr>
+                        <td>Woebot
+                        <td>Chatbot + Website
+                        <td>AWS Lambda/Beanstalk
+                    <tr>
+                        <td>Microsoft
+                        <td>Python web apps
+                        <td>Azure
+                </table>
+
+                <p>#DontStopDeploying #ILikeToShipIt</p>
+            </section>
+
+            <section>
+                <h3>About you!</h3>
+
+                <img src="qrcode_deploy-survey.png" alt="QR Code" style="float:right">
+                
+                <p>Where do you deploy?</p>
+                <ul class="smaller">
+                    <li>VPS
+                    <li>Azure
+                    <li>AWS
+                    <li>Google Cloud
+                    <li>Heroku
+                    <li>PythonAnywhere
+                    <li>Other
+                </ul>
+
+
+                <p>Take the survey!<br>
+                <a target="_blank" href="https://tinyurl.com/deploy-survey">tinyurl.com/deploy-survey</a>
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>My deployment journey<br>on Azure</h2>
+                
+                <img src="../media/AROUND_THE_WORLD_BIT.png" alt="Bit (the racoon) takes a trip around the world" width="550">
+            </section>
+
+            <section>
+                <h3>Deploy #1: Azure Function</h3>
+
+                <p>I used the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions">Azure Functions extension</a> to deploy:</p>
+
+                <img src="screenshot_vscode_funcs.png" alt="Screenshot of Azure function being developed in VS Code" style="border: 1px solid #ddd" height="350">
+
+                <p class="smaller">🔗 <a target="_blank" href="https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python?pivots=python-mode-configuration">Quickstart: Create a function in Azure with Python using VS Code</a></p>
+            </section>
+
+            <section>
+                <h3>Deploy #1: Azure Function (Infra)</h3>
+
+                <p>What got deployed?</p>
+
+                <img src="diagram_function.png" alt="Diagram of architecture- App Service Plan, Function App, Log analytics, Storage account" height="400">
+            </section>
+
+            <section>
+                <h3>Deploy #2: App Service + Postgres</h3>
+
+                <p>I used an <a target="_blank" href="https://portal.azure.com/?feature.customportal=false#create/Microsoft.AppServiceWebAppDatabaseV3">Azure Portal template</a> plus Github workflow:</p>
+
+                <img src="screenshot_portal_template.png" alt="Screenshot of Azure Portal for Web App + DB template" width="290" style="border: 1px solid #ddd">
+                <img src="screenshot_portal_deploy.png" alt="Screenshot of Azure Portal Github configuration screen" width="290" style="border: 1px solid #ddd;">
+            
+                <p>🔗 <a target="_blank" href="https://learn.microsoft.com/en-us/azure/app-service/tutorial-python-postgresql-app?tabs=flask%2Cwindows">Deploy a Python webapp with PostgreSQL in Azure</a></p>
+
+            </section>
+
+            <section>
+                <h3>Deploy #2: App Service + Postgres (Infra)</h3>
+
+                <p>What got deployed?</p>
+
+                <img src="diagram_appservice_pg_vnet.png" alt="Diagram of architecture- App Service Plan, Web App, VNet, Private DNS Zone,PostgreSQL server, Log analytics, Storage account" height="500">
+            </section>
+
+            <section>
+                <h3>Deploy #3: Container Apps + CDN</h3>
+
+                <p>I used a combo of Azure CLI commands and Portal UI.</p>
+                
+                <pre style="font-size:0.5em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                az group create --location eastus --name fastapi-aca-rg
+
+                az acr create --resource-group fastapi-aca-rg --name pamelascontainerregistry --sku Basic
+
+                az acr login --name pamelascontainerregistry
+
+                az acr build --platform linux/amd64 -t pamelascontainerregistry.azurecr.io/fastapi-aca:latest -r pamelascontainerregistry .
+                
+                az extension add --name containerapp --upgrade
+                az provider register --namespace Microsoft.App
+                az provider register --namespace Microsoft.OperationalInsights
+
+                az containerapp env create --name fastapi-aca-env --resource-group fastapi-aca-rg --location eastus
+                
+                az acr credential show --name pamelascontainerregistry
+
+                az containerapp create --name fastapi-aca-app --resource-group fastapi-aca-rg \
+                    --image pamelascontainerregistry.azurecr.io/fastapi-aca:latest --environment fastapi-aca-env \
+                    --registry-server pamelascontainerregistry.azurecr.io --registry-username pamelascontainerregistry \
+                    --registry-password <PASSWORD HERE> --ingress external --target-port 80
+                </code></pre>
+
+                <p class="smaller">🔗 <a target="_blank" href="http://blog.pamelafox.org/2022/09/deploying-containerized-flask-app-to.html">
+                    Deploying a containerized Flask app to Azure Container Apps</a></p>
+            </section>
+
+
+            <section>
+                <h3>Deploy #3: Container Apps + CDN (Infra)</h3>
+
+                <p>What got deployed?</p>
+
+                <img src="diagram_containerapps_cdn.png" alt="Diagram of architecture- Container Apps, Container Registry, CDN Profile, CDN Endpoint, Log Analytics, Key Vault" height="500">
+            </section>
+
+            <section>
+                <h3>A few months later...</h3>
+
+                <p>I want to update those apps!</p>
+
+                <p>😱 But how?</p>
+
+                <table>
+                    <tbody>
+                        <tr class="fragment">
+                            <th>VS Code
+                            <td>I can't remember what to click!
+                        <tr class="fragment">
+                            <th>Portal
+                            <td>The UI changed! And how did I deploy?
+                        <tr class="fragment">
+                            <th>Azure CLI
+                            <td>What commands do I need to re-run? And how did I deploy??
+                    </tbody>
+                </table>
+
+                <p class="fragment">But then I discovered...</p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Azure Bicep</h2>
+                <p>(Infrastructure-as-Code)</p>
+            </section>
+
+            <section>
+                <h3>What is Bicep?</h3>
+
+                <p>Bicep is an <strong>infrastructure-as-code (IAC)</strong> language, similar to Terraform
+                    but designed for Azure. Bicep declaratively defines cloud resources,
+                    so that they can be provisioned in a repeatable manner.
+                </p>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+
+                <pre style="font-size:0.5em; margin-top: 0px; width:450px;"><code data-trim data-noescape class="bicep">
+                resource web 'Microsoft.Web/sites@2022-03-01' = {
+                    name: 'pamelas-app-service'
+                    location: 'eastus'
+                    kind: 'app,linux'
+                    properties: {
+                      serverFarmId: appServicePlan.id
+                      siteConfig: {
+                        alwaysOn: true
+                        linuxFxVersion: 'PYTHON|3.10'
+                      }
+                    }
+                    resource appSettings 'config' = {
+                        name: 'appsettings'
+                        properties: {
+                          DBNAME: 'django'
+                          PGHOST: '${postgresServer.name}.postgres.database.azure.com'
+                          PGUSER: 'admin'
+                          PGPASS: databasePassword
+                        }
+                    }
+                }
+                </code></pre>
+
+                <pre style="font-size:0.5em; margin-top: 0px; width:450px;"><code data-trim data-noescape class="bicep">
+                    resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-01-20-preview' = {
+                        name: 'pamelas-postgres-server'
+                        location: 'eastus'
+                        sku: {
+                          name: 'Standard_B1ms'
+                          tier: 'Burstable'
+                        }
+                        properties: {
+                          version: '14'
+                          administratorLogin: 'django'
+                          administratorLoginPassword: adminPassword
+                          storage: {
+                            storageSizeGB: 128
+                          }
+                        }
+                      }
+                </code></pre>
+                </div>
+                
+            </section>
+
+            <section>
+                <h3>Provisioning from Bicep</h3>
+
+                <p>Prerequisite: An Azure account with a subscription.</p>
+                
+                <p>Deploy resources to a subscription:</p>
+
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                az deployment sub create -f main.bicep
+                </code></pre>
+
+                <aside class="notes">Show a simple demo</aside>
+            </section>
+
+            <section>
+                <h3>Generating Bicep with NubesGen</h3>
+
+                <p>One way to generate Bicep files for web apps is:<br>
+                    <a target="_blank" href="https://nubesgen.com/">nubgesgen.com</a>
+                </p>
+                
+                <img src="screenshot_nubesgen_output.png" alt="Screenshot of NubesGen.com website form for configuring Web App with database" height="350">
+
+                <p>👩🏼‍💻 Contribute here: <a target="_blank" href="https://github.com/microsoft/nubesgen">github.com/microsoft/nubesgen</a></p>
+                <aside class="notes">Deploy it!</aside>
+            </section>
+
+            <section>
+                <h3>Demo: Deploying with NubesGen</h3>
+
+                <style>
+                    #asciicast-iframe-dUh7xtS9U5jWGeg4RswY6q4TI {
+                        height: 350px !important;
+                    }
+                </style>
+                <script async id="asciicast-dUh7xtS9U5jWGeg4RswY6q4TI" src="https://asciinema.org/a/dUh7xtS9U5jWGeg4RswY6q4TI.js"></script>
+
+                <img class="fragment" src="screenshot_nubesgen_portal.png" alt="Screenshot of 4 resources in Azure Portal" style="border:1px solid #ccc;">
+            </section>
+
+            <section>
+                <h3>Benefits of Bicep/IAC</h3>
+
+                <ul>
+                    <li>Includes parameters, variables, loops, and conditional logic
+                        to increase its flexibility and reusability
+                    <li style="margin-top:30px;">Provisions can be parallelized (as long as dependencies are clear)
+                    <li style="margin-top:30px;">Can be tracked with version control
+                        <br>🔗 <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/commit/1409a28a65ad2049ce116eaed2a9ee590c9dae26#diff-e800ed75064b740be458a572b91420b94ca6743a609c7318facf638f60c7028b">Commit: Upgrade to 3.10</a>
+                    <li style="margin-top:30px;">Can be linted for validity
+                        <br>🔗 <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app/blob/77e7ac28e0f8ca398554a857e4d78adf055cff8a/.github/workflows/azure-bicep-validate.yaml#LL23C25-L23C59"><code>az bicep build -f infra/main.bicep</code></a>
+                    <li style="margin-top:30px;">Can be checked for security issues
+                        <br>🔗 <a target="_blank" href="https://github.com/tonybaloney/django-on-azure/blob/d4f2b63d6e1b9623c2ecd988cda748130f952547/.github/workflows/azure-dev-validate.yml#L26">microsoft/security-devops-action</a>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Writing Bicep files</h3>
+
+                SURVEY!
+                <p>🤔 Should web app developers learn to write infrastructure-as-code?</p>
+
+                <ul>
+                    <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
+                    <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a>
+                    <li>Search Github for examples
+                    <li>Create the resource in Portal and export the IAC
+                </ul>
+
+                <p>Read more in: <a target="_blank" href="http://blog.pamelafox.org/2023/01/tips-for-writing-bicep-files-for-azure.html">
+                    Tips for writing Bicep files</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Beyond provisioning</h3>
+
+                <p>All I've shown so far is <strong>provisioning</strong>:
+                    creating resources inside an Azure account.
+                </p>
+
+                <p>For a web app, we still need to actually deploy code to 
+                    the hosting resource (Azure App Service, Azure Functions, etc.)
+                </p>
+
+                <p>We could use CLI commands, Github integrations, Portal uploads.
+                    But there's a better way!</p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Azure Developer CLI (azd)</h2>
+
+                <p><em>*This will soon be renamed. I don't know the new name!</em></p>
+            </section>
+
+            <section>
+                <h3>Azure Developer CLI</h3>
+
+                <p>This new tool is designed to help with all steps of the dev cycle:</p>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Provisioning
+                            <td><code>azd provision</code>
+                        <tr>
+                            <td>Deploying
+                            <td><code>azd deploy</code>
+                        <tr>
+                            <td>⬆️ Both
+                            <td><code>azd up</code>
+                        <tr>
+                            <td>CI/CD
+                            <td><code>azd pipeline config</code>
+                        <tr>
+                            <td>Monitoring
+                            <td><code>azd monitor</code>
+                    </table>
+            </section>
+
+            <section>
+                <h3>Demo: <code>azd up</code></h3>
+
+                <p>First provisions, then deploys. Only re-provisions when infra resource definitions have changed.</p>
+
+                <script async id="asciicast-gJMGgx3h2YCYBl1tjpTGRX3Cq" src="https://asciinema.org/a/gJMGgx3h2YCYBl1tjpTGRX3Cq.js"></script>
+
+                <aside class="notes">
+                    Show portal - link in console<br>
+                    Show website - link in console
+                </aside>
+            </section>
+            
+            <section>
+                <h3>Demo: <code>azd deploy</code></h3>
+
+                <p>If you only changed code, not infra, you can just deploy.</p>
+
+                <script async id="asciicast-ZyvXrCVO30orfIU9HaZZXlhT4" src="https://asciinema.org/a/ZyvXrCVO30orfIU9HaZZXlhT4.js"></script>
+
+            </section>
+
+            <section>
+                <h3>Demo: <code>azd pipeline config</code></h3>
+
+                <p>Configures the secrets for <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/.github/workflows/azure-dev.yaml">
+                    azure-dev.yaml</a>, a Github workflow that provisions and deploys.</p>
+
+                <style>
+                #asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd {
+                    height: 350px !important;
+                }
+                </style>
+                <script async id="asciicast-lP6QZm5PsUqMdinUSUkkthpNd" src="https://asciinema.org/a/lP6QZm5PsUqMdinUSUkkthpNd.js"></script>
+
+                <p>🔗 <a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd/actions/runs/4386198522/jobs/7679920410">Successful workflow run</a></p>
+            </section>
+
+            <section>
+                <h3>Components of an <code>azd</code> project</h3>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/infra"><code>infra/</code></a>
+                            <td>Contains all the infra in Bicep or Terraform files
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/blob/main/azure.yaml"><code>azure.yaml</code></a>
+                            <td>Specifies what code to deploy to which resource
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/.github/workflows"><code class="smaller">.github/</code></a>
+                            <td>Contains workflow for deploying
+                        <tr>
+                            <td colspan="2">✨ Bonus:
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/.vscode"><code>.vscode/</code></a>
+                            <td>Settings for running local server + debugging
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/.devcontainer"><code>.devcontainer/</code></a>
+                            <td>Support for Dev Containers/GitHub Codespaces
+                    </tbody>
+                </table>
+
+                <p>🔗 <a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/make-azd-compatible?pivots=azd-convert">Make your project compatible with Azure Developer CLI</a></p>
+            </section>
+
+            <section>
+                <h3>Finding <code>azd</code> templates</h3>
+
+                <p>You could write the required files yourself,
+                    or, better, start from a template that's
+                    the most like your project.</p>
+                
+                <table style="font-size:20px;">
+                    <thead>
+                        <tr>
+                            <th>
+                            <th>App Service
+                            <th>Functions
+                            <th>Container Apps
+                    <tbody>
+                        <tr style="border-top:4px solid black;">
+                            <td>Flask
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example">Simple App</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-azure-function">Simple API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container">Simple App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-container">Simple API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-gallery-container-app">+ CDN: App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app">+ CDN: API</a><br>
+                        <tr>
+                            <td>+ PostgreSQL
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Quiz app</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/msdocs-flask-postgresql-sample-app-azd">+ VNET: Reviews app</a>
+                            <td>
+                                🚧
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
+                        <tr style="border-top:4px solid black;">
+                            <td>FastAPI
+                            <td>
+                                🚧          
+                                <!--TODO: RegModel-->
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-on-azure-functions">Simple API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-azure-function-apim">+ APIM: Simple API</a><Br>
+                                <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">+ CDN: Maps API</a>
+                            <td>
+                                🚧
+                                <!--TODO: Container app-->
+                        <tr>
+                            <td>+ MongoDB
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo">Todo API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-swa-func">Todo API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-aca">Todo API</a>
+                        <tr style="border-top:4px solid black;">
+                            <td>Django + PG
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">Quiz app</a>
+                                <br>
+                                <a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd">+ VNET: Reviews app</a>
+                                <br>
+                                <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">+ VNET: Booking app</a>
+                                <br>
+                                django-cookie-cutter
+                            <td>
+                                🚧
+                            <td>
+                                🚧
+                                <!-- relecloud? -->
+                </table>
+
+                <p style="font-size:0.8em;">💡 Finding similar <em>architecture</em> is more important than same <em>framework</em>.</p>
+            </section>
+
+            <section>
+                <h3>Finding more <code>azd</code> templates</h3>
+
+                <!-- css grid with one row and two columns -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+                    
+                    <ul>
+                        <li>Look through the <a target="_blank" href="https://azure.github.io/awesome-azd/?operator=AND&tags=python">AZD templates gallery</a>
+                            (use the filters!)
+                        <li style="margin-top:50px;">Search Github for <a target="_blank" href="https://github.com/topics/azd-templates">azd-templates</a>
+                    </ul>
+
+                    <div>
+                        <img src="screenshot_azdgallery.png" alt="AZD gallery" style="width:450px; border: 1px solid gray;">
+                    </div>
+
+                </div>
+                
+                <p>🐘 Need help? Toot at me!</p>
+                <p>🎁 Make a new one? Contribute it!</p>
+
+            </section>
+                        
+            <section>
+                <h3>Demo: FastAPI + CDN (Diagram)</h3>
+
+                <p class="smaller">Try it at:
+                    <a target="_blank" href="https://staticmaps-rk5lctcdqzvbs-cdn-endpoint.azureedge.net/">
+                        staticmaps-rk5lctcdqzvbs-cdn-endpoint.azureedge.net/
+                    </a>
+                </p>
+                <p class="smaller">Code at: 
+                    <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">
+                        github.com/pamelafox/staticmaps-function
+                    </a>
+                </p>
+                <img src="diagram_function_cdn.png" height="450" alt="Architecture diagram for CDN to Function App to FastAPI">
+
+            </section>
+
+            <section>
+                <h3>Demo: Flask + ACA</h3>
+
+                <script async id="asciicast-29MQfq4Ab5SUFszrjp7TRqkS2" src="https://asciinema.org/a/29MQfq4Ab5SUFszrjp7TRqkS2.js"></script>
+                diagram
+                <!-- embed terminal from FastAPI docs -->
+            </section>
+
+            <section>
+                <h3>Demo: Django + App Service</h3>
+                diagram
+            </section>
+
+
+            <section class="heading-only">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+
+        window.highlightJsBadge();
+
+        if (window.location.search == "?print-pdf") {
+            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+            uncounted.forEach(node => {
+                node.parentNode.classList.add("no-print")
+            })
+        }
+
+    </script>
+    </body>
+</html>
