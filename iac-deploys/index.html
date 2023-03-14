@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
         <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
-        <link rel="stylesheet" type="text/css" href="../static/asciinema-player.css" />
         <style>
 			.reveal {
 				font-family: "Work Sans", sans-serif;
@@ -367,20 +366,6 @@
             </section>
 
             <section>
-                <h3>Provisioning from Bicep</h3>
-
-                <p>Prerequisite: An Azure account with a subscription.</p>
-                
-                <p>Create resources in a subscription:</p>
-
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
-                az deployment sub create -f main.bicep
-                </code></pre>
-
-                <aside class="notes">Show a simple demo</aside>
-            </section>
-
-            <section>
                 <h3>Generating Bicep with NubesGen</h3>
 
                 <p>One way to generate Bicep files for web apps is:<br>
@@ -394,16 +379,11 @@
             </section>
 
             <section>
-                <h3>Demo: Deploying with NubesGen</h3>
+                <h3>Demo: Provisioning with Bicep</h3>
 
-                <style>
-                    #asciicast-iframe-dUh7xtS9U5jWGeg4RswY6q4TI {
-                        height: 350px !important;
-                    }
-                </style>
-                <script async id="asciicast-dUh7xtS9U5jWGeg4RswY6q4TI" src="https://asciinema.org/a/dUh7xtS9U5jWGeg4RswY6q4TI.js"></script>
+                <iframe data-src="https://asciinema.org/a/dUh7xtS9U5jWGeg4RswY6q4TI/iframe?" id="asciicast-iframe-dUh7xtS9U5jWGeg4RswY6q4TI" name="asciicast-iframe-dUh7xtS9U5jWGeg4RswY6q4TI" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 420px;"></iframe>
 
-                <img class="fragment" src="screenshot_nubesgen_portal.png" alt="Screenshot of 4 resources in Azure Portal" style="border:1px solid #ccc;">
+                <img class="fragment" src="screenshot_nubesgen_portal.png" alt="Screenshot of 4 resources in Azure Portal" style="border:1px solid #ccc; height:150px;">
             </section>
 
             <section>
@@ -495,7 +475,7 @@
 
                 <p>First provisions, then deploys. Only re-provisions when Bicep resource definitions have changed.</p>
 
-                <script async id="asciicast-gJMGgx3h2YCYBl1tjpTGRX3Cq" src="https://asciinema.org/a/gJMGgx3h2YCYBl1tjpTGRX3Cq.js"></script>
+                <iframe data-src="https://asciinema.org/a/gJMGgx3h2YCYBl1tjpTGRX3Cq/iframe?" id="asciicast-iframe-gJMGgx3h2YCYBl1tjpTGRX3Cq" name="asciicast-iframe-gJMGgx3h2YCYBl1tjpTGRX3Cq" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 560px;"></iframe>
 
                 <aside class="notes">
                     Show portal - link in console<br>
@@ -508,7 +488,7 @@
 
                 <p>If you only changed code, not infra, you can just deploy.</p>
 
-                <script async id="asciicast-ZyvXrCVO30orfIU9HaZZXlhT4" src="https://asciinema.org/a/ZyvXrCVO30orfIU9HaZZXlhT4.js"></script>
+                <iframe data-src="https://asciinema.org/a/ZyvXrCVO30orfIU9HaZZXlhT4/iframe?" id="asciicast-iframe-ZyvXrCVO30orfIU9HaZZXlhT4" name="asciicast-iframe-ZyvXrCVO30orfIU9HaZZXlhT4" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 560px;"></iframe>
 
             </section>
 
@@ -518,12 +498,7 @@
                 <p>Configures the secrets for <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/.github/workflows/azure-dev.yaml">
                     azure-dev.yaml</a>, a Github workflow that provisions and deploys.</p>
 
-                <style>
-                #asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd {
-                    height: 350px !important;
-                }
-                </style>
-                <script async id="asciicast-lP6QZm5PsUqMdinUSUkkthpNd" src="https://asciinema.org/a/lP6QZm5PsUqMdinUSUkkthpNd.js"></script>
+                <iframe data-src="https://asciinema.org/a/lP6QZm5PsUqMdinUSUkkthpNd/iframe?" id="asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd" name="asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 373px;"></iframe>
 
                 <p>🔗 <a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd/actions/runs/4386198522/jobs/7679920410">Successful workflow run</a></p>
             </section>
@@ -707,50 +682,13 @@
             showNotes: false,
             margin: 0.1,
             preloadIframes: true,
+            autoPlayMedia: true,
             plugins: [ RevealHighlight, RevealMenu ],
             pdfSeparateFragments: true
         });
 
         window.highlightJsBadge();
 
-        function checkIframeHeight(scriptEl, currentSlide) {
-            const playerDiv = currentSlide.querySelector('div[id^=asciicast-container]');
-            if (playerDiv) {
-                // get visible height of div
-                const divHeight = playerDiv.clientHeight;
-                const playerFrame = playerDiv.querySelector('iframe');
-                const frameHeight = playerFrame.clientHeight;
-                console.log('div', playerDiv);
-                console.log('divHeight', divHeight);
-                console.log('frameHeight', frameHeight);
-                if (divHeight < 200) {
-                    //setTimeout(checkIframeHeight, 1000, currentSlide);
-                    console.log("Recreating the script tag");
-                    // Remove created DIVs
-                    playerDiv.removeChild(playerFrame);
-                    playerDiv.parentNode.removeChild(playerDiv);
-                    // re-append the same script tag
-                    const newScript = document.createElement('script');
-                    newScript.setAttribute("async", "");
-                    newScript.setAttribute("id", scriptEl.id);
-                    newScript.setAttribute("src", scriptEl.src);
-                    scriptEl.parentNode.replaceChild(newScript, scriptEl);
-                }
-            } else {
-                setTimeout(checkIframeHeight, 1000, currentSlide);
-            }
-        }
-
-        function checkForCasts(event) {
-            const asciiScript = event.currentSlide.querySelector('script[id^=asciicast]');
-            if (asciiScript) {
-                // set timer to find out when iframe is loaded
-                checkIframeHeight(asciiScript, event.currentSlide);
-            }
-        }
-
-        Reveal.on( 'ready', checkForCasts);
-        Reveal.on( 'slidechanged', checkForCasts);
 
     </script>
     </body>
