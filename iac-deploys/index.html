@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
         <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+        <link rel="stylesheet" type="text/css" href="../static/asciinema-player.css" />
         <style>
 			.reveal {
 				font-family: "Work Sans", sans-serif;
@@ -113,6 +114,11 @@
             <section>
                 <h3>About me</h3>
 
+                <p><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a>, 
+                    <a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a>,
+                    <a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a>
+                </p>
+
                 <p>I've been deploying web apps for a long time:</p>
 
                 <table class="smaller">
@@ -154,7 +160,7 @@
             <section>
                 <h3>About you!</h3>
 
-                <img src="qrcode_deploy-survey.png" alt="QR Code" style="float:right">
+                <img src="qrcode_deploy-survey.png" alt="QR Code" style="float:right; width:380px;">
                 
                 <p>Where do you deploy?</p>
                 <ul class="smaller">
@@ -167,9 +173,8 @@
                     <li>Other
                 </ul>
 
-
                 <p>Take the survey!<br>
-                <a target="_blank" href="https://tinyurl.com/deploy-survey">tinyurl.com/deploy-survey</a>
+                <a target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/1">tinyurl.com/deploy-survey</a>
                 </p>
             </section>
 
@@ -285,14 +290,14 @@
             <section class="heading-only">
                 <h2>Azure Bicep</h2>
                 <p>(Infrastructure-as-Code)</p>
+                <img src="../media/DATA_BIT.svg" style="height:400px;">
             </section>
 
             <section>
                 <h3>What is Bicep?</h3>
 
                 <p>Bicep is an <strong>infrastructure-as-code (IAC)</strong> language, similar to Terraform
-                    but designed for Azure. Bicep declaratively defines cloud resources,
-                    so that they can be provisioned in a repeatable manner.
+                    but designed for Azure. Bicep declaratively defines Azure cloud resources.
                 </p>
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
@@ -305,7 +310,6 @@
                     properties: {
                       serverFarmId: appServicePlan.id
                       siteConfig: {
-                        alwaysOn: true
                         linuxFxVersion: 'PYTHON|3.10'
                       }
                     }
@@ -315,7 +319,7 @@
                           DBNAME: 'django'
                           PGHOST: '${postgresServer.name}.postgres.database.azure.com'
                           PGUSER: 'admin'
-                          PGPASS: databasePassword
+                          PGPASS: adminPassword
                         }
                     }
                 }
@@ -344,11 +348,30 @@
             </section>
 
             <section>
+                <h3>IAC and you</h3>
+                
+                <img src="qrcode_iac-survey.png" alt="QR Code" style="float:right; width:380px;">
+                
+                <p>What IAC language(s) have you used?</p>
+                <ul class="smaller">
+                    <li>None
+                    <li>Terraform
+                    <li>Bicep
+                    <li>Helm chart
+                    <li>Other
+                </ul>
+
+                <p>Take the survey!<br>
+                    <a target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/2">tinyurl.com/iac-survey</a>
+                </p>
+            </section>
+
+            <section>
                 <h3>Provisioning from Bicep</h3>
 
                 <p>Prerequisite: An Azure account with a subscription.</p>
                 
-                <p>Deploy resources to a subscription:</p>
+                <p>Create resources in a subscription:</p>
 
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
                 az deployment sub create -f main.bicep
@@ -402,7 +425,6 @@
             <section>
                 <h3>Writing Bicep files</h3>
 
-                SURVEY!
                 <p>🤔 Should web app developers learn to write infrastructure-as-code?</p>
 
                 <ul>
@@ -424,7 +446,7 @@
                     creating resources inside an Azure account.
                 </p>
 
-                <p>For a web app, we still need to actually deploy code to 
+                <p>For a web app, we still need to actually <strong>deploy</strong> code to 
                     the hosting resource (Azure App Service, Azure Functions, etc.)
                 </p>
 
@@ -436,14 +458,19 @@
                 <h2>Azure Developer CLI (azd)</h2>
 
                 <p><em>*This will soon be renamed. I don't know the new name!</em></p>
+                <img src="../media/BIT_AZURE.png" height="400">
             </section>
 
             <section>
                 <h3>Azure Developer CLI</h3>
 
-                <p>This new tool is designed to help with all steps of the dev cycle:</p>
+                <p>This new CLI tool helps with all steps of the dev cycle:</p>
 
                 <table>
+                    <thead>
+                        <tr>
+                            <th>Step
+                            <th>Command
                     <tbody>
                         <tr>
                             <td>Provisioning
@@ -466,7 +493,7 @@
             <section>
                 <h3>Demo: <code>azd up</code></h3>
 
-                <p>First provisions, then deploys. Only re-provisions when infra resource definitions have changed.</p>
+                <p>First provisions, then deploys. Only re-provisions when Bicep resource definitions have changed.</p>
 
                 <script async id="asciicast-gJMGgx3h2YCYBl1tjpTGRX3Cq" src="https://asciinema.org/a/gJMGgx3h2YCYBl1tjpTGRX3Cq.js"></script>
 
@@ -566,9 +593,8 @@
                                 <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
                         <tr style="border-top:4px solid black;">
                             <td>FastAPI
-                            <td>
-                                🚧          
-                                <!--TODO: RegModel-->
+                            <td>       
+                                <a target="_blank" href="https://github.com/pamelafox/scikitlearn-model-to-fastapi-app">Salary API</a>
                             <td>
                                 <a target="_blank" href="https://github.com/pamelafox/fastapi-on-azure-functions">Simple API</a><br>
                                 <a target="_blank" href="https://github.com/pamelafox/fastapi-azure-function-apim">+ APIM: Simple API</a><Br>
@@ -628,7 +654,7 @@
             </section>
                         
             <section>
-                <h3>Demo: FastAPI + CDN (Diagram)</h3>
+                <h3>Demo: FastAPI + Function + CDN</h3>
 
                 <p class="smaller">Try it at:
                     <a target="_blank" href="https://staticmaps-rk5lctcdqzvbs-cdn-endpoint.azureedge.net/">
@@ -645,18 +671,21 @@
             </section>
 
             <section>
-                <h3>Demo: Flask + ACA</h3>
+                <h3>Demo: APIFlask + ACA + CDN</h3>
 
-                <script async id="asciicast-29MQfq4Ab5SUFszrjp7TRqkS2" src="https://asciinema.org/a/29MQfq4Ab5SUFszrjp7TRqkS2.js"></script>
-                diagram
-                <!-- embed terminal from FastAPI docs -->
+                <p class="smaller">Try it at:<br>
+                    <a target="_blank" href="https://flask-charts-aca-zizgwsqsaolso-cdn-endpoint.azureedge.net/charts/bar?title=Enrolled%20students&xlabel=Courses%20offered&ylabel=Number%20enrolled&xvalues=C,Ruby,Java,Python&yvalues=10,20,15,30.5">
+                        https://flask-charts-aca-zizgwsqsaolso-cdn-endpoint.azureedge.net/charts/pie
+                    </a>
+                </p>
+                <p class="smaller">Code at: 
+                    <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app">
+                        github.com/pamelafox/flask-charts-api-container-app
+                    </a>
+                </p>
+                <img src="diagram_charts_api.png" alt="Architecture diagram for CDN to Container App">
+
             </section>
-
-            <section>
-                <h3>Demo: Django + App Service</h3>
-                diagram
-            </section>
-
 
             <section class="heading-only">
                 <h2>Any questions?</h2>
@@ -684,12 +713,44 @@
 
         window.highlightJsBadge();
 
-        if (window.location.search == "?print-pdf") {
-            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-            uncounted.forEach(node => {
-                node.parentNode.classList.add("no-print")
-            })
+        function checkIframeHeight(scriptEl, currentSlide) {
+            const playerDiv = currentSlide.querySelector('div[id^=asciicast-container]');
+            if (playerDiv) {
+                // get visible height of div
+                const divHeight = playerDiv.clientHeight;
+                const playerFrame = playerDiv.querySelector('iframe');
+                const frameHeight = playerFrame.clientHeight;
+                console.log('div', playerDiv);
+                console.log('divHeight', divHeight);
+                console.log('frameHeight', frameHeight);
+                if (divHeight < 200) {
+                    //setTimeout(checkIframeHeight, 1000, currentSlide);
+                    console.log("Recreating the script tag");
+                    // Remove created DIVs
+                    playerDiv.removeChild(playerFrame);
+                    playerDiv.parentNode.removeChild(playerDiv);
+                    // re-append the same script tag
+                    const newScript = document.createElement('script');
+                    newScript.setAttribute("async", "");
+                    newScript.setAttribute("id", scriptEl.id);
+                    newScript.setAttribute("src", scriptEl.src);
+                    scriptEl.parentNode.replaceChild(newScript, scriptEl);
+                }
+            } else {
+                setTimeout(checkIframeHeight, 1000, currentSlide);
+            }
         }
+
+        function checkForCasts(event) {
+            const asciiScript = event.currentSlide.querySelector('script[id^=asciicast]');
+            if (asciiScript) {
+                // set timer to find out when iframe is loaded
+                checkIframeHeight(asciiScript, event.currentSlide);
+            }
+        }
+
+        Reveal.on( 'ready', checkForCasts);
+        Reveal.on( 'slidechanged', checkForCasts);
 
     </script>
     </body>

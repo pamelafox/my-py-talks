@@ -782,14 +782,6 @@
         Reveal.on( 'slidechanged', checkForCasts);
 
         window.highlightJsBadge();
-
-        if (window.location.search == "?print-pdf") {
-            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-            uncounted.forEach(node => {
-                node.parentNode.classList.add("no-print")
-            })
-        }
-
     </script>
     </body>
 </html>
