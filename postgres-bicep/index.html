@@ -1,0 +1,702 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Deploying PostgreSQL to Azure with Bicep</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+        <style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+            .slide-number-a {
+                background-color: #747474;
+            }
+
+            .reveal section li {
+                margin-bottom: 12px;
+            }
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+                font-size: 18px;
+			}
+
+            .reveal code {
+                font-family: "Roboto Mono", monospace;
+            }
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:10%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1 style="font-size:2.5em;">Deploying PostgreSQL to Azure with Bicep
+                </h1>
+
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%; display:none;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section>
+                <h3>About me</h3>
+
+                <p><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a>, 
+                    <a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a>,
+                    <a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a>
+                </p>
+
+                <!-- image from HS Days -->
+                <!-- image from Google days -->
+                <!-- image from Coursera days - MySQL -->
+                <!-- image from Khan Academy days - NoSQL -->
+                <!-- image from Azure - PostgreSQL -->
+            </section>
+
+            <section>
+                <h3>PostgreSQL on Azure</h3>
+
+                <style>
+                .fragment.background-green {
+                    background-color: transparent;
+                }
+                .fragment.background-green.visible {
+                    background-color: aquamarine;
+                }
+                </style>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Single server</td>
+                            <td>Microsoft's original offering. No longer recommended for new apps.</td>
+                        </tr>
+                        <tr>
+                            <td>Citus</td>
+                            <td>Microsoft's distributed database offering. Built on PostgreSQL. Can scale horizontally.
+                                Built in pgBouncer.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="fragment custom background-green">Flexible server</span></td>
+                            <td>Microsoft's most recent PostgreSQL offering. Fully managed service that can scale.
+                                Built in pgBouncer.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><a target="_blank" href="https://techcommunity.microsoft.com/t5/fasttrack-for-azure/comparison-azure-postgresql-single-server-flexible-server/ba-p/3474966">Comparison of PostgreSQL offerings</a>
+                    <br>
+                    <a target="_blank" href="https://devblogs.microsoft.com/cosmosdb/azure-cosmos-db-for-postgresql-vs-azure-database-for-postgresql-when-to-choose-which/">Azure Cosmos DB for PostgreSQL vs. Azure Database for PostgreSQL: When to choose which</a>
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Ways to deploy<br> a PostgreSQL server</h2>
+            </section>
+
+            <section>
+                <h3>Using visual tools</h3>
+
+                <table>
+                    <thead style="display:none;">
+                      <tr>
+                        <th>Method</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Azure portal</td>
+                        <td> <!-- screenshot of portal --> 
+                            <img src="" alt="Azure portal screenshot" height="300"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>VS Code extension</td>
+                        <td> <!-- screenshot of extension --> 
+                            <img src="" alt="Screenshot of VS Code extension" height="300"/>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                <p class="fragment">😃 Easy to get started 😭 but difficult to replicate.</p>
+            </section>
+
+            <section>
+                <h3>Using CLI commands</h3>
+    
+                <table>
+                    <thead style="display:none;">
+                        <tr>
+                        <th>Method</th>
+                        <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Azure CLI</td>
+                        <td>
+                            <pre style="font-size:20px"><code data-trim data-noescape class="shell">
+                        az postgres flexible-server create --resource-group pg-grp --name pg-srv \
+                            --location westus --sku-name GP_Gen5_2 --version 14 \
+                            --admin-user myadmin --admin-password NeverShowThis
+                            </code></pre>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Azure PowerShell</td>
+                        <td>
+                            <pre style="font-size:20px"><code data-trim data-noescape class="shell">
+                        New-AzPostgreSqlFlexibleServer -ResourceGroupName pg-grp -ServerName pg-srv \
+                            -Location westus -SkuName GP_Gen5_2 -Version 14 \
+                            -AdministratorLogin myadmin -AdministratorLoginPassword NeverShowThis
+                            </code></pre>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <p class="fragment">😃 Replication is now possible!<br>
+                    😭 Updating resource parameters requires different commands than creation.
+                  </p>
+            </section>
+
+            <section>
+                <h3>Using ARM templates</h3>
+                
+                <p><strong>ARM (Azure Resource Manager)</strong> templates are JSON files that describe
+                    the resources you want to create.
+                </p>
+
+                <!-- TODO: Show ARM? Separate slide -->
+                <p class="fragment">😃 Repeatable provisioning of all resource types<br>
+                    😭 JSON files can be unwieldy and hard to parameterize
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Bicep</h2>
+            </section>
+            
+
+            <section>
+                <h3>Using Bicep</h3>
+
+                <p><strong>Bicep</strong> is a new DSL (domain-specific language) that compiles to ARM templates.</p>
+
+                <pre><code data-trim data-noescape class="bicep">
+                    resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2021-06-01' = {
+                        name: 'pg-srv'
+                        location: 'eastus'
+                        sku: {
+                          name: 'Standard_D2s_v3'
+                          tier: 'GeneralPurpose'
+                        }
+                        properties: {
+                          administratorLogin: 'myadmin'
+                          administratorLoginPassword: 'NeverShowThis'
+                          version: '14'
+                          storage: {
+                            storageSizeGB: 128
+                          }
+                        }
+                      }                      
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>The Bicep language</h3>
+
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Feature</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Parameters</td>
+                        <td><code>param location string = 'eastus'</code></td>
+                      </tr>
+                      <tr>
+                        <td>Types</td>
+                        <td><code>param storageSizeGB int = 128</code></td>
+                      </tr>
+                      <tr>
+                        <td>Logic</td>
+                        <td><code>skuTier == 'Burstable' ? 32 : 128</code></td>
+                      </tr>
+                      <tr>
+                        <td>Loops</td>
+                        <td><code>for i in range(0, serverCount):</code></td>
+                      </tr>
+                      <tr>
+                        <td>Functions</td>
+                        <td><code>param adminUsername string = newGuid()</code></td>
+                      </tr>
+                      <tr>
+                        <td>Modules</td>
+                        <td><code>module myServer 'flexserver.bicep' { }</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <p><a target="_blank" href="https://docs.microsoft.com/azure/azure-resource-manager/bicep/file">Learn more about Bicep</a></p>
+            </section>
+
+            <section>
+                <h3>A parameterized Bicep file</h3>
+
+                <pre style="font-size: 20px; height:450px;"><code data-trim data-noescape class="bicep">
+                    param serverName string = 'pg-srv'
+                    param location string = 'eastus'
+                    @secure()
+                    param adminPassword string
+
+                    resource srv 'Microsoft.DBforPostgreSQL/flexibleServers@2021-06-01' = {
+                        name: serverName
+                        location: location
+                        sku: {
+                          name: 'Standard_D2s_v3'
+                          tier: 'GeneralPurpose'
+                        }
+                        properties: {
+                          administratorLogin: 'myadmin'
+                          administratorLoginPassword: adminPassword
+                          version: '14'
+                          storage: { storageSizeGB: 128 }
+                        }  
+                    }
+                </code></pre>
+
+            </section>
+                
+            <section>
+                <h3>Provisioning from Bicep</h3>
+
+                <p>Use <code>az deployment group create</code> to create or update resources in an existing resource group:</p>
+                <pre style="white-space: pre-wrap;"><code data-trim data-noescape class="shell">
+                $ az deployment group create --resource-group pg-grp --template-file pg.bicep
+                <span class="fragment">Please provide securestring value for 'adminPassword' (? for help):</span>
+                <span class="fragment">{
+                    "name": "postgres_example1",
+                    "properties": {
+                        "outputResources": [{
+                            "id": "/subscriptions/32ea8a26-5b40-4838-b6cb-be5c89a57c16/resourceGroups/cituscon-examples-eastus/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg-srv",
+                            "resourceGroup": "pg-grp"
+                          }],
+                    ...
+                }</span>
+                </code></pre>
+
+                <div class="fragment">
+                <p>Optionally, specify parameters on the command line:</p>
+                <pre><code data-trim data-noescape class="shell">
+                $ az deployment group create --resource-group pg-grp --template-file pg.bicep \
+                   --parameters adminPassword=ADMIN_PASSWORD
+                </code></pre>
+                </div>
+            </section>
+
+            <section>
+                <h3>Child resources</h3>
+
+                <p>A <a target="_blank" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/child-resource-name-type">
+                    <strong>child resource</strong></a>
+                   exists solely within the scope of another resource.</p>
+
+                <p>Child resources that can be created for PostgreSQL:</p>
+                <ul>
+                    <li><code>administrators</code></li>
+                    <li><code>configurations</code></li>
+                    <li><code>databases</code></li>
+                    <li><code>firewallRules</code></li>
+                    <li><code>migrations</code></li>
+                </ul>
+
+                <p>Additional child resources can be referenced, but not created: 
+                    <code>advisors</code>, <code>backups</code>, <code>queryTexts</code>.
+                </p>
+            </section>
+
+            <section>
+                <h3>Child resources: database</h3>
+                
+                <p>When you don't specify any specific databases,
+                    the server will create the default database <code>postgres</code>
+                    plus two system databases <code>azure_maintenance</code>, <code>azure_sys</code>.</p>
+
+                <p>Create an additional database:</p>
+                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+                    name: serverName
+                    location: location
+                    ...
+
+                    resource database 'databases' = {
+                        name: 'webapp'
+                    }
+                }
+                </code></pre>
+
+                <p>👁️ See full example in <code>postgres_database.bicep</code></p>
+
+            </section>
+
+            <section>
+                <h3>Child resources: databases</h3>
+                
+                <p>Use an <code>array</code> and <code>for</code> loop 
+                    to create multiple additional databases:</p>
+
+                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                param databaseNames array = ['webapp', 'analytics']
+
+                resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+                    name: serverName
+                    location: location
+                    ...
+
+                    resource database 'databases' = [for name in databaseNames: {
+                        name: name
+                    }]
+                }
+                </code></pre>
+
+                <p>👁️ See full example in <code>postgres_databases.bicep</code></p>
+            </section>
+
+            <section>
+                <h3>Child resources: firewall rule</h3>
+
+                <p>By default, the server is not accessible from any IP ranges.
+                    Either configure public access using <code>firewallRules</code> or
+                    use a Virtual Network for private access.
+                </p>
+
+                <p>Allow access from any Azure service within Azure:</p>
+
+                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                resource firewallAzure 'firewallRules' = {
+                    name: 'allow-all-azure-internal-IPs'
+                    properties: {
+                        startIpAddress: '0.0.0.0'
+                        endIpAddress: '0.0.0.0'
+                    }
+                }
+                </code></pre>
+                <p>⚠️ Other Azure customers can now access your server, if they know username/password.</p>
+
+                <p>👁️ See full example in <code>postgres_azurefirewall.bicep</code></p>
+
+            </section>
+
+            <section>
+                <h3>Conditional child resources: firewall rule</h3>
+
+                <p>Use <code>if</code> to create a firewall rule only if a <code>bool</code> parameter is true:</p>
+
+                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                param allowAllIPsFirewall bool
+
+                resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+                    ...
+
+                    resource firewallAll 'firewallRules' = if (allowAllIPsFirewall) {
+                        name: 'allow-all-IPs'
+                        properties: {
+                            startIpAddress: '0.0.0.0'
+                            endIpAddress: '255.255.255.255'
+                        }
+                    }
+                }
+                </code></pre>
+
+                <p>👁️ See full example in <code>postgres_condfirewall.bicep</code></p>
+            </section>
+
+            <section>
+                <h3>Child resources: firewall rules</h3>
+
+                <p>Use an <code>array</code> and <code>for</code> loop to create rules
+                    for each single IP in a list:</p>
+
+                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                param allowedSingleIPs array = []
+    
+                resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+                    ...
+    
+                    resource firewallSingle 'firewallRules' = [for ip in allowedSingleIPs: {
+                        name: 'allow-single-${replace(ip, '.', '')}'
+                        properties: {
+                            startIpAddress: ip
+                            endIpAddress: ip
+                        }
+                    }]
+                }
+                </code></pre>
+
+                <p>👁️ See full example in <code>postgres_loopfirewall.bicep</code></p>
+                <!-- TODO: Test and make! -->
+
+            </section>
+
+            <section>
+                <h2>Using a Virtual Network</h2>
+            </section>
+
+            <section>
+                <h3>Securing in a VNet</h3>
+
+                <p>As a security best practice, Microsoft recommends that you
+                    deploy your PostgreSQL server in a Virtual Network (VNet),
+                    along with other Azure resources that need access to it.
+                </p>
+
+                <p>That requires multiple resources:</p>
+                <ul>
+                    <li>Virtual Network
+                    <li>Private DNS Zone
+                    <li>Whatever resource needs access to the server
+                </ul>
+            </section>
+
+            <section>
+                <h3>Virtual Network</h3>
+
+                <!-- TODO: minimal Bicep! -->
+                https://github.com/pamelafox/msdocs-flask-postgresql-sample-app-azd/blob/e529c16e86bd4e3e8a1d7b5f3e35c594d3ad3e63/infra/resources.bicep#L17
+            </section>
+
+            <section>
+                <h3>Private DNS Zone</h3>
+
+                <!-- TODO: Make Bicep file -->
+
+                resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+                    name: '${pgServerName}.private.postgres.database.azure.com'
+                    location: 'global'
+                    tags: tags
+
+                    resource privateDnsZoneLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+                        parent: privateDnsZone
+                        name: '${pgServerName}-link'
+                        location: 'global'
+                        properties: {
+                          registrationEnabled: false
+                          virtualNetwork: {
+                            id: virtualNetwork.id
+                          }
+                        }
+                      }
+
+                  }
+                  
+                  
+
+            </section>
+
+            <section>
+                <h3>Provisioning from Bicep</h3>
+
+                <p>Use <code>az deployment sub create</code> to create or update resources in a new resource group:</p>
+                <pre style="white-space: pre-wrap;"><code data-trim data-noescape class="shell">
+                $ az deployment sub create --location eastus --template-file pg.bicep \
+                   --parameters adminPassword=ADMIN_PASSWORD
+                <span class="fragment">{
+                    "name": "postgres_example2",
+                    "properties": {
+                        "outputResources": [{
+                            "id": "/subscriptions/32ea8a26-5b40-4838-b6cb-be5c89a57c16/resourceGroups/cituscon-examples-eastus/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg-srv",
+                            "resourceGroup": "pg-grp"
+                          }],
+                    ...
+                }</span>
+                </code></pre>
+            </section>
+
+
+
+            <section class="heading-only">
+                <h2>Tips & Tricks</h2>
+            </section>
+            
+            <section>
+                <h3>PostgreSQL tips</h3>
+
+                <ul>
+                    <li>Another security tactic is to use managed identity instead of a password
+                        to access the database. See sample at: []
+                    <li>Location, location, location: <br>
+                        There are some location constraints for PostgreSQL servers,
+                        especially for Microsoft employees. If you get a funky error,
+                        try a new location (like "centralus") and try again.
+                    <li>There are many things you can't change after creation:
+                        admin username, PostgreSQL version, location, and more.
+                        Give everything a good look before you start adding production data.
+                </ul>
+                <!-- VNets seem hard to change?-->
+            </section>
+
+            <section>
+                <h3>Bicep linting</h3>
+
+                <p>Use the <code>az bicep build</code> command to check your Bicep file for errors:</p>
+                <pre style="white-space: pre-wrap;"><code data-trim data-noescape class="shell">
+                $ az bicep build pg.bicep
+                <span class="fragment">Bicep file "pg.bicep" is syntactically valid.</span>
+                </code></pre>
+
+                <p>Or use the <code>az bicep lint</code> command to check for errors and warnings:</p>
+                <pre style="white-space: pre-wrap;"><code data-trim data-noescape class="shell">
+                $ az bicep lint pg.bicep
+                <span class="fragment">Bicep file "pg.bicep" is syntactically valid.</span>
+                </code></pre>
+
+                <p>Use a pre-commit hook or CI/CD workflow to always run linting:
+                <a target="_blank" href="">GitHub Action workflow: bicep-lint.yaml</a>
+                <br>🔗 <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app/blob/77e7ac28e0f8ca398554a857e4d78adf055cff8a/.github/workflows/azure-bicep-validate.yaml#LL23C25-L23C59"><code>az bicep build -f infra/main.bicep</code></a>
+                </p>
+            </section>
+            
+            <section>
+                <h3>Bicep security validation</h3>
+
+                <p>Use the Microsoft Security Defender action to check for security issues in Bicep files:</p>
+                 🔗 <a target="_blank" href="https://github.com/tonybaloney/django-on-azure/blob/d4f2b63d6e1b9623c2ecd988cda748130f952547/.github/workflows/azure-dev-validate.yml#L26">microsoft/security-devops-action</a>
+                    
+            </section>
+
+            <section>
+                <h3>More Bicep tips</h3>
+
+                <ul>
+                    <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
+                    <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a>
+                    <li>Search Github for examples
+                    <li>Create the resource in Portal and export the IAC
+                </ul>
+
+                <p>Read more in: <a target="_blank" href="http://blog.pamelafox.org/2023/01/tips-for-writing-bicep-files-for-azure.html">
+                    Tips for writing Bicep files</a>
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script src="terraform.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            highlight: {
+                beforeHighlight: hljs => hljs.registerLanguage('bicep', window.hljsDefineBicep)
+            },
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+
+
+    </script>
+    </body>
+</html>
