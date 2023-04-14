@@ -1,4 +1,4 @@
-param serverName string = 'pg-srv'
+param serverName string = 'pg-srv-params'
 param location string = 'eastus'
 @secure()
 param adminPassword string
@@ -15,4 +15,5 @@ resource srv 'Microsoft.DBforPostgreSQL/flexibleServers@2021-06-01' = {
       administratorLoginPassword: adminPassword
       version: '14'
       storage: { storageSizeGB: 128 }
-}  }
+    }  
+}

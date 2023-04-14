@@ -1,7 +1,7 @@
 param serverName string = 'pg-srv'
 param location string = 'eastus'
-param skuName string = 'Standard_D2s_v3'
-param skuTier string = 'GeneralPurpose'
+param skuName string = 'Standard_B1ms'
+param skuTier string = 'Burstable'
 param adminUsername string = 'myadmin'
 @secure()
 param adminPassword string

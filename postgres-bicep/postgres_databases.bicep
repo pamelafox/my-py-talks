@@ -8,8 +8,8 @@ resource srv 'Microsoft.DBforPostgreSQL/flexibleServers@2021-06-01' = {
   name: serverName
   location: location
   sku: {
-    name: 'Standard_D2s_v3'
-    tier: 'GeneralPurpose'
+    name: 'Standard_B1ms'
+    tier: 'Burstable'
   }
   properties: {
     administratorLogin: 'myadmin'
