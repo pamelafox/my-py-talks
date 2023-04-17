@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
-        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
         <style>
 			.reveal {
@@ -20,26 +20,33 @@
 				font-size: smaller;
 			}
 
-            .slide-number-a {
-                background-color: #747474;
-            }
+      .slide-number-a {
+          background-color: #747474;
+      }
 
-            .reveal section li {
-                margin-bottom: 12px;
-            }
+      .reveal section li {
+          margin-bottom: 12px;
+      }
 
 			.reveal pre {
-				background-color: #f5f5f5;
 				width: 100%;
-				border: 1px solid #ccc;
-				border-radius: 4px;
+				border-left: 2px solid #ccc;
+        border-right: 2px solid #ccc;
 				box-shadow: none;
-                font-size: 18px;
+        font-size: 24px;
 			}
 
-            .reveal code {
-                font-family: "Roboto Mono", monospace;
-            }
+      .reveal pre code {
+        padding: 0px 8px 0px 8px;
+      }
+
+      .reveal .code-badge {
+        right: 10px;
+      }
+
+      .reveal code {
+          font-family: "Roboto Mono", monospace;
+      }
 
 			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
 				font-family: "Roboto", sans-serif;
@@ -51,13 +58,13 @@
 				padding-top:10%;
 			}
 
-            .no-code-badge .code-badge {
-                display: none;
-            }
+      .no-code-badge .code-badge {
+          display: none;
+      }
 
-            .code-badge-language {
-                display: none;
-            }
+      .code-badge-language {
+          display: none;
+      }
 
 			.reveal h3 {
 				margin-bottom: 40px;
@@ -90,12 +97,20 @@
 
 			@media print
 			{
-				.no-print, .no-print *
+				.no-print, .no-print *, .code-badge
 				{
 					display: none !important;
 				}
 			}
 
+      .aka {
+        font-family: "Roboto Mono", monospace;
+        background-color: #1c6192;
+        color: white;
+        padding: 8px;
+        border-radius: 6px;
+        display: inline-block;
+      }
 		</style>
 	</head>
     <body>
@@ -146,16 +161,10 @@
                         <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
                       </tr>
                   </table>
-
-                <!-- image from HS Days -->
-                <!-- image from Google days -->
-                <!-- image from Coursera days - MySQL -->
-                <!-- image from Khan Academy days - NoSQL -->
-                <!-- image from Azure - PostgreSQL -->
             </section>
 
             <section>
-                <h3>PostgreSQL on Azure</h3>
+                <h3>Managed services for PostgreSQL on Azure</h3>
 
                 <style>
                 .fragment.background-green {
@@ -175,32 +184,35 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Single server</td>
+                            <td>Azure Database for PostgreSQL – Single Server</td>
                             <td>Microsoft's original offering. No longer recommended for new apps.</td>
                         </tr>
-                        <tr>
-                            <td>Citus</td>
-                            <td>Microsoft's distributed database offering. Built on PostgreSQL. Can scale horizontally.
-                                Built in pgBouncer.
-                            </td>
-                        </tr>
                         <tr class="fragment custom background-green">
-                            <td>Flexible server</td>
-                            <td>Microsoft's most recent PostgreSQL offering. Fully managed service that can scale.
-                                Built in pgBouncer.
+                            <td>Azure Database for PostgreSQL – Flexible Server</td>
+                            <td>Microsoft's most recent PostgreSQL offering. Fully managed service with vertical scaling.
                             </td>
                         </tr>
+                        <tr>
+                          <td>Azure Cosmos DB for PostgreSQL</td>
+                          <td>Distributed database using PostgreSQL and the Citus extension. Can scale horizontally.
+                          </td>
+                      </tr>
                     </tbody>
                 </table>
 
-                <p class="smaller"><a target="_blank" href="https://techcommunity.microsoft.com/t5/fasttrack-for-azure/comparison-azure-postgresql-single-server-flexible-server/ba-p/3474966">📖 Comparison of PostgreSQL offerings</a>
+                <p class="smaller">
+                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compare-single-server-flexible-server">
+                      <span class="aka"> 🔗 aka.ms/flex-vs-single</span>
+                      Comparison: Flexible vs. Single Server </a>
                    <br>
-                   <a target="_blank" href="https://devblogs.microsoft.com/cosmosdb/azure-cosmos-db-for-postgresql-vs-azure-database-for-postgresql-when-to-choose-which/">📖 Azure Cosmos DB for PostgreSQL vs. Azure Database for PostgreSQL: When to choose which</a>
+                   <a target="_blank" href="https://devblogs.microsoft.com/cosmosdb/azure-cosmos-db-for-postgresql-vs-azure-database-for-postgresql-when-to-choose-which/">
+                    <span class="aka" style="margin-top: 16px;"> 🔗 aka.ms/flex-vs-cosmos</span>
+                    Cosmos DB for PostgreSQL vs. Flex Server </a>
                 </p>
             </section>
 
             <section class="heading-only">
-                <h2>Ways to deploy<br> a PostgreSQL server</h2>
+                <h2>Ways to deploy<br> a PostgreSQL Flexible Server</h2>
 
                 <img src="../media/BIT_COWORKING.png" alt="Three raccoons with laptops" height="300">
             </section>
@@ -208,7 +220,7 @@
             <section>
                 <h3>Using the Azure Portal</h3>
 
-                <img src="screenshot_azureportal.png" alt="Azure portal screenshot" height="400" style="border:1px solid #ddd"/>
+                <img src="screenshot_azureportal.png" alt="Azure portal screenshot" style="border:1px solid #ddd"/>
     
                 <p class="fragment">😃 Easy to get started 😭 but difficult to replicate.</p>
                 <!-- 
@@ -231,9 +243,10 @@
                       <tr>
                         <td>Azure CLI</td>
                         <td>
-                            <pre style="font-size:20px"><code data-trim data-noescape class="shell">
-                        az postgres flexible-server create --resource-group pg-grp --name pg-srv \
-                            --location westus --sku-name GP_Gen5_2 --version 14 \
+                            <pre><code data-trim data-noescape class="shell">
+                        az postgres flexible-server create --resource-group pg-grp \
+                            --name pg-srv --location westus \
+                            --sku-name GP_Gen5_2 --version 14 \
                             --admin-user myadmin --admin-password NeverShowThis
                             </code></pre>
                         </td>
@@ -241,9 +254,10 @@
                       <tr>
                         <td>Azure PowerShell</td>
                         <td>
-                            <pre style="font-size:20px"><code data-trim data-noescape class="shell">
-                        New-AzPostgreSqlFlexibleServer -ResourceGroupName pg-grp -ServerName pg-srv \
-                            -Location westus -SkuName GP_Gen5_2 -Version 14 \
+                            <pre><code data-trim data-noescape class="shell">
+                        New-AzPostgreSqlFlexibleServer -ResourceGroupName pg-grp \
+                            -ServerName pg-srv -Location westus \
+                            -SkuName GP_Gen5_2 -Version 14 \
                             -AdministratorLogin myadmin -AdministratorLoginPassword NeverShowThis
                             </code></pre>
                         </td>
@@ -263,7 +277,7 @@
                     the resources you want to create.
                 </p>
 
-                <pre style="font-size:20px; height: 260px; overflow-y: scroll;"><code data-trim data-noescape class="shell">
+                <pre style="height: 260px; overflow-y: scroll;"><code data-trim data-noescape class="shell">
                 {
                     "type": "Microsoft.DBforPostgreSQL/flexibleServers",
                     "apiVersion": "2021-06-01",
@@ -297,9 +311,9 @@
             <section>
                 <h3>Using Bicep</h3>
 
-                <p><strong>Bicep</strong> is a DSL (domain-specific language) that compiles down to ARM templates.</p>
+                <p><strong>Bicep</strong> is a DSL (domain-specific language) that compiles to ARM templates.</p>
 
-                <pre><code data-trim data-noescape class="bicep">
+                <pre style="height:475px;"><code data-trim data-noescape class="bicep">
                     resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2021-06-01' = {
                         name: 'pg-srv'
                         location: 'eastus'
@@ -322,7 +336,7 @@
             <section>
                 <h3>The Bicep language</h3>
 
-                <table>
+                <table style="margin:0">
                     <thead>
                       <tr>
                         <th>Feature</th>
@@ -332,39 +346,43 @@
                     <tbody>
                       <tr>
                         <td style="width:270px;">Parameters</td>
-                        <td><pre style="margin:0; width: 600px;"><code class="bicep">param location string = 'eastus'</code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0; width: 800px;" class="no-code-badge"><code class="bicep">param location string = 'eastus'</code></pre></td>
                       </tr>
                       <tr>
                         <td>Types</td>
-                        <td><pre style="margin:0"><code class="bicep">param storageSizeGB int = 128</code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0" class="no-code-badge"><code class="bicep">param storageSizeGB int = 128</code></pre></td>
                       </tr>
                       <tr>
                         <td>Logic</td>
-                        <td><pre style="margin:0"><code class="bicep">skuTier == 'Burstable' ? 32 : 128</code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0" class="no-code-badge"><code class="bicep">skuTier == 'Burstable' ? 32 : 128</code></pre></td>
                       </tr>
                       <tr>
                         <td>Loops</td>
-                        <td><pre style="margin:0"><code class="bicep">for i in range(0, serverCount):</code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0" class="no-code-badge"><code class="bicep">for i in range(0, serverCount):</code></pre></td>
                       </tr>
                       <tr>
                         <td>Functions</td>
-                        <td><pre style="margin:0"><code class="bicep">param adminUsername string = newGuid()    </code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0" class="no-code-badge"><code class="bicep">param adminUsername string = newGuid()    </code></pre></td>
                       </tr>
                       <tr>
                         <td>Modules</td>
-                        <td><pre style="margin:0"><code class="bicep">module myServer 'flexserver.bicep' { }   </code></pre></td>
+                        <td><pre style="font-size: 26px; margin:0" class="no-code-badge"><code class="bicep">module myServer 'flexserver.bicep' { }   </code></pre></td>
                       </tr>
                     </tbody>
                   </table>
 
-                  <p class="smaller"><a target="_blank" href="https://docs.microsoft.com/azure/azure-resource-manager/bicep/file">📖 Learn more about Bicep</a></p>
+                  <p class="smaller">
+                    <a target="_blank" href="https://docs.microsoft.com/azure/azure-resource-manager/bicep/file">
+                      <span class="aka"> 🔗 aka.ms/bicep-syntax</span>
+                      Bicep file structure & syntax
+                  </a></p>
             </section>
 
             <section>
                 <h3>A parameterized Bicep file</h3>
 
                 <p>Use <strong>parameters</strong> for values that vary across deployments.</p>
-                <pre style="font-size: 20px; height:450px;"><code data-trim data-noescape class="bicep">
+                <pre style="font-size: 22px; height:520px;"><code data-trim data-noescape class="bicep">
                     param serverName string = 'pg-srv'
                     param location string = 'eastus'
                     @secure()
@@ -392,7 +410,7 @@
                 <h3>Deploying from Bicep</h3>
 
                 <p>Use <code>az deployment group create</code> to create or update resources in an existing resource group:</p>
-                <pre style="white-space: pre-wrap;"><code data-trim data-noescape data-line-numbers="1|2|3-11" class="shell">
+                <pre style="white-space: pre-wrap;" class="no-code-badge"><code data-trim data-noescape data-line-numbers="1|2|3-11" class="shell">
                 $ az deployment group create --resource-group pg-grp --template-file pg.bicep
                 Please provide securestring value for 'adminPassword' (? for help):
                 {
@@ -418,8 +436,8 @@
             <section>
                 <h3>Deploying from Bicep (Result)</h3>
 
-                <p>The server will be available in the Azure Portal:</p>
-                <img src="screenshot_azureportal_pg.png" alt="Screenshot of Portal overview page for server">
+                <p style="margin-bottom: 0px;">The server will be available in the Azure Portal:</p>
+                <img src="screenshot_azureportal_pg.png" alt="Screenshot of Portal overview page for server" style="border: 1px solid #ccc; height: 500px;">
             </section>
 
             <section>
@@ -449,7 +467,7 @@
                     plus system databases <code>azure_maintenance</code>, <code>azure_sys</code>.</p>
 
                 <p>Create an additional database:</p>
-                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                <pre><code data-trim data-noescape class="bicep">
                 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
                     name: serverName
                     location: location
@@ -470,7 +488,7 @@
                 
                 <p>Create multiple databases with an <code>array</code> and <code>for</code> loop:</p>
 
-                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                <pre><code data-trim data-noescape class="bicep">
                 param databaseNames array = ['webapp', 'analytics']
 
                 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
@@ -491,8 +509,8 @@
             <section>
                 <h3>Child resources: databases (Result)</h3>
 
-                <p>The databases will be listed in the Azure Portal:</p>
-                <img src="screenshot_azureportal_dbs.png" alt="Screenshot of Databases page of PostgreSQL server" style="border: 1px solid #ccc;">
+                <p style="margin-bottom: 0px;">The databases will be listed in the Azure Portal:</p>
+                <img src="screenshot_azureportal_dbs.png" alt="Screenshot of Databases page of PostgreSQL server" style="border: 1px solid #ccc; height: 500px;">
             </section>
 
             <section>
@@ -504,7 +522,7 @@
 
                 <p>Allow access from any Azure service within Azure:</p>
 
-                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                <pre><code data-trim data-noescape class="bicep">
                 resource firewallAzure 'firewallRules' = {
                     name: 'allow-all-azure-internal-IPs'
                     properties: {
@@ -519,12 +537,12 @@
 
             </section>
 
-            <section>
+            <section data-visibility="hidden">
                 <h3>Conditional child resources: firewall rule</h3>
 
                 <p>Conditionally create a rule using <code>if</code> with a <code>bool</code> param:</p>
 
-                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                <pre><code data-trim data-noescape class="bicep">
                 param allowAllIPsFirewall bool
 
                 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
@@ -548,7 +566,7 @@
 
                 <p>Create rules for each IP in list using <code>array</code> with <code>for</code>:</p>
 
-                <pre style="font-size: 22px;"><code data-trim data-noescape class="bicep">
+                <pre><code data-trim data-noescape class="bicep">
                 param allowedSingleIPs array = ['103.64.88.254', '44.143.22.28']
     
                 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
@@ -569,9 +587,8 @@
             <section>
                 <h3>Child resources: firewall rules (Result)</h3>
 
-                <p>The firewall rules will be listed in the Azure Portal:</p>
-
-                <img src="screenshot_azureportal_firewalls.png" alt="Screenshot of Networking page of PostgreSQL server" style="border: 1px solid #ccc;">
+                <p style="margin-bottom: 0px;">The firewall rules will be listed in the Azure Portal:</p>
+                <img src="screenshot_azureportal_firewalls.png" alt="Screenshot of Networking page of PostgreSQL server" style="border: 1px solid #ccc; height: 500px;">
             </section>
 
             <section class="heading-only">
@@ -585,9 +602,8 @@
                     deploying PostgreSQL servers in a <strong>Virtual Network (VNet)</strong>,
                     along with other Azure resources that need access to it.
                 </p>
-
-                <p>That requires multiple resources:</p>
                 <img src="postgres_vnet.png" style="float:right; width:50%">
+                <p>That requires multiple resources:</p>
                 <ul style="width:40%">
                     <li>Virtual Network
                     <li>Private DNS Zone
@@ -633,15 +649,15 @@
                               properties: {
                                 serviceName: 'Microsoft.DBforPostgreSQL/flexibleServers'
                               }
-                            }
-                          ]
+                            }]
                         }
                       }
                 </code></pre>
 
                 <p class="smaller">
                     <a target="_blank" href="https://techcommunity.microsoft.com/t5/itops-talk-blog/configuring-azure-virtual-network-subnets-with-cidr-notation/ba-p/2047809">
-                    📖 Learn more: Configuring Azure VNet subnets with CIDR notation
+                      <span class="aka"> 🔗 aka.ms/vnet-cidr</span>
+                      Configuring Azure VNet subnets with CIDR notation
                     </a>
                 </p>
             </section>
@@ -662,54 +678,56 @@
                             properties: {
                             serviceName: 'Microsoft.Web/serverFarms'
                             }
-                        }
-                        ]
+                        }]
                     }
                 }
                 </code></pre>
 
                 <p class="smaller">
-                    <a target="_blank" href="https://techcommunity.microsoft.com/t5/itops-talk-blog/configuring-azure-virtual-network-subnets-with-cidr-notation/ba-p/2047809">
-                    📖 Learn more: Configuring Azure VNet subnets with CIDR notation
-                    </a>
+                  <a target="_blank" href="https://techcommunity.microsoft.com/t5/itops-talk-blog/configuring-azure-virtual-network-subnets-with-cidr-notation/ba-p/2047809">
+                    <span class="aka"> 🔗 aka.ms/vnet-cidr</span>
+                    Configuring Azure VNet subnets with CIDR notation
+                  </a>
                 </p>
             </section>
 
             <section>
                 <h3>Private DNS Zone</h3>
 
-                <p>To enable App Service to access the PostgreSQL server,
-                    create a private DNS Zone with a name that ends in
-                    'postgres.database.azure.com' and link to VNet:
+                <p>To let other service access the PostgreSQL server,
+                    create a private DNS Zone:
                 </p>
 
                 <pre><code data-trim data-noescape class="bicep">
                 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2020-06-01' = {
                     <strong>name: '${pgServerPrefix}.private.postgres.database.azure.com'</strong>
                     location: 'global'
-
                     resource vNetLink 'virtualNetworkLinks' = {
                         name: '${pgServerPrefix}-link'
                         location: 'global'
                         properties: {
                           registrationEnabled: false
-                          virtualNetwork: {
-                            id: virtualNetwork.id
-                          }
+                          virtualNetwork: { id: virtualNetwork.id }
                         }
                     }
                 }
                 </code></pre>
-                
-                <p class="smaller">📖 Learn more:
-                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/dns/private-dns-overview">What is Azure Private DNS?</a>
-                    <br>
-                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-networking#private-dns-zone-and-virtual-network-peering">PostgreSQL networking: Private DNS Zone and VNets</a>
+
+                <p class="smaller">
+                  <a target="_blank" href="https://learn.microsoft.com/azure/dns/private-dns-overview">
+                    <span class="aka"> 🔗 aka.ms/private-dns</span>
+                    What is Azure Private DNS?
+                  </a>
+                  <br>
+                  <a target="_blank" href="https://learn.microsoft.com/azure/postgresql/flexible-server/concepts-networking#private-dns-zone-and-virtual-network-peering">
+                    <span class="aka" style="margin-top: 16px;"> 🔗 aka.ms/pg-vnet-dns</span>
+                    PostgreSQL networking: Private DNS Zone and VNets
+                  </a>
                 </p>
             </section>
 
             <section>
-                <h3>Configure the PG server</h3>
+                <h3>Configure the PostgreSQL server</h3>
 
                 <p>Add the <code>network</code> property on the PostgreSQL server to inject it into the VNet and 
                     connect it to the DNS Zone:</p>
@@ -749,7 +767,7 @@
             </section>
             
             <section>
-                <h3>All together: PG in VNet</h3>
+                <h3>All together: PostgreSQL in VNet</h3>
 
                 <!-- screenshot of portal resources -->
                 <!-- diagram of interaction like https://learn.microsoft.com/en-us/azure/dns/private-dns-overview ? -->
@@ -892,8 +910,8 @@
 
 
             <section>
-                <h3>All together: PG in VNet (Result)</h3>
-                <p>All resources will be listed in the Portal:</p>
+                <h3>All together: PostgreSQL in VNet (Result)</h3>
+                <p style="margin-bottom: 0px;">All resources will be listed in the Portal:</p>
                 <img src="screenshot_azureportal_vnet.png" screenshot="Screenshot of all resources in Azure Portal: VNet, DNS Zone, PostgreSQL server, App Service" style="border:1px solid #ccc;">
             </section>
 
@@ -950,7 +968,7 @@
             <section>
                 <h3>Bicep security validation</h3>
 
-                <p>Use the <a target="_blank" href="https://github.com/microsoft/security-devops-action">Microsoft Security DevOps action</a> to check for security issues in Bicep files:</p>
+                <p>Use <a target="_blank" href="https://github.com/microsoft/security-devops-action">Microsoft Security DevOps action</a> to find security issues in Bicep files:</p>
 
                 <pre><code data-trim data-noescape class="yaml">
                 - name: Run Microsoft Security DevOps Analysis
@@ -960,6 +978,7 @@
                     tools: templateanalyzer
                 </code></pre>
 
+                <p class="padded">Example output:</p>
                 <pre style="white-space:normal"><code data-trim data-noescape class="text">
                 Error:      1. TemplateAnalyzer Error AZR-000284 - File: infra/main.bicep. Line: 54. Column 0. 
                 Tool: TemplateAnalyzer: Rule: AZR-000284 (Azure.Deployment.AdminUsername).
@@ -978,14 +997,19 @@
 
                 <ul>
                     <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
-                    <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a>
-                    <li>Search Github for examples
+                      <br>
+                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0vupCxhnmlq8fw9yee07f60VDJ4Sj5OacTHtuXR_kY35k--sYusG4vJ1bw9FnsaOFi7uQoAJkV79mTB3LhwNHZ36yovxcy16KeNbU81r39A7T1dmM3XaVLVMCSFptEfStbpsEjHd5ibuSsJUawZUSKUtNKAJyG2E6cShGTkVtu0KrO5KCsigrP8w/s1600/Screenshot%202023-01-13%20at%202.59.36%20PM.png" alt="Screenshot of Bicep extension erroring on dead code" style="border: 1px solid #ccc; height: 200px; ">
+
+                    <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a> (and keep it open)
+                    <li>Search Github for examples using "lang:bicep"
                     <li>Create the resource in Portal and export the template
-                    <li>Let us know if you have questions!
                 </ul>
 
-                <p>📖 Learn more: <a target="_blank" href="http://blog.pamelafox.org/2023/01/tips-for-writing-bicep-files-for-azure.html">
-                    Tips for writing Bicep files</a>
+                <p class="smaller">
+                  <a target="_blank" href="https://blog.pamelafox.org/2023/01/tips-for-writing-bicep-files-for-azure.html">
+                    <span class="aka"> 🔗 aka.ms/bicep-tips</span>
+                    Tips for writing Bicep files
+                  </a>
                 </p>
             </section>
 
