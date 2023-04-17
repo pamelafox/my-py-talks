@@ -118,10 +118,11 @@
         <div class="slides">
 
             <section class="heading-only" style="padding-top:5%">
-                <h1 style="font-size:2.5em;">Deploying PostgreSQL to Azure with Bicep
+                <img src="cartoon_title.png" alt="An elephant lifting a cloud with an elephant on it" height="600" style="float:left; margin-right: 20px;">
+
+                <h1 style="font-size:2.5em; text-align: left;">Deploying PostgreSQL to Azure with Bicep
                 </h1>
 
-                <img src="../media/BIT_AZURE.png" alt="Raccoon in the clouds" height="300">
 
                 <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%; display:none;">
                     Tips for navigating the slides:
@@ -212,7 +213,7 @@
             <section class="heading-only">
                 <h2>Ways to deploy<br> a PostgreSQL Flexible Server</h2>
 
-                <img src="../media/BIT_COWORKING.png" alt="Three raccoons with laptops" height="300">
+                <img src="cartoon_deploying.png" alt="An elephant emerging from a cannon" height="300">
             </section>
 
             <section>
@@ -302,7 +303,7 @@
             <section class="heading-only">
                 <h2>Bicep</h2>
 
-                <img src="../media/DATA_BIT.png" alt="Bit the raccoon, dressed as Neo from Matrix" height="300"/>
+                <img src="cartoon_biceps.png" alt="An elephant standing upright, flexing their biceps" height="300"/>
             </section>
             
 
@@ -407,23 +408,32 @@
             <section>
                 <h3>Deploying from Bicep</h3>
 
+                <style>
+                .reveal .hljs.has-highlights tr:not(.highlight-line) {
+                    opacity: .7;
+                }
+                .reveal .hljs.has-highlights tr.highlight-line {
+                    background-color: rgb(9, 255, 9);
+                }
+                </style>
                 <p>Use <code>az deployment group create</code> to create or update resources in an existing resource group:</p>
-                <pre style="white-space: pre-wrap;" class="no-code-badge"><code data-trim data-noescape data-line-numbers="1|2|3-11" class="shell">
+                <pre style="white-space: pre-wrap; margin-top: 0px; margin-bottom: 0px;" class="no-code-badge fragment"><code data-trim data-noescape class="shell">
                 $ az deployment group create --resource-group pg-grp --template-file pg.bicep
+                </code></pre>
+                <pre style="white-space: pre-wrap; margin-top: 0px; margin-bottom: 0px;" class="no-code-badge fragment"><code data-trim data-noescape class="shell">
                 Please provide securestring value for 'adminPassword' (? for help):
-                {
-                    "name": "postgres_example1",
+                </code></pre>
+                <pre style="white-space: pre-wrap; margin-top: 0px; margin-bottom: 0px;" class="no-code-badge fragment"><code data-trim data-noescape class="shell">
+                {   "name": "postgres_example1",
                     "properties": {
                         "outputResources": [{
                             "id": "/subscriptions/32ea8a26-5b40-4838-b6cb-be5c89a57c16/resourceGroups/cituscon-examples-eastus/providers/Microsoft.DBforPostgreSQL/flexibleServers/pg-srv",
                             "resourceGroup": "pg-grp"
-                          }],
-                    ...
-                }
+                          }], ...
                 </code></pre>
 
                 <div class="fragment">
-                <p>Optionally, specify parameters on the command line:</p>
+                <p class="padded">Optionally, specify parameters on the command line:</p>
                 <pre><code data-trim data-noescape class="shell">
                 $ az deployment group create --resource-group pg-grp --template-file pg.bicep \
                    --parameters adminPassword=ADMIN_PASSWORD
@@ -434,15 +444,13 @@
             <section>
                 <h3>Deploying from Bicep (Result)</h3>
 
-                <p style="margin-bottom: 0px;">The server will be available in the Azure Portal:</p>
-                <img src="screenshot_azureportal_pg.png" alt="Screenshot of Portal overview page for server" style="border: 1px solid #ccc; height: 500px;">
+                <img src="screenshot_azureportal_pg.png" alt="Screenshot of Portal overview page for server" style="border: 1px solid #ccc; height: 550px;">
             </section>
 
             <section>
                 <h3>Child resources</h3>
 
-                <p>A <a target="_blank" href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/child-resource-name-type">
-                    <strong>child resource</strong></a>
+                <p>A <strong>child resource</strong>
                    exists solely within the scope of its parent resource.</p>
 
                 <p>Child resources that can be created for PostgreSQL:</p>
@@ -507,8 +515,7 @@
             <section>
                 <h3>Child resources: databases (Result)</h3>
 
-                <p style="margin-bottom: 0px;">The databases will be listed in the Azure Portal:</p>
-                <img src="screenshot_azureportal_dbs.png" alt="Screenshot of Databases page of PostgreSQL server" style="border: 1px solid #ccc; height: 500px;">
+                <img src="screenshot_azureportal_dbs.png" alt="Screenshot of Databases page of PostgreSQL server" style="border: 1px solid #ccc; height: 540px;" >
             </section>
 
             <section>
@@ -585,12 +592,13 @@
             <section>
                 <h3>Child resources: firewall rules (Result)</h3>
 
-                <p style="margin-bottom: 0px;">The firewall rules will be listed in the Azure Portal:</p>
-                <img src="screenshot_azureportal_firewalls.png" alt="Screenshot of Networking page of PostgreSQL server" style="border: 1px solid #ccc; height: 500px;">
+                <img src="screenshot_azureportal_firewalls.png" alt="Screenshot of Networking page of PostgreSQL server" style="border: 1px solid #ccc; height: 520px;">
             </section>
 
             <section class="heading-only">
-                <h2>Using a Virtual Network</h2>
+                <h2>Adding a Virtual Network</h2>
+
+                <img src="cartoon_pg_vnet.png" alt="An elephant and a Python inside a net" style="height: 400px;">
             </section>
 
             <section>
@@ -909,14 +917,13 @@
 
             <section>
                 <h3>All together: PostgreSQL in VNet (Result)</h3>
-                <p style="margin-bottom: 0px;">All resources will be listed in the Portal:</p>
                 <img src="screenshot_azureportal_vnet.png" screenshot="Screenshot of all resources in Azure Portal: VNet, DNS Zone, PostgreSQL server, App Service" style="border:1px solid #ccc;">
             </section>
 
             <section class="heading-only">
                 <h2>Tips & Tricks</h2>
 
-                <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit the raccoon as a public speaker" height="300"/>
+                <img src="cartoon_pg_tipstricks.png" alt="An elephant with a clipboard" height="300"/>
             </section>
             
             <section>
@@ -1019,7 +1026,7 @@
               <p>Grab the slides @ <span class="aka">aka.ms/postgres-bicep-slides</span> </p>
               
               <p>Find me online at:</p>
-              <table style="width:40%; float: left; font-size:28px;">
+              <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
                   <tr>
                     <td>Mastodon
                     <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
@@ -1037,8 +1044,8 @@
                       <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
                   </tr>
               </table>
-              
-              <p style="clear:left">Let me know about your experiences with PostgreSQL and Bicep!</p>
+              <br>
+              <p style="clear:both; margin-top: 30px;">Let me know about your experiences with PostgreSQL and Bicep!</p>
               
             </section>
 
