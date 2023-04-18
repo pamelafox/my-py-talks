@@ -95,12 +95,25 @@
                 margin: 10px;
             }
 
+      .reveal pre.overflow-in-print {
+        height: 400px;
+        overflow-y: scroll;
+      }
+      .print-pdf .reveal pre.overflow-in-print {
+        height: auto;
+        overflow-y: visible;
+      }
+
 			@media print
 			{
-				.no-print, .no-print *, .code-badge
+				.no-print, .no-print *, .code-badge, .slide-menu-button
 				{
 					display: none !important;
 				}
+        .reveal pre.overflow-in-print {
+          height: 2000px;
+          overflow-y: visible;
+        }
 			}
 
       .aka {
@@ -118,7 +131,7 @@
         <div class="slides">
 
             <section class="heading-only" style="padding-top:5%">
-                <img src="cartoon_title.png" alt="An elephant lifting a cloud with an elephant on it" height="600" style="float:left; margin-right: 20px;">
+                <img src="cartoon_title.png" alt="An elephant lifting a cloud with an elephant on it" height="500" style="border: 0px; float:left; margin-right: 20px;">
 
                 <h1 style="font-size:2.5em; text-align: left;">Deploying PostgreSQL to Azure with Bicep
                 </h1>
@@ -775,9 +788,8 @@
             <section>
                 <h3>All together: PostgreSQL in VNet</h3>
 
-                <!-- screenshot of portal resources -->
-                <!-- diagram of interaction like https://learn.microsoft.com/en-us/azure/dns/private-dns-overview ? -->
-                <pre style="height:400px; overflow-y:scroll"><code data-trim data-noescape class="bicep">
+                <!-- TODO? diagram of interaction like https://learn.microsoft.com/en-us/azure/dns/private-dns-overview ? -->
+                <pre class="overflow-in-print"><code data-trim data-noescape class="bicep">
                     param name string = 'pgvnet4'
                     param location string = 'eastus'
                     @secure()
@@ -914,7 +926,6 @@
 
             </section>
 
-
             <section>
                 <h3>All together: PostgreSQL in VNet (Result)</h3>
                 <img src="screenshot_azureportal_vnet.png" screenshot="Screenshot of all resources in Azure Portal: VNet, DNS Zone, PostgreSQL server, App Service" style="border:1px solid #ccc;">
@@ -944,6 +955,18 @@
                         Give everything a good look before you start adding production data.
                 </ul>
 
+            </section>
+
+            <section>
+              <h3>Bicep extension for VS Code</h3>
+              <p>Install the Bicep extension for syntax highlighting, auto-complete, and more.</p>
+
+              <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0vupCxhnmlq8fw9yee07f60VDJ4Sj5OacTHtuXR_kY35k--sYusG4vJ1bw9FnsaOFi7uQoAJkV79mTB3LhwNHZ36yovxcy16KeNbU81r39A7T1dmM3XaVLVMCSFptEfStbpsEjHd5ibuSsJUawZUSKUtNKAJyG2E6cShGTkVtu0KrO5KCsigrP8w/s1600/Screenshot%202023-01-13%20at%202.59.36%20PM.png" alt="Screenshot of Bicep extension erroring on dead code" style="border: 1px solid #ccc; height: 350px; ">
+
+              <p>
+                <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">
+                <span class="aka">🔗 aka.ms/bicep-extension</span> Bicep extension for VS Code</a>
+              </p>
             </section>
 
             <section>
@@ -998,13 +1021,25 @@
             </section>
 
             <section>
+              <h3>AZD templates</h3>
+
+              <p>You can use Bicep to create <em>all</em> of your Azure resources,
+                and use the <strong>Azure Developer CLI</strong> to take care of the whole deployment workflow.</p>
+
+              <p style="margin-bottom:0px">Find app templates that use PostgreSQL in the AZD templates gallery:</p>
+              
+              <img src="screenshot_azdpostgres.png" screenshot="Screenshot of AZD templates gallery: PostgreSQL" style="border:1px solid #ccc; height:300px;">
+              <p style="margin-top:0px">
+                <a target="_blank" href="https://azure.github.io/awesome-azd/?operator=AND&tags=azuredb-postgreSQL">
+                <span class="aka">aka.ms/azd-pg</span>
+                AZD templates: PostgreSQL
+                </a>
+            </section>
+
+            <section>
                 <h3>More Bicep tips</h3>
 
                 <ul>
-                    <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
-                      <br>
-                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0vupCxhnmlq8fw9yee07f60VDJ4Sj5OacTHtuXR_kY35k--sYusG4vJ1bw9FnsaOFi7uQoAJkV79mTB3LhwNHZ36yovxcy16KeNbU81r39A7T1dmM3XaVLVMCSFptEfStbpsEjHd5ibuSsJUawZUSKUtNKAJyG2E6cShGTkVtu0KrO5KCsigrP8w/s1600/Screenshot%202023-01-13%20at%202.59.36%20PM.png" alt="Screenshot of Bicep extension erroring on dead code" style="border: 1px solid #ccc; height: 200px; ">
-
                     <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a> (and keep it open)
                     <li>Search Github for examples using "lang:bicep"
                     <li>Create the resource in Portal and export the template
