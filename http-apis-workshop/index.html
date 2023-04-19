@@ -139,31 +139,59 @@
                 <h3>Today's topics</h3>
 
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
-                <ul style="margin-top:20px; font-size:44px; line-height: 2em;">
+                <ul style="margin-top:20px; font-size:34px; line-height: 1.5em;">
                     <li>(Review) HTTP
+                    <li>What are HTTP APIs?
+                        <ul>
+                            <li>👩🏾‍💻 Exercise: Play with APIs
+                        </ul>
                     <li>Building HTTP APIs
                         <ul>
                             <li>Flask
                             <li>FastAPI
+                            <li>👩🏼‍💻 Exercise: Build an API
                         </ul>
                     <li>Hosting HTTP APIs on Azure
+                        <ul>
+                            <li>👩🏻‍💻 Exercise: Deploy an API
+                        </ul>
                 </ul>
             </section>
 
             <section>
-                <h3>Prerequisites</h3>
+                <h3>GitHub Codespaces</h3>
 
-                <p>Online development: <a target="_blank" href="https://github.com/signup">Github account</a></p>
+                <p>Codespaces is an online development environment.</p>
 
-                <p>Local development:</p>
+                <p class="smaller">Open a GitHub repo in Codespaces by clicking <strong>Code</strong> button,
+                    selecting <strong>Codespaces</strong> tab, and
+                    clicking <strong>Create codespace on main</strong>.</p>
+
+                <p class="smaller" style="float:right; text-align: left; width: 600px;">Then wait patiently... ☺️</p>
+                <img src="screenshot_codespacetab.png" alt="Screenshot of Codespace tab" style="border: 1px solid #ccc; height: 300px; float:left;">
+
+                <p class="smaller" style="clear:both">60 hours of free usage each month. 
+                 <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/how-to-optimize-your-codespaces-pro-tips-for-managing-quotas/ba-p/3712032">🔗 Tips for optimizing quotas</a></p>
+            </section>
+
+
+            <section>
+                <h3>Exercise requirements</h3>
+
+                <p>Option 1: Online development with Codespaces 
                 <ul>
+                    <li><a target="_blank" href="https://github.com/signup">Github account</a></p>
+                </ul>
+
+                <p class="padded">Option 3: Local development with VS Code</p>
+                <ul style="line-height:1.1em;">
                     <li><a target="_blank" href="https://code.visualstudio.com/Download">Visual Studio Code</a></li>
                     <li><a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers extension</a></li>
                     <li><a target="_blank" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></li>
                 </ul>
 
-                <p>Local development (option 2):</p>
-                <ul>
+                <p class="padded">Option 3: Local development</p>
+                <ul style="line-height:1.1em;">
                     <li>Code editor</li>
                     <li><a target="_blank" href="https://www.python.org/downloads/">Python 3</a></li>
                 </ul>
@@ -183,8 +211,8 @@
                 Host: www.example.com
                 </code></pre>
 
-                <p>The server sends back an HTTP response:</p>
-                <pre style="font-size:0.7em; margin-top: 0px;"><code data-trim data-noescape class="html">
+                <p class="padded">The server sends back an HTTP response:</p>
+                <pre style="font-size:0.6em; margin-top: 0px;"><code data-trim data-noescape class="html">
                 HTTP/1.1 200 OK
                 Content-Type: text/html; charset=UTF-8
                 Content-Length: 208
@@ -313,7 +341,7 @@
                 <h2>Building an HTTP API<br>
                 ...in Python!</h2>
 
-                <img src="../media/BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" width="400">
+                <img src="../media/BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" height="300">
 
             </section>
 
@@ -394,19 +422,17 @@
 
                 <ul>
                     <li>Fast to build <em>and</em> fast to execute
-                    <li>Relies on Python types (via <a target="_blank" href="https://pydantic-docs.helpmanual.io/">Pydantic</a>)
-                    <li>Auto-generated documentation
-                    <li>Based on the <a target="_blank" href="https://github.com/OAI/OpenAPI-Specification">
-                OpenAPI</a> specification.
+                    <li>Relies on <a target="_blank" href="https://docs.python.org/3/library/typing.html">Python types</a> (via <a target="_blank" href="https://pydantic-docs.helpmanual.io/">Pydantic</a>)
+                    <li>Auto-generated documentation (via <a target="_blank" href="https://github.com/swagger-api/swagger-ui">Swagger-UI</a>)
+                    <li>Based on the <a target="_blank" href="https://github.com/OAI/OpenAPI-Specification"> OpenAPI</a> specification.
                 </ul>
             </section>
 
             <section>
                 <h3>A parameterized API in FastAPI</h3>
 
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                <pre style="font-size:0.6em;"><code data-trim data-noescape class="python">
                 import random
-
                 import fastapi
 
                 app = fastapi.FastAPI()
@@ -416,6 +442,8 @@
                     names = ["Minnie", "Margaret", "Myrtle", "Noa", "Nadia"]
                     if starts_with:
                         names = [n for n in names if n.lower().startswith(starts_with)]
+                    if len(names) == 0:
+                        raise fastapi.HTTPException(status_code=404, detail="No name found")
                     random_name = random.choice(names)
                     return {"name": random_name}
                 </code></pre>
@@ -430,6 +458,7 @@
 
                 <aside class="speaker-notes">Notice: params type/default, async, auto-JSON, docs</a>
             </section>
+
 
             <section>
                 <h3>Running FastAPI locally</h3>
@@ -454,6 +483,8 @@
 
             </section>
 
+
+
             <section>
                 <h3>Exercise: Make an API</h3>
 
@@ -474,34 +505,6 @@
                 <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
-            <section>
-                <h3>Demo: Regression Model API</h3>
-
-                <p>A parameterized API based on a <code>sklearn</code> model.</p>
-
-                <pre style="font-size:0.6em;"><code data-trim data-noescape class="python">
-                model = joblib.load(f"{os.path.dirname(os.path.realpath(__file__))}/model.pkl")
-
-                @app.get("/model_predict")
-                async def model_predict(
-                    years_code: int,
-                    years_code_pro: int,
-                    ed_level: categories.EdLevel,
-                    main_branch: categories.MainBranch,
-                    country: categories.Country):
-                    X_new = numpy.array([[years_code, years_code_pro, ed_level.value, main_branch.value, country.value]])
-                    result = model.predict(X_new)
-                    return {"prediction": result[0]}
-                </code></pre>
-
-                <p>
-                    👀 Demo: 
-                    <a target="_blank" href="https://salary-model2-sibqf23ha7ib2-function-app.azurewebsites.net/docs">salary-model2-sibqf23ha7ib2-function-app.azurewebsites.net/docs</a>
-                </p>
-                <p>
-                    👩🏼‍💻 Code: <a target="_blank" href="https://github.com/pamelafox/regression-model-azure-demo/blob/main/function/model_predict/__init__.py">https://github.com/pamelafox/regression-model-azure-demo/blob/main/function/model_predict/__init__.py</a>
-                </p>
-            </section>
 
             <section class="heading-only">
                 <h2>Hosting an HTTP API<br>
@@ -677,6 +680,36 @@
                 <h2>More on APIs</h2>
 
                 <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%">
+            </section>
+
+
+            <section>
+                <h3>Demo: Regression Model API</h3>
+
+                <p>A parameterized API based on a <code>sklearn</code> model.</p>
+
+                <pre style="font-size:0.6em;"><code data-trim data-noescape class="python">
+                model = joblib.load(f"{os.path.dirname(os.path.realpath(__file__))}/model.pkl")
+
+                @app.get("/model_predict")
+                async def model_predict(
+                    years_code: int,
+                    years_code_pro: int,
+                    ed_level: categories.EdLevel,
+                    main_branch: categories.MainBranch,
+                    country: categories.Country):
+                    X_new = numpy.array([[years_code, years_code_pro, ed_level.value, main_branch.value, country.value]])
+                    result = model.predict(X_new)
+                    return {"prediction": result[0]}
+                </code></pre>
+
+                <p>
+                    👀 Demo: 
+                    <a target="_blank" href="https://salary-model2-sibqf23ha7ib2-function-app.azurewebsites.net/docs">salary-model2-sibqf23ha7ib2-function-app.azurewebsites.net/docs</a>
+                </p>
+                <p>
+                    👩🏼‍💻 Code: <a target="_blank" href="https://github.com/pamelafox/regression-model-azure-demo/blob/main/function/model_predict/__init__.py">https://github.com/pamelafox/regression-model-azure-demo/blob/main/function/model_predict/__init__.py</a>
+                </p>
             </section>
 
             <section>
