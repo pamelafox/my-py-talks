@@ -1,0 +1,233 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>VS Code Day</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+                background: #0a0c0f;
+				font-family: "Work Sans", sans-serif;
+                color: white;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+            .reveal section li {
+                margin-bottom: 12px;
+            }
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+                font-weight: 500;
+				color: white;
+                text-transform: none;
+			}
+
+			.reveal section.heading-only {
+				text-align: left;
+				padding-top: 15%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.python-tutor-link {
+				font-size: smaller;
+			}
+
+			.python-tutor-link:before {
+				content: "";
+				display: block;
+				background: url("http://pythontutor.com/favicon.ico") no-repeat;
+				width: 48px;
+				height: 48px;
+				float: left;
+				margin: 0 6px 0 0;
+			}
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" data-background-image="background_title.png">
+                <h1 style="font-size:80px;  width: 50%;">Writing Python Web Apps with<br>VS Code</h1>
+                <div class="no-print" style="display: none; text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+            <section data-background-image="background_standard.png">
+                <h3>Normal Slide</h3>
+                <p>
+                These are just filler slides now. I'll fill them in later,
+                and may even replace this with a one-pager, if I decide not to use slides at all.
+                </p>
+            </section>
+            
+            <section data-background-image="background_standard.png">
+                <h3>Python Extensions / Linting</h3>
+                
+                <ul>
+                    <li>pylance
+                    <li>python
+                    <li>ruff
+                </ul>
+            </section>
+
+            <section  class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Dev Containers</h2>
+
+            </section>
+
+        
+            <section data-background-image="background_standard.png">
+                <h3>Working with databases
+                
+                <ul>
+                    <li>docker-compose.yaml
+                    <li>sqltools
+                </ul>
+
+            </section>
+
+            <section data-background-image="background_standard.png">
+                <h3>Thank you!</h3>
+  
+                <img src="pamela_elephant.png" alt="Photo of Pamela smiling with a stuffed elephant" style="width: 350px; float:right; border-radius: 12px;">
+  
+                <p>Grab the slides @ <span class="aka">aka.ms/python-apps-vscode</span> </p>
+                
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
+                    <tr>
+                      <td>Mastodon
+                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                    </tr>
+                </table>
+                <br>
+                <p style="clear:both; margin-top: 30px;">Let me know about your experiences with VS Code and Python!</p>
+                
+              </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+
+        // add HighlightJS-badge (options are optional)
+        var options = {
+            copyIconContent: "📄",
+            checkIconContent: "✅"
+        };
+        window.highlightJsBadge();
+
+        if (window.location.search == "?print-pdf") {
+            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
+            uncounted.forEach(node => {
+                node.parentNode.classList.add("no-print")
+            })
+        }
+    </script>
+    </body>
+</html>
