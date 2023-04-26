@@ -104,6 +104,7 @@
                 padding: 8px;
                 border-radius: 6px;
                 display: inline-block;
+                margin-top: 12px;
             }
 
 			@media print
@@ -135,6 +136,35 @@
                 </aside>
             </section>
 
+            
+            <section>
+                <h3>Demo app</h3>
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/">github.com/pamelafox/django-quiz-app/</a><br>
+                    <span class="aka">aka.ms/django-quiz-app</span>
+                </p>
+
+                <img src="screenshot_quiz.png" alt="Screenshot of Quiz page">
+
+                <p>Built with Django 🎸 + PostgreSQL 🐘</p>
+            </section>
+
+            <section>
+                <h3>GitHub Codespaces</h3>
+
+                <p>Codespaces is an online development environment.</p>
+
+                <p class="smaller">Open GitHub repo in Codespaces by clicking <strong>Code</strong> button,
+                    selecting <strong>Codespaces</strong> tab, and
+                    clicking <strong>Create codespace on main</strong>.</p>
+
+                <p class="smaller" style="float:right; text-align: left; width: 400px;">Then wait patiently... ☺️</p>
+                <img src="screenshot_codespaces.png" alt="Screenshot of Codespace tab" style="border: 1px solid #ccc; width: 500px; float:left;">
+
+                <p class="smaller" style="clear:both">60 hours of free usage each month. <br>
+                 <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/how-to-optimize-your-codespaces-pro-tips-for-managing-quotas/ba-p/3712032">🔗 Tips for optimizing quotas</a></p>
+            </section>
 
             <section  class="heading-only" data-background-image="background_headingonly.png">
                 <h2>Dev Containers</h2>
@@ -313,29 +343,28 @@
             </section>
 
             <section>
-                <h3>VS Code Run & Debug</h3>
+                <h3>VS Code Debugging</h3>
 
-                <p>In .vscode/launch.json:</p>
-                <pre style="font-size:0.55em;"><code data-trim data-noescape class="json">
-                {
-                    "version": "0.2.0",
-                    "configurations": [
-                        {
-                            "name": "Python: Django",
-                            "type": "python",
-                            "request": "launch",
-                            "program": "${workspaceFolder}/src/manage.py",
-                            "args": [
-                                "runserver"
-                            ],
-                            "django": true,
-                            "justMyCode": true
-                        }
-                    ]
-                }
+                <p style="margin-bottom:0px">.vscode/launch.json:</p>
+                <pre style="font-size:0.55em; margin-top:6px;"><code data-trim data-noescape class="json">
+                { "version": "0.2.0",
+                  "configurations": [{
+                        "name": "Python: Django",
+                        "type": "python",
+                        "request": "launch",
+                        "program": "${workspaceFolder}/src/manage.py",
+                        "args": [
+                            "runserver"
+                        ],
+                        "django": true,
+                        "justMyCode": true
+                    }]}
                 </code></pre>
 
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/.vscode/launch.json">launch.json</a></p>
+                <p class="padded" style="margin-bottom:0px">In settings.py:</p>
+                <pre style="font-size:0.55em; margin-top:6px;"><code data-trim data-noescape class="json">
+                DEBUG_PROPAGATE_EXCEPTIONS = env("DEBUG") # True locally
+                </code></pre>
 
             </section>
 
@@ -367,6 +396,42 @@
                 env_files = [".env", ".env.test"]
                 </code></pre>
             </section>
+
+            <section  class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Deployment</h2>
+            </section>
+
+            <section>
+                <h3>Bicep extension</h3>
+
+                <img src="screenshot_bicep.png" alt="Screenshot of Bicep extension, linting on one side, visualization on other">
+            </section>
+
+            
+            <section>
+                <h3>Deployment</h3>
+
+                <p>Using the Azure Developer CLI: <span class="aka">aka.ms/azd</span></p>
+                <img src="screenshot_azd.png" alt="Screenshot of azd up command" height="450">
+
+            </section>
+
+            <section>
+                <h3>Result</h3>
+
+                <p>Deployed endpoint:
+                <br>
+                <a class="smaller" target="_blank" href="https://djangoquizt-qckblqxbskqfy-appservice.azurewebsites.net/">
+                    djangoquizt-qckblqxbskqfy-appservice.azurewebsites.net
+                </a>
+                </p>
+
+                <p class="padded">Deployed resources:
+                <br>
+                <img src="screenshot_resources.png" alt="Screenshot of Portal resources created" height="300">
+                </p>
+            </section>
+
 
             <section  class="heading-only" data-background-image="background_headingonly.png">
                 <h2>Next steps</h2>
