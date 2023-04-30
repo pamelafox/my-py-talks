@@ -819,7 +819,6 @@
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
-    <script src="../static/asciinema-player.min.js"></script>
     <script>
         const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
         Reveal.initialize({
@@ -832,20 +831,6 @@
             plugins: [ RevealHighlight, RevealMenu ],
             pdfSeparateFragments: true
         });
-
-        function checkForCasts(event) {
-            const playerDiv = event.currentSlide.querySelector('#azd-up-player');
-            if (playerDiv && !playerDiv.playerObject) {
-                playerDiv.playerObject = AsciinemaPlayer.create(
-                    'azd_up.cast',
-                    playerDiv,
-                    {cols: 80, rows: 20}
-                    );
-            }
-        }
-        Reveal.on( 'ready', checkForCasts);
-        Reveal.on( 'slidechanged', checkForCasts);
-
         window.highlightJsBadge();
     </script>
     </body>

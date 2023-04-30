@@ -1,0 +1,1044 @@
+
+<!doctype html lang="en">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>PyDay - Databases</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+		<style>
+			.reveal {
+                background: #0a0c0f;
+				font-family: "Work Sans", sans-serif;
+                color: white;
+			}
+
+			.reveal .slides section, .reveal table {
+				text-align: left;
+				font-size: smaller;
+                color: white;
+			}
+
+			.reveal pre {
+				background-color: #f5f5f5;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-shadow: none;
+			}
+
+            .reveal section li {
+                margin-bottom: 12px;
+            }
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+                font-weight: 500;
+				color: white;
+                text-transform: none;
+			}
+
+			.reveal section.heading-only {
+				text-align: left;
+				padding-top: 5%;
+			}
+
+            .no-code-badge .code-badge {
+                display: none;
+            }
+
+            .code-badge-language {
+                display: none;
+            }
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+            .aka {
+                font-family: "Roboto Mono", monospace;
+                background-color: #1c6192;
+                color: white;
+                padding: 8px;
+                border-radius: 6px;
+                display: inline-block;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+
+			@media print
+			{
+				.no-print, .no-print *
+				{
+					display: none !important;
+				}
+			}
+
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1>Cloud Databases for Web Apps with Django
+                </h1>
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+            <section>
+                <h3>Today's topics</h3>
+
+                <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
+                <ul style="margin-top:20px; font-size:34px; line-height: 1.5em;">
+                    <li>Databases
+                    <li>Django
+                    <li>Hosting on Azure
+                </ul>
+            </section>
+
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Databases</h2>
+            </section>
+
+            <section>
+                <h3>When do we need databases?</h3>
+
+                <p>Use a database to store any data that needs to be shared across multiple users/computers. </p>
+                
+                <img src="app_with_sql.png" alt="Diagram using SQL to update and query a database storing data for a web application" style="background-color: white;"/>
+            </section>
+
+            <section>
+                <h3>Types of databases</h3>
+
+                <p>Non-relational / document databases:
+                    <br>
+                    MongoDB, Firebase, CouchDB, etc.
+                </p>
+
+                <p>Relational databases:
+                    <br>
+                    MySQL, SQLite, PostgreSQL, etc.
+                </p>
+
+                <p class="padded">🙋🏽‍♀️ What have you used? Tell us in the chat!</p>
+            </section>
+
+            <section>
+                <h3>Relational database structure</h3>
+
+                <p>A database contains <strong>tables</strong>. <br>
+                    Each table has <strong>columns</strong> and <strong>rows</strong>.</p>
+                
+                <p>Example table called <code>restaurants</code>:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Zomsa</td>
+                            <td>10558 San Pablo Ave</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Udupi Palace</td>
+                            <td>1903 University Ave</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Easy Creole</td>
+                            <td>1761 Alcatraz Ave</td>
+                        </tr>
+                </table>
+
+                <p>Tables can be related to each other using <strong>foreign keys</strong>.</p>
+            </section>
+
+            <section>
+                <h3>PostgreSQL</h3>
+
+                <p>PostgreSQL is a popular open-source relational database,
+                    which has a strong community and extension ecosystem.
+                </p>
+
+                <p>It's free and can be installed on your computer.</p>
+                <p>It's also available as a service on Azure.</p>
+
+                <p>Check out all the talks from CitusCon about PostgreSQL!</p>
+            </section>
+
+            <!-- view-source:https://inst.eecs.berkeley.edu/~cs61a/sp21/assets/slides/35-Intro_to_SQL.html#/2 -->
+
+
+            <section  class="heading-only" data-background-image="background_headingonly.png">
+                <h2>PostgreSQL Dev Container</h2>
+            </section>
+
+            <section>
+                <h3>Follow along with me!</h3>
+
+                <p>Open this project:<br>
+                    <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">
+                        github.com/pamelafox/postgresql-playground
+                    </a>
+                    <span class="aka">aka.ms/postgres-playground</span>
+                </p>
+
+                <p>Using either: 
+                    <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
+                    <ul style="float:left; width: 50%">
+                    <li>GitHub Codespaces ➡️
+                    <li>VS Code with Dev Containers extension
+                    </ul>
+                </p>
+            </section>
+
+            <section>
+                <h3>Dockerfile</h3>
+
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="Dockerfile">
+                ARG IMAGE=python:3
+                FROM --platform=amd64 mcr.microsoft.com/devcontainers/${IMAGE}
+
+                RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+                    && apt-get -y install --no-install-recommends postgresql-client \
+                        && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+                </code></pre>
+
+                <p>🔗 Using container image from <a target="_blank" href="https://mcr.microsoft.com/en-us/product/devcontainers/python/about">mcr.microsoft.com devcontainer Python images</a></p>
+                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/Dockerfile">Dockerfile</a></p>
+
+            </section>
+
+            <section>
+                <h3>Docker-compose.yaml</h3>
+
+                <pre style="height: 490px; overflow: hidden; font-size:0.50em;"><code data-trim data-noescape class="yaml">
+                    services:
+                      app:
+                        build:
+                          context: ..
+                          dockerfile: .devcontainer/Dockerfile
+                          args:
+                            IMAGE: python:3.11
+                        volumes:
+                          - ..:/workspace:cached
+                        command: sleep infinity
+                        network_mode: service:db
+                      db:
+                        image: postgres:latest
+                        restart: unless-stopped
+                        volumes:
+                          - postgres-data:/var/lib/postgresql/data
+                        environment:
+                          POSTGRES_DB: app
+                          POSTGRES_USER: app_user
+                          POSTGRES_PASSWORD: app_password
+                    volumes:
+                      postgres-data:
+                </code></pre>
+
+                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/docker-compose.yml">docker-compose.yaml</a></p>
+                    
+            </section>
+
+            <section>
+                <h3>devcontainer.json</h3>
+
+                <p>Configuration needed to work with the Docker files:</p>
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
+                    ...
+                    "dockerComposeFile": "docker-compose.yml",
+                    "service": "app",
+                    "workspaceFolder": "/workspace",
+                    "forwardPorts": [8000, 5432],
+                    "portsAttributes": {
+                        "8000": {"label": "Django port", "onAutoForward": "notify"},
+                        "5432": {"label": "PostgreSQL port", "onAutoForward": "silent"}
+                    },
+                    ...
+                </code></pre>
+
+                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+
+            </section>
+
+            <section>
+                <h3>devcontainer.json</h3>
+
+                <p>Recommended extensions:</p>
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
+                    ...
+                    "extensions": [
+                        "ms-python.python",
+                        "ms-python.vscode-pylance",
+                        "charliermarsh.ruff",
+                        "mtxr.sqltools",
+                        "mtxr.sqltools-driver-pg",
+                    ]
+                    ...
+                </code></pre>
+
+                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+
+            </section>
+
+            <section>
+                <h3>devcontainer.json</h3>
+
+                <p>Configuring SQLTools extension:</p>
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="json">
+                    ...
+                    "sqltools.connections": [
+                        {
+                            "name": "Local database",
+                            "driver": "PostgreSQL",
+                            "server": "localhost",
+                            "port": 5432,
+                            "database": "postgres",
+                            "username": "admin",
+                            "password": "LocalPasswordOnly"
+                        }
+                    ...
+                </code></pre>
+
+                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+
+            </section>
+
+            <section>
+                <h3>SQLTools extension</h3>
+
+                <p>Explore SQL tables and run SQL statements:</p>
+
+                <img src="screenshot_sqltools2.png" style="width: 100%; border: 1px solid #ddd">
+
+                <p>Connect to local <em>or</em> cloud databases.</p>
+
+            </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>PostgreSQL in Python</h2>
+            </section>
+
+            <section>
+                <h3>Accessing PostgreSQL from Python: SQL</h3>
+
+                <p>Web apps need to be able to access and modify data in databases.</p>
+
+                <p>One option is to use SQL directly in the web app code.</p>
+
+                <pre style="font-size: 0.8em;"><code data-trim data-noescape class="python">
+                import psycopg2
+
+                conn = psycopg2.connect("dbname=example")
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM restaurants;")
+                results = cur.fetchall()
+                cur.close()
+                </code></pre>
+
+                <p>⚠️ Executing raw SQL queries makes your app vulnerable to SQL injection attacks.
+                    <a target="_blank" href="https://xkcd.com/327/">See: xkcd.com/327</a></p>
+           
+            </section>
+
+            <section>
+                <h3>Accessing DBs from Web Apps: ORM</h3>
+
+                <p>A better approach is to use an <strong>ORM (Object-Relational Mapper)</strong> to interact with the database. 
+                    An ORM represents table rows as Python objects, and provides methods for querying and modifying data.</p>
+
+                <p>A <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy</a> example:</p>
+                <pre style="font-size: 0.8em;"><code data-trim data-noescape class="python">
+                class Restaurant(Base):
+                    __tablename__ = "restaurants"
+                    id: Mapped[int] = mapped_column(primary_key=True)
+                    name: Mapped[str] = mapped_column()
+            
+                query = select(Restaurant).where(Restaurant.name == "Zomsa")
+                results = session.execute(query)
+                </code></pre>
+            
+            </section>
+
+
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Hosting PostgreSQL<br>
+                on Azure!</h2>
+
+                <img src="../media/BIT_AZURE.png" alt="Bit (the raccoon) in the clouds next to Azure logo" width="400">
+            </section>
+
+
+            <section>
+                <h3>Managed services for PostgreSQL on Azure</h3>
+
+                <style>
+                .fragment.background-green {
+                    background-color: transparent;
+                }
+                .fragment.background-green.visible {
+                    background-color: #04865a;
+                }
+                </style>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Azure Database for PostgreSQL – Single Server</td>
+                            <td>Microsoft's original offering. No longer recommended for new apps.</td>
+                        </tr>
+                        <tr class="fragment custom background-green">
+                            <td>Azure Database for PostgreSQL – Flexible Server</td>
+                            <td>Microsoft's most recent PostgreSQL offering. Fully managed service with vertical scaling.
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>Azure Cosmos DB for PostgreSQL</td>
+                          <td>Distributed database using PostgreSQL and the Citus extension. Can scale horizontally.
+                          </td>
+                      </tr>
+                    </tbody>
+                </table>
+
+                <p class="smaller">
+                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compare-single-server-flexible-server">
+                      <span class="aka"> 🔗 aka.ms/flex-vs-single</span>
+                      Comparison: Flexible vs. Single Server </a>
+                   <br>
+                   <a target="_blank" href="https://devblogs.microsoft.com/cosmosdb/azure-cosmos-db-for-postgresql-vs-azure-database-for-postgresql-when-to-choose-which/">
+                    <span class="aka" style="margin-top: 16px;"> 🔗 aka.ms/flex-vs-cosmos</span>
+                    Cosmos DB for PostgreSQL vs. Flex Server </a>
+                </p>
+            </section>
+
+
+            <!--<section>
+                <h3>Provisioning PostgreSQL with VS Code extension</h3>
+
+                <ul class="smaller">
+                    <li>Download Azure Tools extension for VS Code
+                    <li>Select "+" ("Create resource")
+                    <li>Select "Create Database server"<br>
+                    <li>Select "PostgreSQL Flexible server" as type
+                    <li>Enter unique name
+                    <li>Select SKU (B1ms - least expensive)
+                    <li>Enter unique administrative username
+                    <li>Enter random administrative password (save to Key Vault/password manager)
+                    <li>Select existing resource group or create new one
+                    <li>Select location (eastus typically has capacity)
+                    <li>Wait for it to create the server! 🚀
+                </ul>
+            </section>-->
+
+            <section>
+                <h3>Provisioning PostgreSQL in Portal</h3>
+
+                <p>Use the Azure Portal to create a PostgreSQL server:
+                <a target="_blank" href="https://ms.portal.azure.com/#create/Microsoft.PostgreSQLFlexibleServer">
+                    https://ms.portal.azure.com/#create/Microsoft.PostgreSQLFlexibleServer
+                <br>
+                <span class="aka">aka.ms/portal-postgres</span>
+                </a>
+                </p>
+                <p>Suggested setting: <br>Development workload, Burstable (B1ms), defaults for other options.
+                    <img src="screenshot_burstable.png" alt="Screenshot of Burstable setting in Azure Portal" style="border:1px solid #ddd"/>
+
+                </p>
+                <p>⚠️ Save the admin password to a password manager or Key Vault!</p>
+            </section>
+
+            <section>
+                <h3>Allowing local access to server</h3>
+
+                <p>Open PostgreSQL server in Portal, select "Networking", then select "Add current client IP address",
+                    and click "Save".</p>
+                <img src="screenshot_networking.png" alt="Screenshot of Networking/Firewalls section in Azure Portal" style="border:1px solid #ddd"/>
+                
+            </section>
+
+            <!--<section>
+                <h3>Provisioning PostgreSQL with the Azure Portal</h3>
+
+                <img src="screenshot_azureportal.png" alt="Azure portal screenshot" style="border:1px solid #ddd"/>
+
+            </section>
+
+            <section>
+                <h3>Provisioning PostgreSQL with the Azure CLI</h3>
+                
+                <p>Create the server:</p>
+                <pre><code data-trim data-noescape class="shell">
+                az postgres flexible-server create --resource-group pg-grp \
+                    --name pg-srv --location westus \
+                    --sku-name B1ms --version 14 \
+                    --admin-user myadmin --admin-password NeverShowThis
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Provisioning PostgreSQL with Bicep</h3>
+
+            </section>-->
+
+
+            <section>
+                <h3>Update environment variables</h3>
+
+                <p>Open PostgreSQL server in Portal and select "Connection strings".</p>
+
+                <img src="screenshot_connectionstrings.png" alt="Screenshot of Connection Strings from Azure Portal" style="border:1px solid #ddd"/>
+
+                <p>Copy relevant configuration settings into <code>.env</code> file
+                    and SQLTools settings.</p>
+
+                <img src="screenshot_editconnection.png" alt="Screenshot of SQLTools settings" style="border:1px solid #ddd"/>
+            </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Writing Django Apps</h2>
+            </section>
+
+           <section>
+                <h3>Django framework</h3>
+
+                <p><a target="_blank" href="https://www.djangoproject.com/">Django</a>, an external library, is a fairly "opinionated"
+                    framework for server-side code. Includes an ORM for database interaction.</p>
+                
+                <p>Apps written in Django:</p>
+                <ul>
+                    <li>Coursera (originally, now Scala+Play)
+                    <li>Instagram
+                    <li>Pinterest (originally, now Flask)
+                    <li>Eventbrite
+                </ul>
+            </section>
+
+
+            <section>
+                <h3>Follow along with me!</h3>
+
+                <p>Open this project:<br>
+                    <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app">
+                        github.com/Azure-Samples/msdocs-django-postgresql-sample-app
+                    </a>
+                    <span class="aka">aka.ms/django-restaurants</span>
+                </p>
+
+                <p>Using either: 
+                    <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
+                    <ul style="float:left; width: 50%">
+                    <li>GitHub Codespaces ➡️
+                    <li>VS Code with Dev Containers extension
+                    </ul>
+                </p>
+            </section>
+
+            <section>
+                <h3>Django app structure</h3>
+
+                <p>A Django web app is a collection of "apps" that each have their own models, views, and templates. Each app has its own folder.</p>
+
+                <p>In this app, we have a single app called "restaurant_review":</p>
+                <ul>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/models.py">models.py</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/urls.py">urls.py</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/views.py">views.py</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/admin.py">admin.py</a>
+                </ul>
+
+            </section>
+
+            <section>
+                <h3>Django ORM</h3>
+
+                <p>Define models:</p>
+                <pre><code data-trim data-noescape class="python">
+                class Restaurant(models.Model):
+                    name = models.CharField(max_length=50)
+                </code></pre>
+                <p class="smaller">👁️ See full file: <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/models.py">models.py</a>
+                </p>
+
+                <p>Query models:</p>
+                <pre><code data-trim data-noescape class="python">
+                def details(request, id):
+                    restaurant = get_object_or_404(Restaurant, pk=id)
+                </code></pre>
+                <p>Insert models:</p>
+                <pre><code data-trim data-noescape class="python">
+                restaurant = Restaurant()
+                restaurant.name = name
+                Restaurant.save(restaurant)
+                </code></pre>
+                <p class="smaller">👁️ See full file: <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/views.py">views.py</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Configuring Django ORM</h3>
+
+                <pre style="font-size: 0.8em;"><code data-trim data-noescape class="python">
+                DATABASES = {
+                    'default': {
+                        'ENGINE': 'django.db.backends.postgresql',
+                        'NAME': os.environ.get('DBNAME'),
+                        'HOST': os.environ.get('DBHOST'),
+                        'USER': os.environ.get('DBUSER'),
+                        'PASSWORD': os.environ.get('DBPASS'),
+                    }
+                }
+                </code></pre>
+                <p class="smaller">👁️ See full file: <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/azureproject/settings.py">settings.py</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Running a Django app</h3>
+
+                <p class="padded">Run DB migrations:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python manage.py migrate
+                </code></pre>
+
+                <p class="padded">Run the local server:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python manage.py runserver
+                </code></pre>
+
+                <p>⚠️ For production, a server like gunicorn should be used instead.</p>
+            </section>
+
+            <section>
+                <h3>Using Django admin</h3>
+
+                <p class="padded">Create a superuser:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python manage.py createsuperuser
+                </code></pre>
+
+                <p class="padded">Login to /admin</p>
+
+            </section>
+            
+            <!-- todo: productionizing?? -->
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Hosting Django<br>
+                on Azure!</h2>
+
+                <img src="../media/BIT_AZURE.png" alt="Bit (the raccoon) in the clouds next to Azure logo" width="400">
+            </section>
+
+            <section>
+                <h3>Azure app hosting options</h3>
+                
+                <style>
+                table.deploy-stack {
+                    border-spacing: 30px; 
+                    border-collapse: separate;
+                    border: 0px;
+                }
+
+                table.deploy-stack th, table.deploy-stack td {
+                    color: white;
+                    font-size: 24px;
+                    border-bottom: 0px none;
+                    border-radius: 12px;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 8px;
+                }
+                </style>
+                <table class="deploy-stack">
+                    <tr>
+                        <th >Cloud
+                        <td colspan="4" style="background-color:#767676;">Azure
+                    </tr>
+                    <tr>
+                        <th>Environment
+                        <td colspan="2" style="background-color:#0070c0; color: white;">Containers
+                        <td colspan="2" style="background-color:#0070c0; color: white;">PaaS
+                    </tr>
+                    <tr>
+                        <th>
+                        <td style="background-color: #008850; color: white;">Azure Kubernetes Service
+                        <td style="background-color: #0070c0; color: white;">Container Management
+                        <td style="background-color: #008850; color: white;">Azure App Service
+                        <td style="background-color: #0070c0; color: white;">Serverless
+                        
+                    </tr>
+                    <tr>
+                        <th>
+                        <td>
+                        <td style="background-color: #008850; color: white;">Azure Container Apps
+                        <td>
+                        <td style="background-color: #008850; color: white;">Azure Functions
+                    </tr> 
+                </table>
+                <p class="fragment smaller">
+                    All are good options, depending on your needs.<br><br>
+                    <span style="background-color: #008850; color: white;">Azure App Service</span>
+                    has special code to handle Django apps. Let's use that!
+                </p>
+            </section>
+
+
+            <section>
+                <h3>Goal: App Service + PostgreSQL inside VNet</h3>
+
+                <!-- diagram -->
+                <img src="postgres_vnet.png" alt="App inside VNet with Postgres" width="800">
+            </section>
+
+            <section>
+                <h3>Ways to deploy multiple resources on Azure</h3>
+
+                <ul>
+                    <li>Azure Portal (Web App + DB Template)
+                    <li>Azure CLI script
+                    <li>Azure Developer CLI <span class="fragment">😍 😍 😍</span>
+                </ul>
+            </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Azure Developer CLI (azd)</h2>
+
+                <img src="../media/BIT_AZURE.png" height="400">
+            </section>
+
+            <section>
+                <h3>Azure Developer CLI</h3>
+
+                <p>This new CLI tool helps with all steps of the dev cycle:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Step
+                            <th>Command
+                    <tbody>
+                        <tr>
+                            <td>Provisioning
+                            <td><code>azd provision</code>
+                        <tr>
+                            <td>Deploying code
+                            <td><code>azd deploy</code>
+                        <tr>
+                            <td>⬆️ Both
+                            <td><code>azd up</code>
+                        <tr>
+                            <td>CI/CD
+                            <td><code>azd pipeline config</code>
+                        <tr>
+                            <td>Monitoring
+                            <td><code>azd monitor</code>
+                    </table>
+            </section>
+
+            <section>
+                <h3>Demo: <code>azd up</code></h3>
+
+                <p>First provisions, then deploys. Only re-provisions when Bicep resource definitions have changed.</p>
+
+                <iframe data-src="https://asciinema.org/a/gJMGgx3h2YCYBl1tjpTGRX3Cq/iframe?" id="asciicast-iframe-gJMGgx3h2YCYBl1tjpTGRX3Cq" name="asciicast-iframe-gJMGgx3h2YCYBl1tjpTGRX3Cq" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 560px;"></iframe>
+
+                <aside class="notes">
+                    Show portal - link in console<br>
+                    Show website - link in console
+                </aside>
+            </section>
+            
+            <section>
+                <h3>Demo: <code>azd deploy</code></h3>
+
+                <p>If you only changed code, not infra, you can just deploy.</p>
+
+                <iframe data-src="https://asciinema.org/a/ZyvXrCVO30orfIU9HaZZXlhT4/iframe?" id="asciicast-iframe-ZyvXrCVO30orfIU9HaZZXlhT4" name="asciicast-iframe-ZyvXrCVO30orfIU9HaZZXlhT4" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 560px;"></iframe>
+
+            </section>
+
+            <section>
+                <h3>Demo: <code>azd pipeline config</code></h3>
+
+                <p>Configures the secrets for <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/.github/workflows/azure-dev.yaml">
+                    azure-dev.yaml</a>, a Github workflow that provisions and deploys.</p>
+
+                <iframe data-src="https://asciinema.org/a/lP6QZm5PsUqMdinUSUkkthpNd/iframe?" id="asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd" name="asciicast-iframe-lP6QZm5PsUqMdinUSUkkthpNd" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 100%; float: none; visibility: visible; height: 373px;"></iframe>
+
+                <p>🔗 <a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd/actions/runs/4386198522/jobs/7679920410">Successful workflow run</a></p>
+            </section>
+
+            <section>
+                <h3>Components of an <code>azd</code> project</h3>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/infra"><code>infra/</code></a>
+                            <td>Contains all the infra in Bicep or Terraform files
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/blob/main/azure.yaml"><code>azure.yaml</code></a>
+                            <td>Specifies what code to deploy to which resource
+                        <tr>
+                            <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/.github/workflows"><code class="smaller">.github/</code></a>
+                            <td>Contains CI/CD workflow for deploying
+                    </tbody>
+                </table>
+
+                <p>🔗 <a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/make-azd-compatible?pivots=azd-convert">Make your project compatible with Azure Developer CLI</a></p>
+            </section>
+
+            
+            <section>
+                <h3>The Bicep language</h3>
+
+                <p>Bicep is an <strong>infrastructure-as-code (IAC)</strong> language, similar to Terraform
+                    but designed for Azure. Bicep declaratively defines Azure cloud resources.
+                </p>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+
+                <pre style="font-size:0.5em; margin-top: 0px; width:450px;"><code data-trim data-noescape class="bicep">
+                resource web 'Microsoft.Web/sites@2022-03-01' = {
+                    name: 'pamelas-app-service'
+                    location: 'eastus'
+                    kind: 'app,linux'
+                    properties: {
+                      serverFarmId: appServicePlan.id
+                      siteConfig: {
+                        linuxFxVersion: 'PYTHON|3.10'
+                      }
+                    }
+                    resource appSettings 'config' = {
+                        name: 'appsettings'
+                        properties: {
+                          DBNAME: 'django'
+                          PGHOST: '${postgresServer.name}.postgres.database.azure.com'
+                          PGUSER: 'admin'
+                          PGPASS: adminPassword
+                        }
+                    }
+                }
+                </code></pre>
+
+                <pre style="font-size:0.5em; margin-top: 0px; width:450px;"><code data-trim data-noescape class="bicep">
+                    resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-01-20-preview' = {
+                        name: 'pamelas-postgres-server'
+                        location: 'eastus'
+                        sku: {
+                          name: 'Standard_B1ms'
+                          tier: 'Burstable'
+                        }
+                        properties: {
+                          version: '14'
+                          administratorLogin: 'django'
+                          administratorLoginPassword: adminPassword
+                          storage: {
+                            storageSizeGB: 128
+                          }
+                        }
+                      }
+                </code></pre>
+                </div>
+            </section>
+
+
+            <section>
+                <h3>Writing Bicep files</h3>
+
+                <ul>
+                    <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
+                    <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a>
+                    <li>Search Github for examples
+                    <li>Create the resource in Portal and export the IAC
+                </ul>
+
+                <p>📖 Read more in: <a target="_blank" href="http://blog.pamelafox.org/2023/01/tips-for-writing-bicep-files-for-azure.html">
+                    Tips for writing Bicep files</a> <br>
+                   📺 Watch my CitusCon talk: Deploying PostgreSQL with Bicep <br>
+                   📺 Watch my PyWebConf talk: Easy deploys of Python web apps to Azure
+                </p>
+
+            </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>More Python + DB templates</h2>
+
+                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%">
+            </section>
+
+            <section>
+                <h3>Django + App Service (No VNet)</h3>
+
+                <p>Uses firewall rules to limit access to the server
+                    to only Azure IPs, and stores password in key vault.<p>
+
+                <p>
+                <img src="diagram_djangoquizapp.png" alt="Architecture diagram: Azure Web App, PostgreSQL server, Key Vault" height="300">
+                </p>
+
+                <p class="smaller">
+                    👀 Demo: 
+                    <a target="_blank" href="https://djangoquizapp-x67uibbebibck-appservice.azurewebsites.net">djangoquizapp-x67uibbebibck-appservice.azurewebsites.net</a>
+                </p>
+                <p class="smaller">
+                    👩🏼‍💻 Code:
+                    <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">github.com/pamelafox/django-quiz-app</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Django + App Service + Redis</h3>
+
+                <p>Uses Redis as backend for cache and Celery,
+                    plus Azure storage for static assets and media uploads.</p>
+
+                <p>
+                <img src="diagram_cookiecutter.png" alt="Architecture diagram: Azure Web App, PostgreSQL server, Redis, Storage" height="300" style="background: white; border-top: 4px solid white;">
+                </p>
+
+                <p class="smaller">
+                    👀 Demo: 
+                    <a target="_blank" href="https://djangocc-redis-zbokgdhbokg6a-app-service.azurewebsites.net/">djangocc-redis-zbokgdhbokg6a-app-service.azurewebsites.net/</a>
+                </p>
+                <p class="smaller">
+                    👩🏼‍💻 Code:
+                    <a target="_blank" href="https://github.com/pamelafox/cookiecutter-django-output">
+                        github.com/pamelafox/cookiecutter-django-output
+                    </a>
+                    <br>🍪 Cookie cutter: 
+                    <a target="_blank" href="https://github.com/pamelafox/cookiecutter-django-azure">
+                        github.com/pamelafox/cookiecutter-django-azure
+                    </a>
+                </p>
+            </section>
+            
+
+            <section>
+                <h3>Django + App Service + Storage</h3>
+
+                <p>Uses Azure storage containers for static assets and media uploads,
+                    plus Azure Monitor and Azure Load Testing.
+                </p>
+
+                <p>
+                <img src="diagram_djangoworkshop.png" alt="Architecture diagram: Azure Web App, PostgreSQL server, VNet, Storage, Load Testing" height="300">
+                </p>
+
+                <p class="smaller">
+                    👀 Demo: 
+                    <a target="_blank" href="https://app-wijtm56toffiu.azurewebsites.net/">app-wijtm56toffiu.azurewebsites.net</a>
+                </p>
+                <p class="smaller">
+                    👩🏼‍💻 Code:
+                    <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">github.com/tonybaloney/django-on-azure</a>
+                </p>
+
+            </section>
+
+            <section>
+                <h3>Django + Azure Container Apps</h3>
+                
+                <p>Deploys a containerized version of the previous app.</p>
+                <p>
+                <img src="diagram_acadjango.png" alt="Architecture diagram: Azure Container Apps, Postgres" height="300" style="background: white; border-top: 4px solid white;">
+                </p>
+
+
+                <p class="smaller">
+                    👀 Demo: 
+                    <a target="_blank" href="https://django-aca2-7mmupiv-containerapp.wittywave-a0abc6e2.eastus.azurecontainerapps.io/">django-aca2-7mmupiv-containerapp.wittywave-a0abc6e2.eastus.azurecontainerapps.io</a>
+                </p>
+                <p class="smaller">
+                    👩🏼‍💻 Code:
+                    <a target="_blank" href="https://github.com/Azure-Samples/azure-django-postgres-aca">github.com/Azure-Samples/azure-django-postgres-aca</a>
+                </p>
+
+
+            </section>
+
+            <section class="heading-only"  data-background-image="background_headingonly.png">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+    </script>
+    </body>
+</html>
