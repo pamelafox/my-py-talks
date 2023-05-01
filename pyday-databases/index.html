@@ -109,11 +109,11 @@
     <div class="reveal">
         <div class="slides">
 
-            <section class="heading-only" style="padding-top:5%">
+            <section class="heading-only" data-background-image="background_headingonly.png">
                 <h1>Cloud Databases for Web Apps with Django
                 </h1>
-                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
-                    Tips for navigating the slides:
+                <div class="no-print" style="text-align: left; margin-top: 120px; font-size: 70%;">
+                    Tips for navigating the slides:<br>
                     <ul>
                         <li>Press O or Escape for overview mode.</li>
                         <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
@@ -767,7 +767,7 @@
 
                 <p>This new CLI tool helps with all steps of the dev cycle:</p>
 
-                <table>
+                <table style="width: 100%; font-size: 1.0em;">
                     <thead>
                         <tr>
                             <th>Step
@@ -792,7 +792,7 @@
             </section>
 
             <section>
-                <h3>Demo: <code>azd up</code></h3>
+                <h3><code>azd up</code></h3>
 
                 <p>First provisions, then deploys. Only re-provisions when Bicep resource definitions have changed.</p>
 
@@ -805,7 +805,7 @@
             </section>
             
             <section>
-                <h3>Demo: <code>azd deploy</code></h3>
+                <h3><code>azd deploy</code></h3>
 
                 <p>If you only changed code, not infra, you can just deploy.</p>
 
@@ -814,7 +814,7 @@
             </section>
 
             <section>
-                <h3>Demo: <code>azd pipeline config</code></h3>
+                <h3><code>azd pipeline config</code></h3>
 
                 <p>Configures the secrets for <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/.github/workflows/azure-dev.yaml">
                     azure-dev.yaml</a>, a Github workflow that provisions and deploys.</p>
@@ -825,9 +825,21 @@
             </section>
 
             <section>
+                <h3><code>azd down</code></h3>
+
+                <p>When you no longer need the resources, delete them! 🗑️<br> 
+                    Don't waste 💵 💵 on unused resources.</p>
+
+                <p>Use <code>azd down</code> to delete everything in the resource group.</p>
+
+                <p>You can also find the resource group in the Portal and delete it there.</p>
+                <img src="screenshot_delete.png" alt="Delete resource group" width="800">
+            </section>
+
+            <section>
                 <h3>Components of an <code>azd</code> project</h3>
 
-                <table>
+                <table style="width:100%; font-size: 1.0em;">
                     <tbody>
                         <tr>
                             <td><a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app/tree/main/infra"><code>infra/</code></a>
@@ -900,12 +912,13 @@
 
 
             <section>
-                <h3>Writing Bicep files</h3>
+                <h3>Tips for writing Bicep files</h3>
 
                 <ul>
                     <li>Install the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep">Bicep extension</a> for VS Code
                     <li>Open the <a target="_blank" href="https://learn.microsoft.com/en-us/azure/templates/">Bicep reference</a>
-                    <li>Search Github for examples
+                    <li>Check <a target="_blank" href="https://azure.github.io/awesome-azd/?tags=python">AZD templates gallery</a>
+                    <li>Search GitHub for examples
                     <li>Create the resource in Portal and export the IAC
                 </ul>
 
