@@ -1,6 +1,6 @@
 
-<!doctype html lang="en">
-<html>
+<!doctype html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -129,10 +129,9 @@
                 <h3>Today's topics</h3>
 
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
-                <ul style="margin-top:20px; font-size:44px; line-height: 2em;">
+                <ul style="margin-top:20px; font-size:40px; line-height: 2em;">
                     <li>Intro to Containers
                     <li>Containerizing Flask
-                    <li>Running locally
                     <li>Hosting containers on Azure
                     <li>Containers with databases
                     <li>Hosting containers on Azure with databases
@@ -146,7 +145,11 @@
             <section>
                 <h3>The goal of containers</h3>
 
-                
+                <p>A container is a standard way to package an application
+                    with all of its dependencies, so that it can be run <em>anywhere</em>.</p>
+                <img src="container_ship.jpg" alt="Container ship at port" width="660" style="border: 1px solid white;">
+            </section>
+
             <section>
                 <h3>Docker overview</h3>
 
@@ -168,7 +171,7 @@
             </section>
 
             <section>
-                <h3>Why Docker?</h3>
+                <h3>The benefits of containers</h3>
 
                 <ul>
                     <li><strong>Environment consistency</strong>:  Ensure that 
@@ -204,19 +207,47 @@
             
             </section>
 
+            <section>
+                <h3>Image registries</h3>
+
+                <p>A <strong>registry</strong> is a place to store and share images.</p>
+
+                <p>Commonly used image registries:</p>
+                    <ul>
+                        <li><a target="_blank" href="https://hub.docker.com/">Docker Hub</a>: contains many images, including official images for python, postgres, Unix systems, etc.
+                        <li><a target="_blank" href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry">GitHub container registry</a>
+                        <li><a target="_blank" href="https://azure.microsoft.com/en-us/services/container-registry/">Azure container registry</a>
+                        <li><a target="_blank" href="https://aws.amazon.com/ecr/">AWS container registry</a>
+                        <li><a target="_blank" href="https://cloud.google.com/container-registry">Google Cloud container registry</a>
+                    <br>
+            </section>
+
+            <section>
+                <h3>Image layers</h3>
+
+                <p>A container image often starts off with a <strong>base image</strong>, 
+                    and then adds layers on top of it.</p>
+                
+                <p>For example:</p>
+                    <ul>
+                        <li>Base image: Ubuntu 20.04
+                        <li>Layer 1: Python 3.9
+                        <li>Layer 2: Flask 2.0
+                        <li>Layer 3: Your app
+                    </ul>
+                <p>Docker can cache each layer, which improves performance.</p>
+            </section>
+
             <section class="heading-only"  data-background-image="background_headingonly.png">
-                <h2>Containerizing<br>
-                Python apps</h2>
+                <h2>Productionizing<br>
+                Flask apps</h2>
 
                 <img src="../media/BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" width="400">
-
             </section>
 
             
             <section>
-                <h3>Sample Flask app 
-                    <a target="_blank" href="https://github.com/codespaces/new?hide_repo_select=true&amp;ref=main&amp;repo=592979753"><img style="float:right;" src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"></a>
-                </h3>
+                <h3>Sample Flask app </h3>
 
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
                 from flask import Flask, render_template, request
@@ -232,13 +263,31 @@
                 </code></pre>
 
                 <p>
-                    👀 Demo: 
-                    <a class="smaller" target="_blank" href="https://flaskcontainer-jd5m-containerapp.graymoss-ba9f7d1d.centralus.azurecontainerapps.io/">flaskcontainer-jd5m-containerapp.graymoss-ba9f7d1d.centralus.azurecontainerapps.io</a>
-                </p>
-                <p>
-                    👩🏼‍💻 Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/simple-flask-server-container/">github.com/pamelafox/simple-flask-server-container</a>
+                    👩🏾‍💻 Want to follow along? Starter repo: <br>
+                    <span class="aka">aka.ms/flask-docker-starter</span><br>
+                    Code: <a class="smaller" target="_blank" href="https://github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart">github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart</a>
                 </p>
 
+            </section>
+
+
+            <section>
+                <h3>Follow along with me!</h3>
+
+                <p>Open this project:<br>
+                    <a target="_blank" href="https://github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart">
+                        github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart
+                    </a>
+                    <span class="aka">aka.ms/flask-docker-starter</span>
+                </p>
+
+                <p>Using either: 
+                    <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
+                    <ul style="float:left; width: 50%">
+                    <li>GitHub Codespaces ➡️
+                    <li>VS Code with Dev Containers extension
+                    </ul>
+                </p>
             </section>
             
             <section>
@@ -246,17 +295,60 @@
 
                 <p>Using the built-in Flask server:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                flask run
+                python3 -m flask run --port 50505 --debug
+                </code></pre>
+                <br>
+                <p class="fragment">⚠️ The dev server is <strong>not recommended</strong> for production use.</p>
+            </section>
+
+            <section>
+                <h3>Running Flask with gunicorn</h3>
+
+                <p>Gunicorn is a production-level server
+                    that can run multiple worker processes.</p>
+
+                <p>Add <code>gunicorn</code> to <code>requirements.txt</code>:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                fastapi==0.95.1
+                gunicorn==20.1.0
                 </code></pre>
 
-                <p>⚠️ <strong>Not recommended</strong> for production use.</p>
-
-                <!--
-                <p>Using production-level server:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                gunicorn app:app
+                <p class="padded">Use <code>gunicorn</code> to run Flask app using default worker:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                python3 -m gunicorn app:app --workers 4 --bind 0.0.0.0:50505
                 </code></pre>
-                -->
+            </section>
+
+            <section>
+                <h3>Configuring gunicorn</h3>
+
+                <p>Gunicorn can be configured with a <code>gunicorn.conf.py</code> file:</p>
+
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="python">
+                import multiprocessing
+                    
+                max_requests = 1000
+                max_requests_jitter = 50
+                log_file = "-"
+                bind = "0.0.0.0:50505"
+                
+                workers = (multiprocessing.cpu_count() * 2) + 1
+                threads = workers
+                timeout = 120
+                </code></pre>
+
+                <p>The run command can be simplified to:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                python3 -m gunicorn app:app
+                </code></pre>
+
+            </section>
+
+            <section class="heading-only"  data-background-image="background_headingonly.png">
+                <h2>Containerizing<br>
+                Flask apps</h2>
+
+                <img src="../media/DATA_BIT.svg" alt="Bit (the raccoon) as Neo from the Matrix" width="400">
             </section>
 
             <section>
@@ -277,7 +369,7 @@
                 <table style="font-size: smaller;">
                     <tr>
                         <td>The base or parent image*
-                        <td><code>FROM python:3.9.13</code>
+                        <td><code>FROM python:3.11</code>
                     <tr>
                         <td>Additional software
                         <td><code>RUN pip3 install Flask gunicorn</code>
@@ -285,12 +377,12 @@
                         <td><code>WORKDIR /code</code><br>
                             <code>COPY . .</code>
                     <tr><td>Services to expose (storage/network)
-                        <td><code>EXPOSE 5000</code>
+                        <td><code>EXPOSE 50505</code>
                     <tr><td>Command to run upon launching container
                         <td><code>ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]</code>
                 </table>
 
-                <p class="smaller">*Find existing images in registries, like <a target="_blank" href="https://hub.docker.com/search?image_filter=official&q=">DockerHub</a>.</p>
+                <p class="smaller">*Find existing images in registries, like <a target="_blank" href="https://hub.docker.com/search?image_filter=official&q=">Docker Hub</a>.</p>
             </section>
             
 
@@ -299,7 +391,7 @@
 
                 <p>A complete file:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="docker">
-                FROM python:3.9.13
+                FROM python:3.11
 
                 WORKDIR /code
 
@@ -308,10 +400,12 @@
 
                 COPY . .
 
-                EXPOSE 5000
+                EXPOSE 50505
 
                 ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]
                 </code></pre>
+
+                <p class="smaller">📖 Learn more: <a target="_blank" href="https://gabnotes.org/docker-images-layers-and-cache/">Docker images layer and cache</a></p>
             </section>
 
             <section>
@@ -319,11 +413,11 @@
 
                 <p>Using the <code>docker build</code> command:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                docker build --tag simpleflaskservercontainer .
+                docker build --tag flaskapp .
                 </code></pre>
 
-                <p>Using the <code>VS Code Docker extension</code>:</p>
-                <img src="vsc-docker.png" alt="Screenshot of Docker extension in Visual Studio Code" width="700">
+                <p class="padded" style="margin-bottom:0px">Using the VS Code Docker extension:</p>
+                <img src="vsc-docker.png" alt="Screenshot of Docker extension in Visual Studio Code" width="600">
 
             </section>
 
@@ -332,68 +426,239 @@
 
                 <p>Using the <code>docker run</code> command:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                docker run --publish 5000:5000 simpleflaskservercontainer
+                docker run --publish 50505:50505 flaskapp
                 </code></pre>
                 
-                <p class="padded" style="margin-bottom:0px">Using Docker Desktop:</p>
-                <img src="docker-run.png" alt="Screenshot of Docker images list with run button next to one of them" width="650">
+                <p class="padded" style="margin-bottom:0px">Using VS Code Docker extension or Docker Desktop:</p>
+                <img src="screenshot_vscode_run.png" alt="Screenshot of Docker images list with run option in context menu" height="300">
+                <img src="docker-run.png" alt="Screenshot of Docker images list with run button next to one of them" height="300">
+            </section>
 
-                <p class="smaller">You can also use the VS Code Docker extension to run containers.</p>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Hosting containers<br>
+                on Azure!</h2>
+
+                <img src="../media/BIT_AZURE.png" alt="Bit (the raccoon) in the clouds next to Azure logo" width="400">
+
+            </section>
+
+
+            <section>
+                <h3>Azure hosting options</h3>
+                
+                <style>
+                table.deploy-stack {
+                    border-spacing: 30px; 
+                    border-collapse: separate;
+                    border: 0px;
+                }
+
+                table.deploy-stack th, table.deploy-stack td {
+                    font-size: 20px;
+                    border-bottom: 0px none;
+                    border-radius: 12px;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 8px;
+                }
+                </style>
+                <table class="deploy-stack">
+                    <tr>
+                        <th>Cloud
+                        <td colspan="4" style="background-color:#767676;">Azure
+                    </tr>
+                    <tr>
+                        <th>Environment
+                        <td colspan="2" style="background-color:#0070c0; color: white;">Containers
+                        <td colspan="2" style="background-color:#0070c0; color: white;">PaaS
+                    </tr>
+                    <tr>
+                        <th>
+                        <td style="background-color: #008850; color: white;">Azure Kubernetes Service
+                        <td style="background-color: #0070c0; color: white;">Container Management
+                        <td style="background-color: #008850; color: white;">Azure App Service
+                        <td style="background-color: #0070c0; color: white;">Serverless
+                        
+                    </tr>
+                    <tr>
+                        <th>
+                        <td>
+                        <td style="background-color: #008850; color: white;">Azure Container Apps
+                        <td>
+                        <td style="background-color: #008850; color: white;">Azure Functions
+                    </tr> 
+                </table>
+                <p class="smaller">For hosting containers, 
+                    <span style="background-color: #008850; color: white; padding: 3px 6px; border-radius: 6px;">Kubernetes Service</span>,
+                    <span style="background-color: #008850; color: white; padding: 3px 6px; border-radius: 6px;">Container Apps</span>, and
+                    <span style="background-color: #008850; color: white; padding: 3px 6px; border-radius: 6px;">App Service (BYOC)</span> 
+                    are all good options.</p>
+
+                <br>
+                <p class="smaller">📖 Learn more: <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/compare-options">Comparing Container Apps with other Azure container options</a></p>
             </section>
 
             <section>
-                <h3>Exercise: Run a container</h3>
+                <h3>Hosting on Azure Container Apps</h3>
 
-                <p>Starting from this repo:<br>
-                   <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container">
-                    github.com/pamelafox/simple-flask-server-container
-                   </a>
+                <p>A <strong>Container Apps Environment</strong>
+                    manages a <strong>Container App</strong>.</p>
+
+                <img src="diagram_azurecontainerapp.png" alt="Flask container architecture diagram: Azure Container Apps Environment, Azure Container App, Azure Container Registry, Container, and PostgreSQL Server">
+                
+                <p>
+                    The <strong>Container App</strong> pulls its image from an <strong>Azure Container Registry</strong>.
+                    (Other registries are also possible)
+                </p>
+            </section>
+
+            <section>
+                <h3>Follow along with me!</h3>
+
+                <p>Open this project:<br>
+                    <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container">
+                        github.com/pamelafox/simple-flask-server-container
+                    <br>
+                    <span class="aka">aka.ms/flask-docker-deploy</span>
+                    </a>
                 </p>
 
-                <ol>
-                    <li>Follow the <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container#local-development-with-docker">Local development with Docker steps</a>.
-                    <li>Try changing the base image to a higher Python version number and re-building / re-running.
-                    <li>Try changing the HTML code and re-building / re-running.
+                <p>Using either: 
+                    <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
+                    <ul style="float:left; width: 50%">
+                    <li>GitHub Codespaces ➡️
+                    <li>VS Code with Dev Containers extension
+                    </ul>
+                </p>
+            </section>
+
+            <section>
+                <h3>Deploying to ACA with Azure CLI</h3>
+
+                <ol class="smaller">
+                    <li>Get a free Azure account and subscription.
+                    <li>Install the Azure CLI (already installed in Dev Container).
+                    <li>Login to your Azure account:
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    az login
+                    </code></pre>
+                    <li>Create a resource group:</p>
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    az group create --name flaskapp-rg --location eastus
+                    </code></pre>
+
+                    <li>Create resources and deploy the app:</p>
+
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    az containerapp up --resource-group flaskapp-rg --name flaskapp-aca \
+                        --ingress external --target-port 50505 --source .
+                    </code></pre>
                 </ol>
-                <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
+            </section>
+
+            <section>
+                <h3>Deploying to ACA with AZD</h3>
+
+                <p>Using this repo (with Bicep files in infra folder):<br>
+                    <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container">
+                        github.com/pamelafox/simple-flask-server-container
+                    <br>
+                    <span class="aka">aka.ms/flask-docker-deploy</span>
+                    </a>
+                </p>
+
+                <ol class="smaller">
+                    <li>Get a free Azure account and subscription.
+                    <li>Install the Azure Developer CLI (already installed in Dev Container).
+                    <li>Login to your Azure account:
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    azd auth login
+                    </code></pre>
+                    <li>Create resources and deploy the app:
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    azd up
+                    </code></pre>
+                </ol>
+            </section>
+
+
+            <section>
+                <h3>Clean up the resources</h3>
+
+                <p>Azure Container Apps pricing is consumption based,
+                    but Azure Container Registry pricing is hourly based.</p>
+
+                <p>When you no longer need the resources, delete them! 🗑️ </p>
+
+                <p>Find the resource group in the Portal and delete it there:</p>
+                <img src="screenshot_delete.png" alt="Delete resource group" width="800">
+
+                <p>If you used <code>azd</code>, an alternative is to call <code>azd down</code>.</p>
+
             </section>
 
             <section class="heading-only"  data-background-image="background_headingonly.png">
-                <h2>Databases in containers</h2>
+                <h2>Accessing databases<br>
+                    from containers
+                </h2>
+
+                <img src="../media/BIT_DEV.svg" alt="Bit (the raccoon) next to a bunch of monitors" width="400">
             </section>
 
             <section>
-                <h3>Sample Flask app with DB
-                    <a target="_blank" href="https://github.com/codespaces/new?hide_repo_select=true&amp;ref=main&amp;repo=592499662"><img style="float:right;" src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces" style="max-width: 100%;"></a>
-                </h3>
+                <h3>Sample Flask app with DB</h3>
 
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
-                ...
                 @app.route('/surveys', methods=['GET'])
                 def surveys_list_page():
-                    surveys = Survey.query.all()    
-                    return render_template('surveys_list.html', surveys=surveys)
+                    return render_template('surveys_list.html', surveys=Survey.query.all())
                 
                 @app.route('/surveys/<int:survey_id>', methods=['GET'])
                 def survey_page(survey_id):
                     survey = Survey.query.where(Survey.id == survey_id).first()
                     answers = Survey.query.where(Answer.survey==survey_id)
                     return render_template('survey_details.html', survey=survey, answers=answers, already_voted='survey_id' in request.cookies)
-                ...
                 </code></pre>
 
                 <p>
                     👀 Demo: 
-                    <a class="smaller" target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io</a>
+                    <a class="smaller" target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">
+                        <span class="aka">aka.ms/flask-surveys-docker</span>
+                    </a>
                 </p>
+
                 <p>
-                    👩🏼‍💻 Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">github.com/pamelafox/flask-surveys-container-app</a>
+                    👩🏾‍💻 Want to follow along? Starter repo: <br>
+                    <span class="aka">aka.ms/flask-docker-starter</span><br>
+                    Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">github.com/pamelafox/flask-surveys-container-app</a>
                 </p>
 
             </section>
 
+
             <section>
-                <h3>Data persistence</h3>
+                <h3>Follow along with me!</h3>
+
+                <p>Open this project:<br>
+                    <a class="smaller" target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">
+                    github.com/pamelafox/flask-surveys-container-app
+                    </a>
+                    <span class="aka">aka.ms/flask-db-container</span>
+                </p>
+
+                <p>Using either: 
+                    <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
+                    <ul style="float:left; width: 60%">
+                    <li>GitHub Codespaces ➡️
+                    <li>VS Code with Dev Containers extension
+                    </ul>
+                </p>
+            </section>
+            
+
+            <section>
+                <h3>Data persistence in containers</h3>
             
                 <p>Data <em>can</em> be written to a container's file system, but:</p>
 
@@ -415,7 +680,7 @@
                 
                 <img alt="Diagram of Docker container and Docker volumes inside the File System" src="volumes.svg" width="450">
 
-                <p>When developing with databases locally, use a volume to store the data for the database.</p>
+                <p>When developing with databases <em>locally</em>, use a volume to store the data for the database.</p>
             </section>
 
             <section>
@@ -472,11 +737,11 @@
             <section>
                 <h3>Docker compose</h3>
 
-                <p>Docker compose is a tool for defining and running multi-container Docker apps,
-                    and <code>docker-compose.yaml</code> is a YAML file that defines the services that make up your app.
+                <p>Docker compose is a tool for multi-container Docker apps<br>
+                    <code>docker-compose.yaml</code> defines the services that make up your app.
                 </p>
 
-                <pre style="font-size:0.4em; margin-top: -10px;"><code data-trim data-noescape class="bash">
+                <pre style="font-size:0.45em; height:480px;"><code data-trim data-noescape class="bash">
                 services:
                     db:
                         image: postgres
@@ -506,163 +771,161 @@
             </section>
 
             <section>
-                <h3>Exercise: Run multiple containers</h3>
+                <h3>Run multiple containers</h3>
 
-                <p>Starting from this repo:<br>
-                    <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">
-                        github.com/pamelafox/flask-surveys-container-app
-                    </a>
-                 </p>
- 
-                 <ol>
-                    <li>Follow the <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app#local-development-with-docker">Local development with Docker steps</a>.
-                    <li>Make a survey in the app.
-                    <li>If you're in Codespaces, change the visibility of port 5000 to "Public" and share the URL of your survey with classmates.
-                 </ol>
-                 <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
+                <p>Run the app and database containers:</p>
+
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
+                docker-compose up
+                </code></pre>
+
             </section>
 
             <section class="heading-only" data-background-image="background_headingonly.png">
                 <h2>Hosting containers<br>
+                    <em>with databases</em><br>
                 on Azure!</h2>
 
                 <img src="../media/BIT_AZURE.png" alt="Bit (the raccoon) in the clouds next to Azure logo" width="400">
 
             </section>
 
-            <!--TODO
-                <section>
-                <h3>Container registries</h3>
-            </section>
-            -->
-
             <section>
-                <h3>Hosting considerations</h3>
+                <h3>Storage in container apps</h3>
 
-                <ul>
-                    <li>How much traffic do you expect?
-                    <li>Do you need scale-to-zero?
-                    <li>How variable will the traffic be?
-                    <li>How much control do you need over the environment?
-                </ul>
-            </section>
+                <p>For temporary storage, you can write to file system or
+                have an <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts?pivots=azure-cli#temporary-storage">
+                    ephemeral volume</a> in a container app.
+                </p>
 
+                <p>For permanent storage, you can mount
+                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts?pivots=azure-cli#azure-files">Azure Files</a>
+                    but performance is too limited to be useful for a database.
+                </p>
 
-            <section>
-                <h3>Azure hosting options</h3>
-                
-                <style>
-                table.deploy-stack {
-                    border-spacing: 30px; 
-                    border-collapse: separate;
-                    border: 0px;
-                }
-
-                table.deploy-stack th, table.deploy-stack td {
-                    font-size: 20px;
-                    border-bottom: 0px none;
-                    border-radius: 12px;
-                    text-align: center;
-                    vertical-align: middle;
-                    padding: 8px;
-                }
-                </style>
-                <table class="deploy-stack">
-                    <tr>
-                        <th>Cloud
-                        <td colspan="4" style="background-color:#ccc;">Azure
-                    </tr>
-                    <tr>
-                        <th>Environment
-                        <td colspan="2" style="background-color:#0070c0; color: white;">Containers
-                        <td colspan="2" style="background-color:#0070c0; color: white;">PaaS
-                    </tr>
-                    <tr>
-                        <th>
-                        <td style="background-color: #00bc70; color: white;">Azure Kubernetes Service
-                        <td style="background-color: #0070c0; color: white;">Container Management
-                        <td style="background-color: #00bc70; color: white;">Azure App Service
-                        <td style="background-color: #0070c0; color: white;">Serverless
-                        
-                    </tr>
-                    <tr>
-                        <th>
-                        <td>
-                        <td style="background-color: #00bc70; color: white;">Azure Container Apps
-                        <td>
-                        <td style="background-color: #00bc70; color: white;">Azure Functions
-                    </tr> 
-                </table>
-                <p class="fragment smaller">For hosting containers, 
-                    <span style="background-color: #00bc70; color: white; padding: 3px 6px; border-radius: 6px;">Kubernetes Service</span>,
-                    <span style="background-color: #00bc70; color: white; padding: 3px 6px; border-radius: 6px;">Container Apps</span>, and
-                    <span style="background-color: #00bc70; color: white; padding: 3px 6px; border-radius: 6px;">App Service</span> 
-                    are all good options.</p>
-            </section>
-
-            <section>
-                <h3>Hosting on Azure Container Apps</h3>
-
-                <p>A <strong>Container Apps Environment</strong>
-                    manages a <strong>Container App</strong>
-                    which pulls its image from an <strong>Azure Container Registry</strong>.</p>
-                <p>The <strong>Container App</strong> connects with the <strong>PostgreSQL server</strong>
-                    over the internal Azure network.</p>
-
-                <img src="flaskdb_container.png" alt="Flask container architecture diagram: Azure Container Apps Environment, Azure Container App, Azure Container Registry, Container, and PostgreSQL Server">
+                <p class="fragment">
+                Best approach for Azure: <br>
+                Use a managed database service <em>outside</em> the container.
                 </p>
             </section>
-            
+
             <section>
-                <h3>Deploying to Azure Container Apps</h3>
+                <h3>Azure managed databases services</h3>
 
-                <p>Using the <a target="_blank" href=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview?WT.mc_id=python-81211-pamelafox">Azure Dev CLI</a>:</p>
+                <style>
+                .fragment.background-green {
+                    background-color: transparent;
+                }
+                .fragment.background-green.visible {
+                    background-color: #04865a;
+                }
+                </style>
 
-                <img src="screenshot_azd_up.png" alt="Screenshot of azd up command deploying to Azure Container Apps" style="border: 1px solid #ccc">
-
+                <p>These are just some of the options:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Azure CosmosDB
+                            <td>Distributed database with multiple APIs, including MongoDB and Cassandra.
+                        </tr>
+                        <tr>
+                            <td>Azure Cosmos DB for PostgreSQL</td>
+                            <td>Distributed database using PostgreSQL and the Citus extension. Can scale vertically and horizontally.
+                            </td>
+                          </tr>
+                        <tr class="fragment custom background-green">
+                            <td>Azure Database for PostgreSQL – Flexible Server</td>
+                            <td>Fully managed service with vertical scaling.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
             <section>
-                <h3>Exercise: Deploy a container app</h3>
+                <h3>Goal: Containerized App with PostgreSQL access</h3>
 
-                <p>Starting from this repo (or your fork):<br>
+                <img src="diagram_azurecontainerapp_postgres.png" alt="Architecture diagram: Azure Container App with PostgreSQL access" width="800" style="border: 10px solid white;">
+            </section>
+
+            <section>
+                <h3>Deploying to ACA + PG with AZD</h3>
+
+                <p>Using this repo (with Bicep files in infra folder):<br>
                     <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">
-                     github.com/pamelafox/flask-surveys-container-app
+                        https://github.com/pamelafox/flask-surveys-container-app
+                    <br>
+                    <span class="aka">aka.ms/flask-db-container</span>
                     </a>
-                 </p>
+                </p>
 
-                <ol>
-                    <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/en-in/free/?WT.mc_id=python-81211-pamelafox">free Azure account</a>
-                    <li>Either open the project in Codespaces 
-                        or follow <a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd?WT.mc_id=python-81211-pamelafox">these installation steps for the Azure Developer CLI.</a>
-                    <li>Run <code>azd up</code>. If prompted, login to your Azure account.
-                    <li>If it deploys successfully, share the endpoint URL with your classmates.
-                        If not, let us know about any bugs. 🪲
-                    <li>Once you've verified the app is working, run <code>azd down</code> to un-deploy the app.
+                <ol class="smaller">
+                    <li>Get a free Azure account and subscription.
+                    <li>Install the Azure Developer CLI (already installed in Dev Container).
+                    <li>Login to your Azure account:
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    azd auth login
+                    </code></pre>
+                    <li>Create resources and deploy the app:
+                    <pre style="font-size:0.8em;"><code data-trim data-noescape class="bash">
+                    azd up
+                    </code></pre>
                 </ol>
-
-                <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
 
-            <section class="heading-only" data-background-image="background_headingonly.png">
-                <h2>More Python + Containers templates</h2>
+            <section>
+                <h3>Clean up the resources</h3>
 
-                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%">
+                <p>Azure Container App has usage-based pricing. Both Azure Container Registry and PostgreSQL flexible server have hourly-based pricing.</p>
+
+                <p>When you no longer need the resources, delete them! 🗑️ </p>
+
+                <p>Find the resource group in the Portal and delete it there:</p>
+                <img src="screenshot_delete.png" alt="Delete resource group" width="800">
+
+                <p>If you used <code>azd</code>, an alternative is to call <code>azd down</code>.</p>
+
             </section>
 
+            <section>
+                <h3>More containerized Python templates</h3>
+
+                <p>Find lots of examples in the AZD templates gallery:
+                <br>
+                <a class="smaller" target="_blank" href="https://azure.github.io/awesome-azd/?operator=AND&tags=python&tags=aca">
+                https://azure.github.io/awesome-azd/?operator=AND&tags=python&tags=aca
+                </a>
+                </p>
+
+                <img src="screenshot_azdcontainers.png" alt="Screenshot of AZD templates gallery" width="600">
+               
+
+            </section>
 
             <section>
                 <h3>More resources</h3>
 
                 <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%" style="float:right;">
 
-                <ul style="float:left; width: 60%; display: grid; gap: 18px;">
-                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/quickstarts-app-hosting">Hosting Python apps on Azure</a>
+                <ul style="float:left; width: 60%; margin-bottom: 40px;">
                     <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/containers-in-azure-overview-python">Python Container Apps in Azure</a>
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/quickstarts-app-hosting">Hosting Python apps on Azure</a>
                     <li><a target="_blank" href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a>
                     <li><a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/how-to-optimize-your-codespaces-pro-tips-for-managing-quotas/ba-p/3712032">How to optimize your Codespaces</a>
                 </ul>
+
+                <p>📋 Answer our survey! <br>
+                    <span class="aka">aka.ms/pydaysurvey</span>
+                </p>
+                <br>
+                <p>🙏🏻 Thank you for attending! 🙏🏾</p>
             </section>
 
             <section class="heading-only"  data-background-image="background_headingonly.png">
