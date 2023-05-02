@@ -110,7 +110,7 @@
         <div class="slides">
 
             <section class="heading-only" data-background-image="background_headingonly.png">
-                <h1>Containerizing Python Web Apps with Docker
+                <h1>Containerizing Python<br>Web Apps with Docker
                 </h1>
                 <div class="no-print" style="text-align: left; margin-top: 120px; font-size: 70%;">
                     Tips for navigating the slides:<br>
@@ -257,15 +257,16 @@
                 @app.route('/')
                 def index():
                    return render_template('index.html')
-            
-                if __name__ == '__main__':
-                   app.run()
+
+                @app.route('/hello')
+                def hello():
+                    return render_template('hello.html', name=request.args.get('name'))
                 </code></pre>
 
                 <p>
                     👩🏾‍💻 Want to follow along? Starter repo: <br>
                     <span class="aka">aka.ms/flask-docker-starter</span><br>
-                    Code: <a class="smaller" target="_blank" href="https://github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart">github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart</a>
+                    Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/simple-flask-server-container-starter">github.com/pamelafox/simple-flask-server-container-starter</a>
                 </p>
 
             </section>
@@ -275,17 +276,18 @@
                 <h3>Follow along with me!</h3>
 
                 <p>Open this project:<br>
-                    <a target="_blank" href="https://github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart">
-                        github.com/Azure-Samples/msdocs-python-flask-webapp-quickstart
-                    </a>
+                    <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container-starter">github.com/pamelafox/simple-flask-server-container-starter
+                    
                     <span class="aka">aka.ms/flask-docker-starter</span>
+                    </a>
                 </p>
 
                 <p>Using either: 
                     <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
-                    <ul style="float:left; width: 50%">
+                    <ul style="float:left; width: 55%">
                     <li>GitHub Codespaces ➡️
                     <li>VS Code with Dev Containers extension
+                    <li>Local dev with virtual environment
                     </ul>
                 </p>
             </section>
@@ -294,7 +296,7 @@
                 <h3>Running Flask app locally</h3>
 
                 <p>Using the built-in Flask server:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
                 python3 -m flask run --port 50505 --debug
                 </code></pre>
                 <br>
@@ -309,11 +311,11 @@
 
                 <p>Add <code>gunicorn</code> to <code>requirements.txt</code>:</p>
                 <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
-                fastapi==0.95.1
+                Flask==2.2.3
                 gunicorn==20.1.0
                 </code></pre>
 
-                <p class="padded">Use <code>gunicorn</code> to run Flask app using default worker:</p>
+                <p class="padded">Use <code>gunicorn</code> to run Flask app with multiple workers:</p>
                 <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
                 python3 -m gunicorn app:app --workers 4 --bind 0.0.0.0:50505
                 </code></pre>
@@ -406,6 +408,19 @@
                 </code></pre>
 
                 <p class="smaller">📖 Learn more: <a target="_blank" href="https://gabnotes.org/docker-images-layers-and-cache/">Docker images layer and cache</a></p>
+            </section>
+
+            <section>
+                <h3>Add a dockerignore file</h3>
+
+                <p>Prevent unnecessary files from being copied to the image:</p>
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="docker">
+                .git*
+                .venv/
+                **/*.pyc
+                __pycache__/
+                </code></pre>
+
             </section>
 
             <section>
@@ -621,16 +636,16 @@
                     return render_template('survey_details.html', survey=survey, answers=answers, already_voted='survey_id' in request.cookies)
                 </code></pre>
 
-                <p>
+                <p class="smaller">
                     👀 Demo: 
-                    <a class="smaller" target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">
+                    <a target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">
                         <span class="aka">aka.ms/flask-surveys-docker</span>
                     </a>
                 </p>
 
-                <p>
+                <p class="smaller">
                     👩🏾‍💻 Want to follow along? Starter repo: <br>
-                    <span class="aka">aka.ms/flask-docker-starter</span><br>
+                    <span class="aka">aka.ms/flask-db-container</span><br>
                     Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">github.com/pamelafox/flask-surveys-container-app</a>
                 </p>
 
@@ -650,8 +665,9 @@
                 <p>Using either: 
                     <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
                     <ul style="float:left; width: 60%">
-                    <li>GitHub Codespaces ➡️
+                    <li>GitHub Codespaces ➡️ ➡️ ➡️
                     <li>VS Code with Dev Containers extension
+                    <li>Local editor with virtual environment
                     </ul>
                 </p>
             </section>
@@ -668,7 +684,7 @@
                     <li>Container storage drives are less performant
                 </ul>
                 
-                <p>If you need to persist data, you should store it outside the container.</p>
+                <p>If you need to persist data, you should store it <em>outside</em> the container.</p>
                 
             </section>
 
@@ -698,8 +714,8 @@
 
                 <p class="padded">Run a PostgreSQL container with the volume and network:</p>
                 <pre style="font-size:0.7em; margin-top: -10px;"><code data-trim data-noescape class="bash">
-                docker run --rm -d -v postgres-data:/var/lib/postgresql/data \
-                    --network postgres-net --name db \
+                docker run --rm -d --name db --network postgres-net \
+                    -v postgres-data:/var/lib/postgresql/data \
                     -e POSTGRES_USER=app_user -e POSTGRES_PASSWORD=app_password \
                     postgres
                 </code></pre>
@@ -722,14 +738,14 @@
 
                 <p>Build the container:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                docker build --tag flasksurveyscontainerapp .
+                docker build --tag flasksurveyscontainerapp src/
                 </code></pre>
 
                 <p class="padded">Run the app container over the same network:</p>
 
                 <pre style="font-size:0.7em; margin-top: -10px;"><code data-trim data-noescape class="bash">
-                docker run --rm -d --network postgres-net \
-                    --name flask-db-app -p 5000:5000 \
+                docker run --rm --name flask-db-app --network postgres-net \
+                    --env-file .env -p 50505:50505 \
                     flasksurveyscontainerapp
                 </code></pre>
             </section>
@@ -737,8 +753,8 @@
             <section>
                 <h3>Docker compose</h3>
 
-                <p>Docker compose is a tool for multi-container Docker apps<br>
-                    <code>docker-compose.yaml</code> defines the services that make up your app.
+                <p>Docker compose is a tool for multi-container Docker apps.<br>
+                    <code>docker-compose.yaml</code> defines the services that make up your app:
                 </p>
 
                 <pre style="font-size:0.45em; height:480px;"><code data-trim data-noescape class="bash">
@@ -798,7 +814,7 @@
                     ephemeral volume</a> in a container app.
                 </p>
 
-                <p>For permanent storage, you can mount
+                <p class="fragment">For permanent storage, you can mount
                     <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts?pivots=azure-cli#azure-files">Azure Files</a>
                     but performance is too limited to be useful for a database.
                 </p>
