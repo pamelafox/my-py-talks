@@ -43,7 +43,7 @@
 
 			.reveal section.heading-only {
 				text-align: left;
-				padding-top: 10%;
+				padding-top: 5%;
 			}
 
             .no-code-badge .code-badge {
@@ -125,12 +125,15 @@
             <section class="heading-only" style="padding-top:5%"  data-background-image="background_headingonly.png">
                 <h1>Build, Test, and Deploy HTTP APIs with FastAPI 
                 </h1>
+
+                <h2><span class="aka">aka.ms/pyday-apis</span></h2>
+
                 <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
-                    Tips for navigating the slides:
+                    Tips for navigating the slides:<br>
                     <ul>
-                        <li>Press O or Escape for overview mode.</li>
-                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Use the left-side menu for a table of contents.</li>
                         <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
                     </ul>
                 </div>
 
@@ -186,7 +189,7 @@
             </section>
 
             <section>
-                <h3>Today's topics</h3>
+                <h3>What we'll cover</h3>
 
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
                 <ul style="margin-top:20px; font-size:34px; line-height: 1.5em;">
@@ -374,8 +377,9 @@
 
                 <p>
                     👩🏼‍💻 Want to follow along? Starter repo: <br>
+                    <a target="_blank" href="https://github.com/pamelafox/pyday-fastapi-starter">
                     <span class="aka">aka.ms/fastapi-starter</span><br>
-                    <a target="_blank" href="https://github.com/pamelafox/pyday-fastapi-starter">https://github.com/pamelafox/pyday-fastapi-starter</a>
+                    https://github.com/pamelafox/pyday-fastapi-starter</a>
                 </p>
             </section>
 
@@ -650,8 +654,9 @@
                 <p>Open the branch with all the changes:<br>
                     <a target="_blank" href="https://github.com/pamelafox/pyday-fastapi-starter/tree/deploy-to-azure">
                     github.com/pamelafox/pyday-fastapi-starter/tree/deploy-to-azure
-                    </a>
+                    <br>
                     <span class="aka">aka.ms/fastapi-ready2deploy</span>
+                </a>
                 </p>
 
                 <p>Easiest option: 😍 GitHub Codespaces 😍 </p>
@@ -684,7 +689,7 @@
 
                 table.deploy-stack th, table.deploy-stack td {
                     color: white;
-                    font-size: 20px;
+                    font-size: 24px;
                     border-bottom: 0px none;
                     border-radius: 12px;
                     text-align: center;
@@ -869,6 +874,8 @@
     <script>
         const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
         Reveal.initialize({
+            width: 1280,
+            height: 720,
             hash: true,
             center: false,
             slideNumber: true,
