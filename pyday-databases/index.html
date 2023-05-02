@@ -131,14 +131,16 @@
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
                 <ul style="margin-top:20px; font-size:34px; line-height: 1.5em;">
                     <li>Databases
+                    <li>Databases in Python
+                    <li>Databases on Azure
                     <li>Django
-                    <li>Hosting on Azure
+                    <li>Django apps on Azure
                 </ul>
             </section>
 
 
             <section class="heading-only" data-background-image="background_headingonly.png">
-                <h2>Databases</h2>
+                <h2>Intro to Databases</h2>
             </section>
 
             <section>
@@ -197,6 +199,57 @@
                             <td>1761 Alcatraz Ave</td>
                         </tr>
                 </table>
+            </section>
+
+            <section>
+                    <h3>Related tables</h3>
+
+                    restaurants:
+                    <table style="margin:0;">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Zomsa</td>
+                                <td>10558 San Pablo Ave</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Udupi Palace</td>
+                                <td>1903 University Ave</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Easy Creole</td>
+                                <td>1761 Alcatraz Ave</td>
+                            </tr>
+                    </table>
+
+                    <br>
+                    reviews:
+                    <table style="margin:0;">
+                        <thead>
+                            <tr>
+                                <th>id
+                                <th>restaurant_id
+                                <th>text
+                        <tbody>
+                            <tr>
+                                <td>1
+                                <td>3
+                                <td>so yummy!
+                            <tr>
+                                <td>2
+                                <td>3
+                                <td>scrumdiddlyumptious!
+                        </tbody>
+                    </table>
 
                 <p>Tables can be related to each other using <strong>foreign keys</strong>.</p>
             </section>
@@ -204,21 +257,27 @@
             <section>
                 <h3>PostgreSQL</h3>
 
-                <p>PostgreSQL is a popular open-source relational database,
-                    which has a strong community and extension ecosystem.
+                <img src="logo_postgres.png" alt="PostgreSQL logo" width="300" style="float:right; margin-left: 20px;">
+
+                <p>PostgreSQL is a popular open-source relational database
+                    that has a strong community and extension ecosystem.
                 </p>
 
                 <p>It's free and can be installed on your computer.</p>
                 <p>It's also available as a service on Azure.</p>
 
-                <p>Check out all the talks from CitusCon about PostgreSQL!</p>
+                <p>📺 Check out the CitusCon talks about PostgreSQL!<br>
+                    <a target="_blank" href=https://www.youtube.com/hashtag/cituscon">
+                        youtube.com/hashtag/cituscon
+                    </a>
+                </p>
             </section>
 
             <!-- view-source:https://inst.eecs.berkeley.edu/~cs61a/sp21/assets/slides/35-Intro_to_SQL.html#/2 -->
 
 
             <section  class="heading-only" data-background-image="background_headingonly.png">
-                <h2>PostgreSQL Dev Container</h2>
+                <h2>PostgreSQL in VS Code</h2>
             </section>
 
             <section>
@@ -227,14 +286,15 @@
                 <p>Open this project:<br>
                     <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">
                         github.com/pamelafox/postgresql-playground
-                    </a>
+                    <br>
                     <span class="aka">aka.ms/postgres-playground</span>
+                    </a>
                 </p>
 
                 <p>Using either: 
                     <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
-                    <ul style="float:left; width: 50%">
-                    <li>GitHub Codespaces ➡️
+                    <ul style="float:left; width: 60%">
+                    <li>GitHub Codespaces ➡️ ➡️ ➡️
                     <li>VS Code with Dev Containers extension
                     </ul>
                 </p>
@@ -242,6 +302,7 @@
 
             <section>
                 <h3>Dockerfile</h3>
+
 
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="Dockerfile">
                 ARG IMAGE=python:3
@@ -252,7 +313,7 @@
                         && apt-get clean -y && rm -rf /var/lib/apt/lists/*
                 </code></pre>
 
-                <p>🔗 Using container image from <a target="_blank" href="https://mcr.microsoft.com/en-us/product/devcontainers/python/about">mcr.microsoft.com devcontainer Python images</a></p>
+                <p>🔗 Using container image from <a target="_blank" href="https://mcr.microsoft.com/en-us/product/devcontainers/python/about">MCR devcontainer Python images</a></p>
                 <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/Dockerfile">Dockerfile</a></p>
 
             </section>
@@ -290,7 +351,7 @@
             </section>
 
             <section>
-                <h3>devcontainer.json</h3>
+                <h3>devcontainer.json: Top level config</h3>
 
                 <p>Configuration needed to work with the Docker files:</p>
                 <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
@@ -311,9 +372,9 @@
             </section>
 
             <section>
-                <h3>devcontainer.json</h3>
+                <h3>devcontainer.json: VS Code extensions</h3>
 
-                <p>Recommended extensions:</p>
+                <p>Installing extensions:</p>
                 <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
                     ...
                     "extensions": [
@@ -331,7 +392,7 @@
             </section>
 
             <section>
-                <h3>devcontainer.json</h3>
+                <h3>devcontainer.json: VS Code settings</h3>
 
                 <p>Configuring SQLTools extension:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="json">
@@ -380,8 +441,8 @@
 
                 conn = psycopg2.connect("dbname=example")
                 cur = conn.cursor()
-                cur.execute("SELECT * FROM restaurants;")
-                results = cur.fetchall()
+                cur.execute("INSERT INTO restaurants (id, name) VALUES ('1', 'test')")
+                conn.commit()
                 cur.close()
                 </code></pre>
 
@@ -576,15 +637,17 @@
                 <p>Open this project:<br>
                     <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app">
                         github.com/Azure-Samples/msdocs-django-postgresql-sample-app
-                    </a>
+                    <br>
                     <span class="aka">aka.ms/django-restaurants</span>
+                </a>
                 </p>
 
                 <p>Using either: 
                     <img src="screenshot_codespacetab.png" alt="Screenshot of GitHub Codespaces tab" width="400" style="float:right;">
-                    <ul style="float:left; width: 50%">
-                    <li>GitHub Codespaces ➡️
+                    <ul style="float:left; width: 55%">
+                    <li>GitHub Codespaces ➡️ ➡️ ➡️
                     <li>VS Code with Dev Containers extension
+                    <li>Local environment with Python 3 and PostgreSQL installed
                     </ul>
                 </p>
             </section>
