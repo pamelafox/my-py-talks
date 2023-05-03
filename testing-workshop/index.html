@@ -126,8 +126,8 @@
                     <li>Name
                     <li>Pronouns
                     <li>Location
-                    <li>Programming/Web experience 
-                    <li>What interests you about containerization?
+                    <li>Programming experience 
+                    <li>What interests you about testing?
                     <li>What is the coolest/weirdest/cutest animal? 🐍
                 </ul>
                 <p>
@@ -168,7 +168,7 @@
             <section>
                 <h3>Testing pyramid</h3>
 
-                <img src="media/software_testing_pyramid.png" alt="Software testing pyramid" height="550"/>
+                <img src="software_testing_pyramid.png" alt="Software testing pyramid" height="550"/>
             </section>
 
             <section>
@@ -216,7 +216,7 @@
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
                     import unittest
 
-                    from sum_scores import sum_scores
+                    from summer import sum_scores
 
                     class TestSumScores(unittest.TestCase):
 
@@ -259,7 +259,7 @@
                 popular third-party alternative for writing tests.</p>
 
                 <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
-                from sum_scores import sum_scores
+                from summer import sum_scores
 
                 def test_sum_empty():
                     assert sum_scores([]) == 0
@@ -412,7 +412,7 @@
 
                 <p>Install the package:</p>
                 <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
-                pip3 install coverage
+                pip3 install pytest-cov
                 </code></pre>
 
                 <p>Run with pytest:</p>
