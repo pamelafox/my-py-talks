@@ -37,7 +37,9 @@
 			}
 
       .reveal pre code {
-        padding: 0px 8px 0px 8px;
+        padding: 8px 8px 8px 8px;
+
+        background-color: #ececec;
       }
 
       .reveal .code-badge {
@@ -50,7 +52,7 @@
 
 			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
 				font-family: "Roboto", sans-serif;
-				color: #0072c1;
+				color: rgb(50, 50, 50);
 			}
 
 			.reveal section.heading-only {
@@ -132,12 +134,16 @@
 
 <section class="heading-only" style="padding-top:5%">
 
-    <h1 style="font-size:2.5em; text-align: left;">Automated Accessibility Audits
+    <h1 style="font-size:2.5em;">Automated Accessibility Audits
     </h1>
 
+    <img src="screenshot_axe_extension.png" height="250" style="border:1px solid #ccc" alt="Screenshot of Axe-core browser extension showing 37 issues">
+    <div style="vertical-align:top; margin-top: 100px; display:inline-block;">➡️</div>
+    <img src="screenshot_a11y_violations.png" height="250" style="border:1px solid #ccc" alt="Screenshot of Pytest test failure showing 6 a11y violations">
 
-    <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%; display:none;">
-        Tips for navigating the slides:
+    <h3>Pamela Fox, North Bay Python 2023</h3>
+    <div class="no-print" style="text-align: left; margin-top: 20px; font-size: 70%; display:none;">
+        Tips for navigating the slides:<br>
         <ul>
             <li>Press O or Escape for overview mode.</li>
             <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
@@ -147,9 +153,10 @@
 
 </section>
 
-<section data-visibility="hidden">
+<section>
     <h3>About me</h3>
 
+    <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
     <p>Python Cloud Advocate at Microsoft</p>
     <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
     <br>
@@ -176,19 +183,20 @@
 
 <section>
   <h3>My accessibility journey</h3>
-  <p>aka, why am I talking to you about this?</p>
   <ul>
-    <li>Coursera: Addressed site-wide issues from first external audit
-    <li>Khan Academy: Helped team addressing forum UI issues from external audit
-    <li>Khan Academy: Addressed accessibility issues with AP CSP content
-    <li>Microsoft: Figuring out how to make sure our samples are accessible
+    <li><strong>Coursera</strong>: Addressed site-wide issues from first external audit
+    <img src="screenshot_coursera.png" alt="Screenshot of Coursera website from initial launch" height="80" style="border: 1px solid #ccc">
+    <li><strong>Khan Academy</strong>: Helped team address UI issues from external audit
+    <img src="screenshot_ka_banner.png" alt="Screenshot of Khan Academy banner" height="80" style="border: 1px solid #ccc">
+    <li><strong>Khan Academy</strong>: Addressed accessibility issues with AP CSP content
+    <li><strong>Microsoft</strong>: Making sure our samples are accessible (and stay accessible)
       <br>
-      <span class="fragment">🥅 Goal for today!</span>
+      <span class="fragment"> ⬆️ Goal for today! 🥅 </span>
   </ul>
 </section>
 
 <section class="heading-only">
-  <h2>What is accessibility?</h2>
+  <h2>Accessibility</h2>
 </section>
 
 <section>
@@ -260,26 +268,49 @@
 
 
 <section class="heading-only">
-  <h2>Measuring accessibility</h2>
+  <h2>📏 Measuring accessibility 🧏🏽‍♀️</h2>
 </section>
 
 <section>
   <h3>Manually</h3>
 
-  <p>You can find many issues using browser extensions and manual testing (like keyboard tests).</p>
+  <style type="text/css">
+.extension-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
 
-  <ul>
-    <li>Accessibility Insights extension (
-      <a target="_blank" href="https://chrome.google.com/webstore/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni">Chrome</a>,
-      <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/accessibility-insights-fo/ghbhpcookfemncgoinjblecnilppimih">Edge</a>
-      )
-    <li>Axe-core extension (
-      <a target="_blank" href="https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd">Chrome</a>,
-      <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/axe-devtools-web-access/kcenlimkmjjkdfcaleembgmldmnnlfkn">Edge</a>
-      )
-  </ul>
+.extension-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  <p>But, will you remember to use these tools every time you make a change?</p>
+.extension-grid-caption {
+  text-align: center;
+}
+  </style>
+  <p>You can find many issues using browser extensions and manual testing.</p>
+
+  <div class="extension-grid">
+    <div class="extension-grid-item">
+      <img src="screenshot_accessibility_insights.png" alt="Screenshot from Accessibility Insights Fast Pass page showing 31 violations" height="300">
+      <p class="extension-grid-caption">Accessibility Insights extension <br>(
+        <a target="_blank" href="https://chrome.google.com/webstore/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni">Chrome</a>,
+        <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/accessibility-insights-fo/ghbhpcookfemncgoinjblecnilppimih">Edge</a>)
+      </p>
+    </div>
+    <div class="extension-grid-item">
+      <img src="screenshot_axe_extension.png" alt="Screenshot from Axe-core extension showing 37 violations" height="300">
+      <p class="extension-grid-caption">Axe-core extension <br>(
+        <a target="_blank" href="https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd">Chrome</a>,
+        <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/axe-devtools-web-access/kcenlimkmjjkdfcaleembgmldmnnlfkn">Edge</a>
+        )</p>
+    </div>
+  </div>
+
+  <p class="fragment smaller">But, will you remember to use these tools every time you make a change?</p>
 
 </section>
 
@@ -307,7 +338,7 @@
 </section>
 
 <section class="heading-only">
-  <h2>Axe-core</h2>
+  <h2>⛏️ Axe-core 🤘🏽</h2>
 </section>
 
 <section>
