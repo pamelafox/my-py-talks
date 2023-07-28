@@ -1,0 +1,896 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Automated Accessibility Audits</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+        <style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+      .slide-number-a {
+          background-color: #747474;
+      }
+
+      .reveal section li {
+          margin-bottom: 12px;
+      }
+
+			.reveal pre {
+				width: 100%;
+				border-left: 2px solid #ccc;
+        border-right: 2px solid #ccc;
+				box-shadow: none;
+        font-size: 30px;
+			}
+
+      .reveal pre code {
+        padding: 0px 8px 0px 8px;
+      }
+
+      .reveal .code-badge {
+        right: 10px;
+      }
+
+      .reveal code {
+          font-family: "Roboto Mono", monospace;
+      }
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:10%;
+			}
+
+      .no-code-badge .code-badge {
+          display: none;
+      }
+
+      .code-badge-language {
+          display: none;
+      }
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+            .smaller {
+                font-size: smaller;
+            }
+
+            code {
+                padding: 2px 4px;
+                font-size: 90%;
+                color: #0072c1;
+                background-color: #f9f2f4;
+                border-radius: 4px;
+            }
+
+            p.padded {
+                margin-top: 32px;
+            }
+
+            section .row {
+                display: flex;
+            }
+
+            section .column {
+                flex: 48%;
+                margin: 10px;
+            }
+
+      .reveal pre.overflow-in-print {
+        height: 400px;
+        overflow-y: scroll;
+      }
+      .print-pdf .reveal pre.overflow-in-print {
+        height: auto;
+        overflow-y: visible;
+      }
+
+			@media print
+			{
+				.no-print, .no-print *, .code-badge, .slide-menu-button
+				{
+					display: none !important;
+				}
+        .reveal pre.overflow-in-print {
+          height: 2000px;
+          overflow-y: visible;
+        }
+			}
+
+      .aka {
+        font-family: "Roboto Mono", monospace;
+        background-color: #1c6192;
+        color: white;
+        padding: 8px;
+        border-radius: 6px;
+        display: inline-block;
+      }
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+<section class="heading-only" style="padding-top:5%">
+
+    <h1 style="font-size:2.5em; text-align: left;">Automated Accessibility Audits
+    </h1>
+
+
+    <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%; display:none;">
+        Tips for navigating the slides:
+        <ul>
+            <li>Press O or Escape for overview mode.</li>
+            <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+            <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+        </ul>
+    </div>
+
+</section>
+
+<section data-visibility="hidden">
+    <h3>About me</h3>
+
+    <p>Python Cloud Advocate at Microsoft</p>
+    <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+    <br>
+    <p>Find me online at:</p>
+    <table style="width:40%; float: left; font-size:28px;">
+        <tr>
+          <td>Mastodon
+          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+        </tr>
+        <tr>
+            <td>Twitter
+            <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+          </tr>
+        <tr>
+            <td>GitHub
+            <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+          </tr>
+        <tr>
+            <td>Website
+            <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+          </tr>
+      </table>
+</section>
+
+<section>
+  <h3>My accessibility journey</h3>
+  <p>aka, why am I talking to you about this?</p>
+  <ul>
+    <li>Coursera: Addressed site-wide issues from first external audit
+    <li>Khan Academy: Helped team addressing forum UI issues from external audit
+    <li>Khan Academy: Addressed accessibility issues with AP CSP content
+    <li>Microsoft: Figuring out how to make sure our samples are accessible
+      <br>
+      <span class="fragment">🥅 Goal for today!</span>
+  </ul>
+</section>
+
+<section class="heading-only">
+  <h2>What is accessibility?</h2>
+</section>
+
+<section>
+  <h3>What is accessibility?</h3>
+
+  <style>
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.image-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-caption {
+  text-align: center;
+}
+  </style>
+
+  <p>Making your website usable by as many people as possible,
+  especially for those with permanent, temporary, or situational disabilities.</p>
+
+  <div class="image-grid">
+    <div class="image-grid-item">
+      <img src="disability_amputee.png" alt="Photo of person with amputated arm">
+      <p class="image-caption">Permanent</p>
+    </div>
+    <div class="image-grid-item">
+      <img src="disability_broken.png" alt="Photo of kid with broken arm">
+      <p class="image-caption">Temporary</p>
+    </div>
+    <div class="image-grid-item">
+      <img src="disability_baby.png" alt="Photo of parent holding baby with arm">
+      <p class="image-caption">Situational</p>
+    </div>
+  </div>
+
+</section>
+
+<section>
+  <h3>Disabilities are diverse</h3>
+
+  <div style=" float:left; width: 500px; margin-right:20px;">
+  <p>Consider the difficulties each of these people might experience on your site:
+  
+  <ul class="fragment">
+    <li>Tricky drag and drop interactions
+    <li>Lack of color contrast
+    <li>Audio notifications without captions
+    <li>Text-to-speech failures
+    </ul>
+  </p>
+</div>
+  <img src="disabilities_matrix.png" alt="Matrix of accessibility scenarios - chronic, temporary, situational" height="600" style="float:left;">
+</section>
+
+<section>
+  <h3>Accessibility is important</h3>
+  <p>It's the right thing to do.</p>
+  <p>It's the law.</p>
+  <p>It's good for business.</p>
+  <br>
+  <p class="fragment">But what we measure matters...</p>
+</section>
+
+
+<section class="heading-only">
+  <h2>Measuring accessibility</h2>
+</section>
+
+<section>
+  <h3>Manually</h3>
+
+  <p>You can find many issues using browser extensions and manual testing (like keyboard tests).</p>
+
+  <ul>
+    <li>Accessibility Insights extension (
+      <a target="_blank" href="https://chrome.google.com/webstore/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni">Chrome</a>,
+      <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/accessibility-insights-fo/ghbhpcookfemncgoinjblecnilppimih">Edge</a>
+      )
+    <li>Axe-core extension (
+      <a target="_blank" href="https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd">Chrome</a>,
+      <a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/axe-devtools-web-access/kcenlimkmjjkdfcaleembgmldmnnlfkn">Edge</a>
+      )
+  </ul>
+
+  <p>But, will you remember to use these tools every time you make a change?</p>
+
+</section>
+
+<section>
+  <h3>Audits</h3>
+
+  <p>External audits are performed by accessibility experts
+    and can provide great insights.</p>
+
+  <p>But, they can be expensive and time-consuming, so are often only done once a year.
+    It's easy to regress between audits.
+  </p>
+</section>
+
+<section>
+  <h3>Automated</h3>
+
+  <p>Automated tools can help you catch issues before they get to production.</p>
+  
+  <ul>
+    <li><a target="_blank" href="https://github.com/dequelabs/axe-core">axe-core</a> (JavaScript): Engine that detects accessibility issues
+    <li><a target="_blank" href="https://github.com/pa11y/pa11y">pa11y</a> (JavaScript CLI): Wrapper for axe-core and other tools
+    <li><a target="_blank" href="https://github.com/GoogleChrome/lighthouse">lighthouse</a> (JavaScript CLI): Wrapper for axe-core and other tools
+  </ul>
+</section>
+
+<section class="heading-only">
+  <h2>Axe-core</h2>
+</section>
+
+<section>
+  <h2>Using axe-core</h2>
+
+  <p>Axe-core must be used on an actually rendered webpage in a browser;
+    not just a static HTML file.</p>
+
+  <pre style="font-size:0.6em;"><code data-trim data-noescape class="html">
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Accessibility test&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Accessibility test&lt;/h1&gt;
+      &lt;img src="pamela_baby_donkey.png"&gt;
+      &lt;script src="https://cdn.jsdelivr.net/npm/axe-core@4.7.2/axe.min.js"&gt;&lt;/script&gt;
+      &lt;script&gt;
+      axe.run().then(results => {
+          console.log(results.violations);
+      })
+    &lt;/script&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+  </code></pre>
+  <a target="_blank" href="example.html">🔗 example.html</a>
+</section>
+
+<section>
+  <h3>Axe-core results</h3>
+
+  <p>The results contains a list of violations, keyed by the rule ID.</p>
+  <pre style="font-size:0.6em;"><code data-trim data-noescape class="json">
+  [
+  {"id": "image-alt",
+   "impact": "critical",
+   "tags": ["cat.text-alternatives", "wcag2a", "wcag111", "section508",
+            "section508.22.a", "ACT", "TTv5", "TT7.a", "TT7.b"],
+   "description": "Ensures &lt;img&gt; elements have alternate text or a role of none or presentation",
+   "help": "Images must have alternate text",
+   "helpUrl": "https://dequeuniversity.com/rules/axe/4.7/image-alt?application=axeAPI",
+   "nodes": [{
+        "html": "&lt;img src=\"pamela_baby_donkey.jpg\" width=\"300\"&gt;",
+        "target": ["img"],
+        "failureSummary": "Fix any of the following:\nElement does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+    }]
+  }
+  ...
+  ]
+  </code></pre>
+
+  <a target="_blank" href="https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#results-object">🔗 Axe-core API docs: results object</a>
+</section>
+
+<section>
+  <h3>Using axe-core from Python</h3>
+
+  <p>We need a way to programmatically render a webpage and run JS on it.</p>
+  <br>
+  <p>Webpage renderers:</p>
+  <ul>
+    <li><a target="_blank" href="https://www.selenium.dev/">Selenium</a>: Supports many browsers, but can be slow/flaky
+    <li><a target="_blank" href="https://playwright.dev/python/">Playwright</a>: Newer, faster, more reliable
+  </ul>
+</section>
+
+<section class="heading-only">
+  <h2>Axe-core + Playwright</h2>
+</section>
+
+<section>
+  <h3>Playwright: Getting started</h3>
+
+  <p>Playwright is available for <a target="_blank" href="https://playwright.dev/python/">Python</a> (plus other languages).</p>
+
+  <p class="padded">Install the package:</p>
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m pip install playwright
+  </code></pre>
+  <p class="padded">Install the browsers:</p>
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m playwright install --with-deps
+  </code></pre>
+</section>
+
+<section>
+  <h3>Playwright: Rendering a webpage</h3>
+  <p>Use either the sync or async API:</p>
+  <pre><code data-trim data-noescape class="python">
+  from playwright.sync_api import sync_playwright
+
+  with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto("https://2023.northbaypython.org/")
+    print(page.title())
+    browser.close()
+  </code></pre>
+
+  <p>You can use methods to interact with the webpage, like to click on a button or fill in a form.</p>
+</section>
+
+<section>
+  <h3>Playwright: Running JS on a page</h3>
+
+  <p>Inject a local or remote JS file:</p>
+  <pre><code data-trim data-noescape class="python">
+  page.add_script_tag(url="https://cdn.jsdelivr.net/npm/axe-core@4.7.2/axe.min.js")
+  </code></pre>
+
+  <p class="padded">Use the <code>evaluate</code> method to run JS:</p>
+  <pre><code data-trim data-noescape class="python">
+  axe_results = page.evaluate("axe.run()")
+  </code></pre>
+  <p>When the result of an expression is a JS Promise, Playwright will wait for it to resolve
+    and return the result.</p>
+
+  <aside class="notes">
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+  browser = p.chromium.launch()
+  page = browser.new_page()
+  page.goto("https://2023.northbaypython.org/")
+  page.add_script_tag(url="https://cdn.jsdelivr.net/npm/axe-core@4.7.2/axe.min.js")
+  axe_results = page.evaluate("axe.run()")
+  print(axe_results["violations"])
+  browser.close()
+  </aside>
+</section>
+
+<section>
+  <h3>All together: axe-playwright-python</h3>
+
+  <p>I created <a target="_blank" href="https://github.com/pamelafox/axe-playwright-python">axe-playwright-python</a>,
+    a Python package that runs the axe-core JavaScript library on a Playwright <code>Page</code>.</p>
+
+  <pre><code data-trim data-noescape class="python">
+  python3 -m pip install -U axe-playwright-python
+  python3 -m playwright install --with-deps
+  </code></pre>
+
+  <pre class="padded"><code data-trim data-noescape class="python">
+  from playwright.sync_api import sync_playwright
+  from axe_playwright_python.sync_playwright import Axe
+
+  with sync_playwright() as playwright:
+      browser = playwright.chromium.launch()
+      page = browser.new_page()
+      page.goto("https://pretalx.northbaypython.org/")
+      results = Axe().run(page)
+      print(results.response)
+      browser.close()
+  </pre></code>
+</section>
+
+<section>
+  <h3>axe-core-python: Results report</h3>
+
+  <p>The results object stores the full results as a dict 
+    but also includes methods for other results formats.</p>
+  
+  <pre><code data-trim data-noescape class="python">
+  print(results.generate_report())
+  </code></pre>
+  <pre style="font-size:0.8em"><code data-trim data-noescape class="text">
+Found 3 accessibility violations:
+color-contrast - Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds
+  URL: https://dequeuniversity.com/rules/axe/4.4/color-contrast?application=axeAPI
+  Impact Level: serious
+  Tags: ['cat.color', 'wcag2aa', 'wcag143']
+  Elements Affected:
+    
+  1) Target: a[href$="nbpy-2023/"]
+    Snippet: &lt;a href="/nbpy-2023/"&gt;North Bay Python 2023 (July 29th – 30th, 2023)&lt;/a&gt;
+    Messages:
+    * Element has insufficient color contrast of 3.06 (foreground color: #3aa57c, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1
+  ...
+  </code></pre>
+</section>
+
+
+<section>
+  <h3>axe-core-python: Results snapshot</h3>
+
+  <p>The snapshot format only includes violation rule names and counts.</p>
+  
+  <pre><code data-trim data-noescape class="python">
+  print(results.generate_snapshot())
+  </code></pre>
+  <pre><code data-trim data-noescape>
+  color-contrast (serious) : 2
+  empty-heading (minor) : 1
+  link-name (serious) : 1
+  </code></pre>
+
+  <p class="padded">(We'll see soon why that's a helpful format!)</p>
+
+  <p>What other formats would be helpful? PRs welcome!</p>
+</section>
+
+<section class="heading-only">
+  <h2>Testing with Pytest</h2>
+</section>
+
+<section>
+  <h3>Pytest + Playwright</h3>
+
+  <p>Pytest is a popular Python testing framework,
+    and Playwright offers a pytest plugin.</p>
+  </p>
+
+  <pre><code data-trim data-noescape class="shell">
+  pip install pytest-playwright
+  </code></pre>
+
+  <pre><code data-trim data-noescape class="python">
+  from playwright.sync_api import Page, expect
+
+  def test_click_tickets(page: Page):
+      page.goto("https://2023.northbaypython.org/")
+      page.get_by_role("link", name="Tickets on sale now!").click()
+      expect(page.locator("main")).to_contain_text("tickets are available")
+  </code></pre>
+
+</section>
+
+<section>
+  <h3>Pytest + Playwright + axe-core</h3>
+
+  <p>We can use axe-playwright-python in our Pytest tests
+    to assert that there are no violations,
+    and to generate a report if there are.</p>
+
+  <pre><code data-trim data-noescape class="python">
+from axe_playwright_python.sync_playwright import Axe
+from playwright.sync_api import Page
+
+def test_a11y(page: Page):
+    page.goto("https://2023.northbaypython.org/", _external=True)
+    results = Axe().run(page)
+    assert results.violations_count == 0, results.generate_report()
+  </code></pre>
+
+</section>
+
+<section>
+  <h3>Pytest + Playwright + axe-core: Results</h3>
+
+  <p>When we run the test, we get a report of the violations.</p>
+
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m pytest test_axe_count.py
+  </code></pre>
+
+  <pre><code data-trim data-noescape class="python">
+def test_a11y(page: Page):
+    page.goto("https://2023.northbaypython.org/")
+    results = Axe().run(page)
+>   assert results.violations_count == 0, results.generate_report()
+E   AssertionError: Found 5 accessibility violations:
+E         image-alt - Ensures <img> elements have alternate text or a role of none or presentation
+E               URL: https://dequeuniversity.com/rules/axe/4.4/image-alt?application=axeAPI
+  ...
+  </code></pre>
+
+  <p class="fragment padded">But nobody's perfect: most webpages will have > 0 violations. What to do? 🤔</p>
+</section>
+
+<section class="heading-only">
+  <h2>📸 Snapshot testing 🧪</h2>
+</section>
+
+<section>
+  <h3>What is snapshot testing?</h3>
+
+  <p>Snapshot testing is a way to test that the output of a function
+    matches a previously saved snapshot.</p>
+
+  <p>Example using <a target="_blank" href="https://github.com/joseph-roitman/pytest-snapshot">pytest-snapshot</a>:</p>
+  
+  <pre><code data-trim data-noescape class="python">
+  def emojify(s):
+    return s.replace('love', '❤️').replace('python', '🐍')
+  
+  def test_function_output_with_snapshot(snapshot):
+    snapshot.assert_match(emojify('I love python'), 'snapshot.txt')
+  </code></pre>
+
+  <p>The first time we run the test, it will save the output to a file.<br>
+    The next time we run the test, it will compare the output to that file.</p>
+
+  <p>We check snapshots into source control to track them over time.</p>
+</section>
+
+<section>
+  <h3>Snapshot testing + axe-core</h3>
+
+  <p>We can save the axe-core snapshots
+    and check them into source control.</p>
+
+  <p>That way, we can see if the violations change over time.</p>
+
+  <br>
+  <p>Less violations: 👍 Update the snapshot!<br>
+     More violations: 😱 Revert that change!
+  </p>
+
+  <br><br>
+  <p>🙏🏼 Kudos to Michael Wheeler from UMich and their talk on <a target="_blank" href="https://it.umich.edu/community/michigan-it-symposium/2021/presentations/automated-web-accessibility-testing-using-browser">Automated Web Accessibility Testing</a>
+    for the idea of using snapshot testing with axe-core.</p>
+</section>
+
+<section>
+  <h3>Playwright + axe-core + snapshot testing</h3>
+
+  <p>To make it as easy as possible, I made a <a target="_blank" href="https://github.com/pamelafox/pytest-axe-playwright-snapshot">pytest plugin</a>
+    that combines Playwright, axe-core, and snapshot testing.</p>
+
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m pip install pytest-axe-playwright-snapshot
+  python3 -m playwright install --with-deps
+  </code></pre>
+
+  <p class="padded">A test from a <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Flask app</a>:</p>
+  <pre><code data-trim data-noescape class="python">
+  from flask import url_for
+  from playwright.sync_api import Page
+
+  def test_index(page: Page, axe_pytest_snapshot):
+    page.goto(url_for("index", _external=True))
+    axe_pytest_snapshot(page)
+  </code></pre>
+  <p class="smaller"><em>Requires pytest-flask to run a local server for the tests.</em></p>
+</section>
+
+<section>
+  <h3>Running the snapshot tests</h3>
+
+  <p><strong>First run:</strong> (saves the snapshot)</p>
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m pytest --snapshot-update
+  </code></pre>
+
+  <div class="fragment">
+  <p class="padded">Saved to <code>snapshots/test_violations/chromium/snapshot.txt</code>:</p>
+
+  <pre><code data-trim data-noescape class="text">
+  color-contrast (serious) : 2
+  empty-heading (minor) : 1
+  link-name (serious) : 1
+  </code></pre>
+  </div>
+
+  <div class="fragment">
+  <p class="padded"><strong>Subsequent runs:</strong> (compares new snapshot to old.)</p>
+  <pre><code data-trim data-noescape class="shell">
+  python3 -m pytest
+  </code></pre>
+  <p>Only update the snapshots if you're okay with the change in violations.</p>
+  </div>
+</section>
+
+<section>
+  <h3>Test results: New accessibility issue</h3>
+
+  <p>If there are violations in the new snapshot that weren't in the old,
+    the test will fail with a message like this:</p>
+
+  <pre><code data-trim data-noescape class="text">
+  E  AssertionError: New violations found: html-has-lang (serious)
+  E  That's bad news! 😱 Either fix the issue or run `pytest --snapshot-update` to update the snapshots.
+  E  html-has-lang - Ensures every HTML document has a lang attribute
+  E    URL: https://dequeuniversity.com/rules/axe/4.4/html-has-lang?application=axeAPI
+  E    Impact Level: serious
+  E    Tags: ['cat.language', 'wcag2a', 'wcag311', 'ACT']
+  E    Elements Affected:
+  E    1) Target: html
+  E       Snippet: &lt;html&gt;
+  E       Messages:
+  E       * The &lt;html&gt; element does not have a lang attribute
+  </code></pre>
+
+</section>
+
+<section>
+  <h3>Test results: Fixed accessibility issue</h3>
+
+  <p>If there are less violations in the new snapshot than the old one,
+    the test will also fail, but with a happy message like this:</p>
+
+  <pre><code data-trim data-noescape class="shell">
+    E  AssertionError: Old violations no longer found: html-has-lang (serious).
+    E  That's good news! 🎉 Run `pytest --snapshot-update` to update the snapshots.
+  </code></pre>
+
+</section>
+
+<section>
+  <h3>CI/CD integration</h3>
+
+  <p>Run the tests on every PR.</p>
+
+  <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/actions/runs/5695546314/job/15438903614?pr=29">
+  <img src="screenshot_action_wide.png" alt="Screenshot of GitHub actions workflow that shows test failure due to accessibility violations" width="1000">
+  </a>
+
+  <p>🔗 <a href="https://github.com/pamelafox/flask-db-quiz-example/blob/main/.github/workflows/python.yaml">GitHub Actions workflow</a></p>
+</section>
+
+<section class="heading-only">
+  <h2>💁🏼‍♀️ Tips for accessibility tests 🧪</h2>
+  <br>
+  <p>(And really, any E2E tests)</p>
+</section>
+
+<section>
+  <h3>Keep database state constant</h3>
+
+  <p>If you're using a database, use a fixture to create the data you need for the test.</p>
+  
+  <pre><code data-trim data-noescape class="python">
+  @pytest.fixture()
+  def fake_quiz(app):
+    Quiz.seed_data_if_empty()
+
+    yield _db.session.query(Quiz).first()
+
+    _db.session.query(Quiz).delete()
+  </code></pre>
+
+  <p>🔗 From <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/blob/main/tests/conftest.py">
+    tests/conftest.py</a></p>
+</section>
+
+<section>
+  <h3>Wait for the page to be ready</h3>
+
+  <p>Tests run quicker than humans. If parts of your page load asynchronously, 
+    you'll need to explicitly wait for them to be ready before running the tests.</p>
+
+  <p>HTMX example: (scores load via XHR)</p>
+  <pre><code data-trim data-noescape class="html">
+    &lt;div id="scores" hx-get="/quizzes/{{ quiz.id}}/scores" hx-trigger="load"&gt;
+      &lt;span class="htmx-indicator"&gt;Loading...&gt;/span&lt;
+    &lt;/div&gt;
+  </code></pre>
+
+  <p class="padded">Test:</p>
+  <pre><code data-trim data-noescape class="python">
+  def test_quiz(page: Page, fake_quiz, axe_pytest_snapshot):
+      page.goto(url_for("quizzes.quiz", quiz_id=fake_quiz.id, _external=True))
+      expect(page.locator("#scores")).not_to_contain_text("Loading...")
+      axe_pytest_snapshot(page)
+  </code></pre>
+</section>
+
+
+<section>
+  <h3>Test more than the initial load</h3>
+
+  <p>If the page has any JavaScript or interaction, run a test on the initial state <em>and</em> the post-interaction state.</p>
+
+  <p>Initial load:</p>
+  <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+  def test_quiz(page: Page, fake_quiz, axe_pytest_snapshot):
+      page.goto(url_for("quizzes.quiz", quiz_id=fake_quiz.id, _external=True))
+      axe_pytest_snapshot(page)
+  </code></pre>
+
+  <p class="padded">Post-interaction:</p>
+  <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+  def test_quiz_submit(page: Page, fake_quiz, axe_pytest_snapshot):
+      page.goto(url_for("quizzes.quiz", quiz_id=fake_quiz.id, _external=True))
+      page.get_by_label("Your name:").click()
+      page.get_by_label("Your name:").fill("Pamela")
+      page.get_by_label("Ada Lovelace").check()
+      page.get_by_label("pip").check()
+      page.get_by_role("button", name="Submit your score!").click()
+      expect(page.locator("#score")).to_contain_text("You scored 25% on the quiz.")
+      axe_pytest_snapshot(page)
+  </code></pre>
+</section>
+
+<section>
+  <h3>Fixing accessibility issues</h3>
+
+  <p>You can read the reports from pytest to get a gist for the accessibility violations,
+    but it's often easier to use a browser extension that uses Axe-core rules.</p>
+
+  <ul>
+    <li><a target="_blank" href="https://microsoftedge.microsoft.com/addons/detail/axe-devtools-web-access/kcenlimkmjjkdfcaleembgmldmnnlfkn">
+      Axe DevTools</a> for Edge</li>
+    <li><a target="_blank" href="https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd">
+      Axe DevTools</a> for Chrome</li>
+  </ul>
+
+  <p>Also consider an IDE extension like <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=deque-systems.vscode-axe-linter">VS Code Axe Linter</a></p>
+
+</section>
+
+<section>
+  <h3>Don't rely on automation to find all issues</h3>
+
+  <blockquote style="width:100%;">
+    With axe-core, you can find on average 57% of WCAG issues automatically.
+
+    <footer><cite>🔗 <a target="_blank" href="https://github.com/dequelabs/axe-core">axe-core docs</a></cite></footer>
+  </blockquote>
+  <br>
+  <div class="fragment padded">
+    <p>
+    What else can you do?</p>
+    <ul>
+      <li>Manual tests (tab/keyboard)
+      <li>External audits
+      <li>Engage with users who have disabilities
+    </ul>
+  </div>
+</section>
+
+<!--<section>
+  <h3>Test with different screen sizes</h3>
+</section>-->
+
+<section>
+  <h3>Thank you!</h3>
+
+  <p>Grab the slides @ <a target="_blank" href="https://pamelafox.github.io/my-py-talks/automate-a11y">pamelafox.github.io/my-py-talks/automate-a11y</a> </p>
+  
+  <ul>
+    <li><a target="_blank" href="https://github.com/pamelafox/axe-playwright-python">github.com/pamelafox/axe-playwright-python</a>
+    <li><a target="_blank" href="https://github.com/pamelafox/pytest-axe-playwright-snapshot">github.com/pamelafox/pytest-axe-playwright-snapshot</a>
+    <li><a target="_blank" href="https://github.com/pamelafox/pamelafox-site">github.com/pamelafox/pamelafox-site</a>: Repo with tests for 0 violations
+    <li><a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/">github.com/pamelafox/flask-db-quiz-example</a>: Repo with snapshot tests
+  </ul>
+
+  <p>Find me online at:</p>
+  <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
+      <tr>
+        <td>Mastodon
+        <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+      </tr>
+      <tr>
+          <td>Twitter
+          <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+        </tr>
+      <tr>
+          <td>GitHub
+          <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+        </tr>
+      <tr>
+          <td>Website
+          <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+      </tr>
+  </table>  
+</section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+
+
+    </script>
+    </body>
+</html>

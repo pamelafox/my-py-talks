@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Accessibility test</title>
+  </head>
+  <body>
+    <h1>Accessibility test</h1>
+    <img src="pamela_baby_donkey.jpg" width="300">
+    <script src="https://cdn.jsdelivr.net/npm/axe-core@4.7.2/axe.min.js"></script>
+    <script>
+    axe.run().then(results => {
+        console.log(results.violations);
+    })
+  </script>
+  </body>
+</html>

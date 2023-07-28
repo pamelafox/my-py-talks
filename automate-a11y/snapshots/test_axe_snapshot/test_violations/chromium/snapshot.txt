@@ -1,0 +1,5 @@
+image-alt (critical) : 1
+landmark-one-main (moderate) : 1
+link-name (serious) : 26
+page-has-heading-one (moderate) : 1
+region (moderate) : 4
