@@ -1,23 +1,28 @@
-
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>Configure VS Code for Productive Programming</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
-        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
-		<link rel="stylesheet" href="../static/slides.css">
-	</head>
-    <body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Configure VS Code for Productive Programming</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../static/slides.css">
+</head>
+
+<body>
     <div class="reveal">
         <div class="slides">
 
             <section class="heading-only">
                 <h1 style="font-size:80px;  width: 100%;">Configure VS Code<br> for Productive Programming</h1>
+
+                <img src="https://code.visualstudio.com/assets/docs/languages/python/python-editing.gif" alt="Animated GIF of autocomplete in Python code in VS Code" height="200">
+                <img src="https://code.visualstudio.com/assets/docs/python/testing/test-results.png" alt="Screenshot of Python tests in VS Code testing tab" height="200">
                 <div class="no-print" style="display: none; text-align: left; margin-top: 100px; font-size: 70%;">
                     Tips for navigating the slides:
                     <ul>
@@ -31,55 +36,93 @@
                 </aside>
             </section>
 
+
+            <section>
+                <h3>About me</h3>
             
+                <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
+                <p>Python Cloud Advocate at Microsoft</p>
+                <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+                <br>
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px;">
+                    <tr>
+                      <td>Mastodon
+                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                      </tr>
+                  </table>
+            </section>
+
+            <section>
+                <h3>Today's topics</h3>
+
+                <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="A bunch of raccoon students with computers" width="400" style="float:right; margin-left: 20px;">
+
+                <ul style="line-height:2em;">
+                    <li>Dev Containers</li>
+                    <li>VS Code Profiles</li>
+                    <li>VS Code Tools</li>
+                    <li>GitHub Copilot</li>
+                </ul>
+
+                <p>Feel free to ask questions in the chat or @ me after! 🙋🏽‍♀️ 🙋🏻 🙋🏼‍♀️ 🙋🏿‍♂️</p>
+            </section>
+
+
             <section>
                 <h3>Demo app</h3>
 
                 <p>
-                    <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/">github.com/pamelafox/django-quiz-app/</a><br>
-                    <span class="aka">aka.ms/django-quiz-app</span>
+                    <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice">github.com/Azure-Samples/azure-flask-postgres-flexible-appservice</a><br>
+                    <span class="aka">aka.ms/flask-pgflex-app</span>
                 </p>
 
-                <img src="screenshot_quiz.png" alt="Screenshot of Quiz page">
+                <img src="screenshot_frontpage.png" alt="Screenshot of front page of Relecloud space tourism website" width="490" style="border: 1px solid #ccc">
 
-                <p>Built with Django 🎸 + PostgreSQL 🐘</p>
+                <p>Built with Flask 🎸 + PostgreSQL 🐘</p>
             </section>
 
-            <section>
-                <h3>GitHub Codespaces</h3>
-
-                <p>Codespaces is an online development environment.</p>
-
-                <p class="smaller">Open GitHub repo in Codespaces by clicking <strong>Code</strong> button,
-                    selecting <strong>Codespaces</strong> tab, and
-                    clicking <strong>Create codespace on main</strong>.</p>
-
-                <p class="smaller" style="float:right; text-align: left; width: 400px;">Then wait patiently... ☺️</p>
-                <img src="screenshot_codespaces.png" alt="Screenshot of Codespace tab" style="border: 1px solid #ccc; width: 500px; float:left;">
-
-                <p class="smaller" style="clear:both">60 hours of free usage each month. <br>
-                 <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/how-to-optimize-your-codespaces-pro-tips-for-managing-quotas/ba-p/3712032">🔗 Tips for optimizing quotas</a></p>
-            </section>
-
-            <section  class="heading-only">
+            <section class="heading-only">
                 <h2>Dev Containers</h2>
+
+                <img src="../media/BIT_DEV.svg" alt="A raccoon in front of multiple monitors" width="400">
+
             </section>
 
             <section>
                 <h3>Dockerfile</h3>
 
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="Dockerfile">
-                ARG IMAGE=python:3
-                FROM --platform=amd64 mcr.microsoft.com/devcontainers/${IMAGE}
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="Dockerfile">
+                FROM mcr.microsoft.com/devcontainers/python:3.11-bullseye
 
                 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
                     && apt-get -y install --no-install-recommends postgresql-client \
-                        && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+                    && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+                
+                RUN python -m pip install --upgrade pip
                 </code></pre>
 
-                <p>🔗 Using container image from <a target="_blank" href="https://mcr.microsoft.com/en-us/product/devcontainers/python/about">mcr.microsoft.com devcontainer Python images</a></p>
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/Dockerfile">Dockerfile</a></p>
+                <p>🔗 Using image from <a target="_blank"
+                        href="https://mcr.microsoft.com/en-us/product/devcontainers/python/about">mcr.microsoft.com
+                        devcontainer Python images</a></p>
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/.devcontainer/Dockerfile_dev">Dockerfile</a>
+                </p>
 
+                <aside class="notes">Why pip upgrade?</aside>
             </section>
 
             <section>
@@ -87,40 +130,43 @@
 
                 <pre style="height: 490px; overflow: hidden; font-size:0.50em;"><code data-trim data-noescape class="yaml">
                     services:
-                      app:
-                        build:
-                          context: ..
-                          dockerfile: .devcontainer/Dockerfile
-                          args:
-                            IMAGE: python:3.11
-                        volumes:
-                          - ..:/workspace:cached
-                        command: sleep infinity
-                        network_mode: service:db
                       db:
-                        image: postgres:latest
+                        image: postgres:14
                         restart: unless-stopped
+                        environment:
+                          POSTGRES_DB: relecloud
                         volumes:
                           - postgres-data:/var/lib/postgresql/data
+                      app:
+                        build:
+                          context: .
+                          dockerfile: Dockerfile_dev
+                        volumes:
+                          - ..:/workspace:cached
                         environment:
-                          POSTGRES_DB: app
-                          POSTGRES_USER: app_user
-                          POSTGRES_PASSWORD: app_password
+                          POSTGRES_DATABASE: relecloud
+                          POSTGRES_USERNAME: postgres
+                          POSTGRES_PASSWORD: postgres
+                          POSTGRES_HOST: db
+                        command: sleep infinity
+                        network_mode: service:db
                     volumes:
                       postgres-data:
                 </code></pre>
 
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/docker-compose.yml">docker-compose.yaml</a></p>
-                    
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/.devcontainer/docker-compose_dev.yml">docker-compose.yaml</a>
+                </p>
+
             </section>
 
             <section>
                 <h3>devcontainer.json</h3>
 
                 <p>Configuration needed to work with the Docker files:</p>
-                <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
-                    ...
-                    "dockerComposeFile": "docker-compose.yml",
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="json">
+                {
+                    "dockerComposeFile": "docker-compose_dev.yml",
                     "service": "app",
                     "workspaceFolder": "/workspace",
                     "forwardPorts": [8000, 5432],
@@ -129,114 +175,210 @@
                         "5432": {"label": "PostgreSQL port", "onAutoForward": "silent"}
                     },
                     ...
+                }
                 </code></pre>
 
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a>
+                </p>
 
             </section>
 
             <section>
                 <h3>devcontainer.json</h3>
 
-                <p>Recommended extensions:</p>
-                <pre style="font-size:0.8em;"><code data-trim data-noescape class="json">
-                    ...
-                    "extensions": [
-                        "ms-python.python",
-                        "ms-python.vscode-pylance",
-                        "charliermarsh.ruff",
-                        "mtxr.sqltools",
-                        "mtxr.sqltools-driver-pg",
-                    ]
-                    ...
+                <p>Automatically installed extensions:</p>
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="json">
+                "extensions": [
+                    "ms-python.python",
+                    "charliermarsh.ruff",
+                    "ms-python.black-formatter",
+                    "mtxr.sqltools",
+                    "mtxr.sqltools-driver-pg"
+                ]
                 </code></pre>
 
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a>
+                </p>
+
+                <aside class="notes">Python extension includes pylance</aside>
+            </section>
+
+            <section>
+                <h3>devcontainer.json</h3>
+
+                <p>Extension configuration settings:</p>
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="json">
+                "sqltools.connections": [
+                    {
+                        "name": "Local database",
+                        "driver": "PostgreSQL",
+                        "server": "db",
+                        "port": 5432,
+                        "database": "relecloud",
+                        "username": "postgres",
+                        "password": "postgres"
+                    }
+                ],
+                </code></pre>
+
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a>
+                </p>
 
             </section>
 
             <section>
                 <h3>devcontainer.json</h3>
 
-                <p>Configuring extensions:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="json">
-                    ...
-                    "sqltools.connections": [
-                        {
-                            "name": "Container database",
-                            "driver": "PostgreSQL",
-                            "previewLimit": 50,
-                            "server": "localhost",
-                            "port": 5432,
-                            "database": "app",
-                            "username": "app_user",
-                            "password": "app_password"
-                        }
-                    ],
-                    ...
-                </code></pre>
-
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
-
-            </section>
-
-            <section>
-                <h3>devcontainer.json</h3>
-
-                <p>Configuring VS Code:</p>
-                <pre style="font-size:0.6em;"><code data-trim data-noescape class="json">
+                <p>VS Code editor settings:</p>
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="json">
                     ...
                     "python.defaultInterpreterPath": "/usr/local/bin/python",
                     "python.linting.enabled": true,
                     "python.testing.pytestEnabled": true,
                     "python.testing.unittestEnabled": false,
-                    "python.formatting.provider": "black",
-                    "[python]": {
-                        "editor.formatOnSave": true,
-                        "editor.codeActionsOnSave": {
-                            "source.fixAll": true
-                        }
-                    },
                     "files.exclude": {
-                        "**/*.coverage": true,
-                        ".ruff_cache": true
+                        ".coverage": true,
+                        ".pytest_cache": true,
+                        "__pycache__": true
                     }
                     ...
                 </code></pre>
 
-                <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a></p>
+                <p>👁️ See full file: <a target="_blank"
+                        href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/devcontainer.json">devcontainer.json</a>
+                </p>
 
+            </section>
+
+            <section>
+                <h3>GitHub Codespaces</h3>
+
+                <p>Codespaces is an online development environment
+                    that uses Dev Container definitions.
+                </p>
+
+                <p class="smaller">Open any GitHub repo in Codespaces by clicking <strong>Code</strong> button,
+                    selecting <strong>Codespaces</strong> tab, and
+                    clicking <strong>Create codespace on main</strong>.</p>
+
+                <p class="smaller" style="float:right; text-align: left; width: 400px;">Then wait patiently... ☺️</p>
+                <img src="screenshot_codespaces.png" alt="Screenshot of Codespace tab"
+                    style="border: 1px solid #ccc; width: 500px; float:left;">
+
+                <p class="smaller" style="clear:both">60 hours of free usage each month. <br>
+                    <a target="_blank"
+                        href="https://techcommunity.microsoft.com/t5/educator-developer-blog/how-to-optimize-your-codespaces-pro-tips-for-managing-quotas/ba-p/3712032">🔗
+                        Tips for optimizing quotas</a>
+                </p>
             </section>
 
             <section class="heading-only">
                 <h2>VS Code Profiles</h2>
+
+                <img src="../media/BIT_PYTHON.svg" alt="A raccoon writing Python code on laptop" width="400">
+
+            </section>
+
+            <section>
+                <h3>Profile contents</h3>
+
+                <p>Profiles are for your <em>personal</em> preferences,
+                though they can be exported and shared.</p>
+                <ul>
+                    <li>Settings</li>
+                    <li>UI State</li>
+                    <li>Extensions</li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h3>Settings</h3>
+
+                <p>You typically set these in "Preferences: Open User Settings" or via extensions.</p>
+                <pre style="font-size:0.6em;"><code data-trim data-noescape class="json">
+                ...
+                "editor.autoClosingBrackets": "never",
+                "editor.inlineSuggest.enabled": true,
+                "editor.minimap.enabled": false,
+                "[python]": {
+                    "editor.formatOnSave": true,
+                    "editor.codeActionsOnSave": {
+                      "source.fixAll": true
+                    },
+                    "editor.defaultFormatter": "ms-python.black-formatter"
+                }
+                ...
+                </code></pre>
+                <p>👁️ See full exported settings: <a target="_blank"
+                        href="https://gist.github.com/pamelafox/8a3aaa504effd9f0e137c79f20bfe176">settings.json</a></p>
+                <aside class="notes">
+                    Show profile in VS Code,
+                    show normal way of editing settings,
+                    demonstrate editor formatting on save, on copy
+                </aside>
+            </section>
+
+            <section>
+                <h3>Multiple profiles</h3>
+
+                <p>You can use multiple profiles for different ways of working.</p>
+
+                <p>For example...</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Profile
+                            <th>Settings
+                            <th>Extensions
+                    <tbody>
+                        <tr>
+                            <td>Frontend
+                            <td>
+                                "workbench.colorTheme": "Solarized Light",
+                                "github.copilot.enable": {"*": true},
+                            <td>
+                                axe Accessibility Linter,
+                                Can I Use,
+                                CSS Peek,
+                                ESLint,
+                                Prettier
+                        <tr>
+                            <td>Teaching Python
+                            <td>"editor.fontSize": 22,
+                                "github.copilot.enable": {"*": false},
+                                "window.zoomLevel": 3
+                            <td>Live Share,
+                                VS Code Pets,
+                                Doctest Button
+                </table>
+
+                <p>Switch between profiles using the gear icon in bottom right.</p>
+            </section>
+
+            <section>
+                <h3>Sharing profiles</h3>
+
+                <img src="screenshot_export.png" width="320" style="margin-left: 20px; float:right;">
+
+                <p>From the gear icon, select "View profile contents" and then select "Export".</p>
+
+
+                <p>👁️ See exported profile:
+                        <a target="_blank"
+                        href="https://vscode.dev/profile/github/0ad78ff3e93fdc73771866b1576a4b1c">in vscode.dev</a>,
+                        <a target="_blank" href="https://gist.github.com/pamelafox/0ad78ff3e93fdc73771866b1576a4b1c">
+                        as a gist</a>
+                    </p>
             </section>
 
             <section class="heading-only">
                 <h2>VS Code Tools</h2>
-            </section>
 
-            <section>
-                <h3>VS Code Tasks</h3>
-
-                <p>In .vscode/tasks.json:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="json">
-                    {
-                        "version": "2.0.0",
-                        "tasks": [ {
-                          "label": "Apply migrations",
-                          "type": "shell",
-                          "command": "./src/manage.py migrate",
-                          "problemMatcher": [],
-                          "presentation": {
-                            "reveal": "always",
-                            "panel": "dedicated"
-                          }
-                        },
-                    ...
-                    </code></pre>
-
-                    <p>👁️ See full file: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/.devcontainer/.vscode/tasks.json">tasks.json</a></p>
+                <img src="../media/DATA_BIT.svg" alt="A raccoon that looks like Neo from Matrix" width="400">
 
             </section>
 
@@ -244,40 +386,46 @@
                 <h3>VS Code Debugging</h3>
 
                 <p style="margin-bottom:0px">.vscode/launch.json:</p>
-                <pre style="font-size:0.55em; margin-top:6px;"><code data-trim data-noescape class="json">
-                { "version": "0.2.0",
-                  "configurations": [{
-                        "name": "Python: Django",
-                        "type": "python",
-                        "request": "launch",
-                        "program": "${workspaceFolder}/src/manage.py",
-                        "args": [
-                            "runserver"
-                        ],
-                        "django": true,
-                        "justMyCode": true
-                    }]}
+                <pre style="font-size:0.65em; margin-top:6px;"><code data-trim data-noescape class="json">
+                {
+                    "version": "0.2.0",
+                    "configurations": [
+                        {
+                            "name": "Python: Flask",
+                            "type": "python",
+                            "request": "launch",
+                            "module": "flask",
+                            "env": {"FLASK_APP": "src.flaskapp", "FLASK_DEBUG": "1"},
+                            "args": ["run", "--port=50505", "--no-debugger", "--reload"],
+                            "jinja": true,
+                            "justMyCode": false
+                        }
+                    ]
+                }
                 </code></pre>
 
-                <p class="padded" style="margin-bottom:0px">In settings.py:</p>
-                <pre style="font-size:0.55em; margin-top:6px;"><code data-trim data-noescape class="json">
-                DEBUG_PROPAGATE_EXCEPTIONS = env("DEBUG") # True locally
-                </code></pre>
-
+                <aside class="notes">
+                    Change pages.py to:
+                    name = request.form.get("fullname")
+                    Show error
+                    Then debug it
+                    Watch request.form
+                </aside>
             </section>
 
             <section>
                 <h3>VS Code Testing</h3>
 
-                <p class="smaller">Only supports <code>unittest</code> and <code>pytest</code> now.
-                    <br>
-                    <a target="_blank" href="https://github.com/Microsoft/vscode-python/issues/73">See issue #73 for Django TestCase</a>
+                <p class="smaller">Supports <code>unittest</code> and <code>pytest</code>.
                 </p>
 
                 <p style="margin-bottom:0px">In requirements-dev.txt:</p>
                 <pre style="font-size:0.55em; margin-top: 6px;"><code data-trim data-noescape class="json">
+                coverage
                 pytest
-                pytest-django
+                pytest-cov
+                pytest-flask
+                pytest-playwright
                 </code></pre>
 
                 <p style="margin-bottom:0px">In devcontainer.json:</p>
@@ -289,23 +437,35 @@
                 <p style="margin-bottom:0px">In pyproject.toml:</p>
                 <pre style="font-size:0.55em; margin-top: 6px;"><code data-trim data-noescape class="json">
                 [tool.pytest.ini_options]
-                pythonpath = ["src"]
-                python_files = ["tests.py"]
-                env_files = [".env", ".env.test"]
+                addopts = "-ra --cov -vv"
+                
+                [tool.coverage.report]
+                show_missing = true
                 </code></pre>
+
+                <p><a target="_blank" href="https://code.visualstudio.com/docs/python/testing">📖  Python testing in VS Code</a></p>
             </section>
 
             <section class="heading-only">
                 <h2>GitHub Copilot</h2>
+
+                <img src="../media/BIT_ML.svg" alt="A raccoon building a robot and reading" width="400">
+
             </section>
 
             <section>
                 <h3>Many ways to invoke Copilot</h3>
 
                 <ul>
-                    <li><strong>Editor</strong>: Just type and it will suggest code</li>
-                    <li><strong>Chat</strong>: Ask questions about your code or code topics.</li>
-                    <li><strong>Context menu</strong>: Ask it to explain, fix, or test selected code.</li>
+                    <li><strong>Editor</strong>: Just type and it will suggest code
+                        <img src="screenshot_copilot_complete.png" alt="Screenshot of Copilot completing Python code" height="150">
+                    </li>
+                    <li><strong>Chat</strong>: Ask questions about your code or code topics.
+                        <img src="screenshot_copilot_chat2.png" alt="Screenshot of Copilot chat" height="120">
+                    </li>
+                    <li><strong>Context menu</strong>: Ask it to explain, fix, or test selected code.
+                        <img src="screenshot_copilot_inline.png" alt="Screenshot of Copilot inline chat" height="80">
+                    </li>
                 </ul>
             </section>
 
@@ -313,9 +473,26 @@
                 <h3>Prompting Copilot</h3>
 
                 <ul>
-                    <li>Provide context</li>
-                    <li>Be predictable</li>
+                    <li>Provide context
+                        <ul>
+                            <li>Open files
+                            <li>Comments
+                            <li>Imports
+                            <li>Names
+                            <li>Types
+                        </ul>
+                    </li>
+                    <li>Be predictable
+                        <ul>
+                            <li>Naming conventions
+                            <li>Software architecture patterns
+                        </ul>
+                    </li>
                 </ul>
+
+                <p>📖 <a target="_blank" href="http://blog.pamelafox.org/2023/06/best-practices-for-prompting-github.html">Blog: Best practices for prompting GitHub Copilot in VS Code</a><br>
+                  🎥 <a target="_blank" href="https://www.youtube.com/watch?v=ImWfIDTxn7E">Video: Best practices for prompting GitHub Copilot in VS Code</a>
+                </p>
             </section>
 
             <section>
@@ -333,13 +510,13 @@
                 </ul>
             </section>
 
-            <section  class="heading-only">
+            <section class="heading-only">
                 <h2>Next steps</h2>
             </section>
 
             <section>
                 <h3>More example repos</h3>
-                
+
                 <p>All of these repos are equipped with Dev Containers:</p>
 
                 <table style="font-size:20px;">
@@ -355,88 +532,114 @@
                             <td>
                                 <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">Quiz app</a>
                                 <br>
-                                <a target="_blank" href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd">+ VNET: Reviews app</a>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd">+ VNET:
+                                    Reviews app</a>
                                 <br>
-                                <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">+ VNET: Booking app</a>
+                                <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">+ VNET: Booking
+                                    app</a>
                                 <br>
-                                <a target="_blank" href="https://github.com/cookiecutter/cookiecutter-django/discussions/4205">cookiecutter</a>
+                                <a target="_blank"
+                                    href="https://github.com/cookiecutter/cookiecutter-django/discussions/4205">cookiecutter</a>
                             <td>
-                                
+
                             <td>
-                                <a target="_blank" href="https://github.com/Azure-Samples/azure-django-postgres-aca">Booking app</a>
-                
+                                <a target="_blank"
+                                    href="https://github.com/Azure-Samples/azure-django-postgres-aca">Booking app</a>
+
                         <tr style="border-top:4px solid white;">
                             <td>Flask
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example">Simple App</a>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-server-example">Simple App</a>
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-azure-function">Simple API</a>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-api-azure-function">Simple API</a>
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-container">Simple App</a><br>
-                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-container">Simple API</a><br>
-                                <a target="_blank" href="https://github.com/pamelafox/flask-gallery-container-app">+ CDN: App</a><br>
-                                <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app">+ CDN: API</a><br>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-server-container">Simple App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-container">Simple
+                                    API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-gallery-container-app">+
+                                    CDN: App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app">+
+                                    CDN: API</a><br>
                         <tr>
                             <td>+ PostgreSQL
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Quiz app</a><br>
-                                <a target="_blank" href="https://github.com/pamelafox/msdocs-flask-postgresql-sample-app-azd">+ VNET: Reviews app</a>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Quiz
+                                    app</a><br>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/msdocs-flask-postgresql-sample-app-azd">+ VNET:
+                                    Reviews app</a>
                             <td>
-                                
+
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
                         <tr style="border-top:4px solid white;">
                             <td>FastAPI
-                            <td>       
-                                <a target="_blank" href="https://github.com/pamelafox/scikitlearn-model-to-fastapi-app">Salary API</a>
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/fastapi-on-azure-functions">Simple API</a><br>
-                                <a target="_blank" href="https://github.com/pamelafox/fastapi-azure-function-apim">+ APIM: Simple API</a><Br>
-                                <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">+ CDN: Maps API</a>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/scikitlearn-model-to-fastapi-app">Salary API</a>
                             <td>
-                                <a target="_blank" href="https://github.com/pamelafox/simple-fastapi-container">Simple API</a>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-on-azure-functions">Simple
+                                    API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-azure-function-apim">+
+                                    APIM: Simple API</a><Br>
+                                <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">+ CDN: Maps
+                                    API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-fastapi-container">Simple
+                                    API</a>
                         <tr>
                             <td>+ MongoDB
                             <td>
-                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo">Todo API</a>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo">Todo
+                                    API</a>
                             <td>
-                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-swa-func">Todo API</a>
+                                <a target="_blank"
+                                    href="https://github.com/Azure-Samples/todo-python-mongo-swa-func">Todo API</a>
                             <td>
-                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-aca">Todo API</a>
-                        </table>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-aca">Todo
+                                    API</a>
+                </table>
 
             </section>
 
             <section data-background-image="background_standard.png">
                 <h3>Thank you!</h3>
-  
-                <img src="https://developer.microsoft.com/en-us/advocates/media/profiles/pamela-fox.png" alt="Photo of Pamela smiling with a stuffed elephant" style="width: 350px; float:right; border-radius: 12px;">
-  
-                <p>Grab the slides @ <span class="aka">pamelafox.github.io/mypy-talks/configure-vscode</span> </p>
-                
+
+                <img src="https://developer.microsoft.com/en-us/advocates/media/profiles/pamela-fox.png"
+                    alt="Photo of Pamela smiling with a stuffed elephant"
+                    style="width: 350px; float:right; border-radius: 12px;">
+
+                <p>Grab the slides @ <span class="aka">aka.ms/superstream-vscode</span> </p>
+
                 <p>Find me online at:</p>
                 <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
                     <tr>
-                      <td>Mastodon
-                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                        <td>Mastodon
+                        <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
                     </tr>
                     <tr>
                         <td>Twitter
                         <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
-                      </tr>
+                    </tr>
                     <tr>
                         <td>GitHub
                         <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
-                      </tr>
+                    </tr>
                     <tr>
                         <td>Website
                         <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
                     </tr>
                 </table>
                 <br>
-                <p style="clear:both; margin-top: 30px; font-size:smaller;">Let me know about your experiences with VS Code + Python!</p>
-                
-              </section>
+                <p style="clear:both; margin-top: 30px; font-size:smaller;">Let me know about your experiences with VS
+                    Code + Python!</p>
+
+            </section>
 
             <section class="heading-only" data-background-image="background_headingonly.png">
                 <h2>Any questions?</h2>
@@ -450,20 +653,21 @@
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
     <script>
-    Reveal.initialize({
-        width: 1280,
-        height: 720,
-        hash: true,
-        center: false,
-        slideNumber: true,
-        showNotes: false,
-        margin: 0.1,
-        preloadIframes: true,
-        autoPlayMedia: true,
-        plugins: [ RevealHighlight, RevealMenu ],
-        pdfSeparateFragments: true
-    });
-    window.highlightJsBadge();
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [RevealHighlight, RevealMenu],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
     </script>
-    </body>
+</body>
+
 </html>
