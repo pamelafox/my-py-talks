@@ -29,8 +29,6 @@
 
 .reveal pre code {
   padding: 8px 8px 8px 8px;
-
-  background-color: #ececec;
 }
 
 .reveal .code-badge {
@@ -75,8 +73,6 @@
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #0072c1;
-  background-color: #f9f2f4;
   border-radius: 4px;
 }
 

@@ -4,104 +4,13 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>Web Apps</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
-        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
-		<style>
-			.reveal {
-				font-family: "Work Sans", sans-serif;
-			}
-
-			.reveal .slides section {
-				text-align: left;
-				font-size: smaller;
-			}
-
-			.reveal pre {
-				background-color: #f5f5f5;
-				width: 100%;
-				border: 1px solid #ccc;
-				border-radius: 4px;
-				box-shadow: none;
-			}
-
-            .reveal section li {
-                margin-bottom: 12px;
-            }
-
-			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-				font-family: "Roboto", sans-serif;
-				color: #0072c1;
-			}
-
-			.reveal section.heading-only {
-				text-align:center;
-				padding-top:10%;
-			}
-
-            .no-code-badge .code-badge {
-                display: none;
-            }
-
-            .code-badge-language {
-                display: none;
-            }
-
-			.python-tutor-link {
-				font-size: smaller;
-			}
-
-			.python-tutor-link:before {
-				content: "";
-				display: block;
-				background: url("http://pythontutor.com/favicon.ico") no-repeat;
-				width: 48px;
-				height: 48px;
-				float: left;
-				margin: 0 6px 0 0;
-			}
-
-			.reveal h3 {
-				margin-bottom: 40px;
-			}
-
-            .smaller {
-                font-size: smaller;
-            }
-
-            code {
-                padding: 2px 4px;
-                font-size: 90%;
-                color: #0072c1;
-                background-color: #f9f2f4;
-                border-radius: 4px;
-            }
-
-            p.padded {
-                margin-top: 32px;
-            }
-
-            section .row {
-                display: flex;
-            }
-
-            section .column {
-                flex: 48%;
-                margin: 10px;
-            }
-
-			@media print
-			{
-				.no-print, .no-print *
-				{
-					display: none !important;
-				}
-			}
-
-		</style>
+		<title>Web Apps with Databases</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
+        <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+        <link rel="stylesheet" href="../static/slides.css">
 	</head>
     <body>
     <div class="reveal">
@@ -143,7 +52,7 @@
                     <li>Location
                     <li>Programming/Web experience 
                     <li>What interests you about Python Web Apps?
-                    <li>What's one non-digital activity you've enjoyed recently?
+                    <li>Favorite kind of pet/animal?
                 </ul>
             </section>
             
@@ -177,6 +86,7 @@
                 <ul>
                     <li>Code editor</li>
                     <li><a target="_blank" href="https://www.python.org/downloads/">Python 3</a></li>
+                    <li><a target="_blank" href="https://www.postgresql.org/download/">PostgreSQL</a></li>
                 </ul>
             </section>
 
@@ -187,14 +97,15 @@
                     to different URLs and return different responses.</p>
                 
                 <p>An example Flask app:</p>
-                <pre><code data-trim data-noescape class="python">
+                <pre style="font-size: 0.8em;"><code data-trim data-noescape class="python">
                     from flask import Flask
 
                     app = Flask(__name__)
 
                     @app.route("/hello")
                     def index():
-                        return render_template("hello.html", name=request.args.get("name"))
+                        return render_template("hello.html",
+                                               name=request.args.get("name"))
                 </code></pre>
 
                 <p>Routes may return different responses based off query parameters, path parameters, or headers.
@@ -267,10 +178,32 @@
                 cursor.execute("SELECT name, title FROM organizers")
                 results = cursor.fetchall()
                 </code></pre>
+            </section>
+
+            <section>
+                <h3>Risks of using SQL directly</h3>
 
                 <p>⚠️ Executing raw SQL queries makes your app vulnerable to SQL injection attacks.
-                    <a target="_blank" href="https://xkcd.com/327/">See: xkcd.com/327</a></p>
-           
+                </p>
+
+                <p>What you expect:</p>
+                <pre style="font-size: 0.8em;" class="no-code-badge"><code data-trim data-noescape class="python ">
+                user_input = "Bobby"
+                query = "SELECT name, id FROM users where name = " + user_input
+                </code></pre>
+
+                <div class="fragment">
+                <p>What a hacker could do:</p>
+                <pre style="font-size: 0.8em;" class="no-code-badge"><code data-trim data-noescape class="python">
+                user_input = "Bobby); DROP TABLE students;"
+                query = "SELECT name, title id users where name = " + user_input
+                </code></pre>
+
+                <a target="_blank" href="https://xkcd.com/327/">
+                From: xkcd.com/327</a>
+                </p>
+                
+                </div>
             </section>
 
             <section>
@@ -282,14 +215,12 @@
 
                 <p>A <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy</a> example:</p>
                 <pre><code data-trim data-noescape class="python">
-                # Define the organizer class (for organizers table)
                 class Organizer(Base):
                     __tablename__ = "organizers"
                     id: Mapped[int] = mapped_column(primary_key=True)
-                    name: Mapped[str] = mapped_column()
-                    title: Mapped[str] = mapped_column()
+                    name: Mapped[str]
+                    title: Mapped[str]
                 
-                # Query the database
                 query = select(User).where(User.title == "Coordinator")
                 results = session.execute(query)
                 </code></pre>
@@ -297,57 +228,96 @@
             </section>
 
             <section>
-                <h3>Example: Flask Restaurant Reviews</h3>
+                <h3>Querying with SQLAlchemy 2.0</h3>
 
-                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/flask-db-reviews">tinyurl.com/flask-db-reviews</a></p>
+                <p>Get by primary key:</p>
+                <pre><code data-trim data-noescape class="python">
+                session.get(User, 42)
+                </code></pre>
 
-                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/Azure-Samples/msdocs-flask-postgresql-sample-app">github.com/Azure-Samples/msdocs-flask-postgresql-sample-app</a></p>
+                <p>Get all rows in table:</p>
+                <pre><code data-trim data-noescape class="python">
+                session.execute(select(User)).scalars().all()
+                </code></pre>
+                
+                <p>Finding rows by column value:</p>
+                <pre><code data-trim data-noescape class="python">
+                session.execute(select(User).where(User.title == "Coordinator")).scalars().all()
+                </code></pre>
+            </section>
 
-                <p>App setup and routes are in <a target="_blank" href="https://github.com/Azure-Samples/msdocs-flask-postgresql-sample-app/blob/main/app.py">app.py</a>.<br>
-                   Models are in <a target="_blank" href="https://github.com/Azure-Samples/msdocs-flask-postgresql-sample-app/blob/main/models.py">models.py</a> and use <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy 1.4</a>.
-                </p>
+            <section>
+                <h3>Example: Flask + PostgreSQL</h3>
+
+                <p class="smaller"><a  target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice">github.com/Azure-Samples/azure-flask-postgres-flexible-appservice</a></p>
+
+                <UL>
+                    <li>App setup is in <a target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/src/flaskapp/__init__.py">__init__.py</a>.
+                    <li>Routes are in <a target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/src/flaskapp/pages.py">pages.py</a>.
+                    <li>Models are in <a target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice/blob/main/src/flaskapp/models.py">models.py</a> and use <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy 2.0</a>.
+                </ul>
 
                 <p class="padded">Run database migrations and server:</p>
-                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
-                python3 -m flask db upgrade
-                python3 -m flask run
+                <pre style="font-size:0.7em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 -m flask --app src.flaskapp db upgrade --directory src/flaskapp/migrations
+                python3 -m flask --app src.flaskapp seed --filename src/seed_data.json
+
+                python3 -m gunicorn 'src.flaskapp:create_app()' --reload
                 </code></pre>
 
             </section>
 
-            
+            <section>
+                <h3>Database migrations</h3>
+
+                <p>Migrations are a way to keep track of changes to the database schema.</p>
+
+                <ol>
+                    <li>When you make a change to the database schema, create a migration file.</p>
+
+                <p class="smaller">Using Flask-Migrate:</p>
+
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 -m flask --app src.flaskapp db migrate 
+                </code></pre>
+
+                <li>Run the migration file to update the database.</p>
+
+                <p class="smaller">Using Flask-Migrate:</p>
+                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 -m flask --app src.flaskapp db upgrade 
+                </code></pre>
+                </ol>
+            </section>
             <section>
                 <h3>Exercise: Flask app</h3>
 
                 <p>Using this repo:<br>
-                    <a  target="_blank" href="https://github.com/Azure-Samples/msdocs-flask-postgresql-sample-app">github.com/Azure-Samples/msdocs-flask-postgresql-sample-app</a></p>
-
+                    <p class="smaller"><a  target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice">github.com/Azure-Samples/azure-flask-postgres-flexible-appservice</a></p>
                 <ol>
                     <li>Follow the readme steps to get the app running.
-                    <li>Add several restaurants using the web interface.
-                    <li>Change the index route to return restaurants
-                        ordered by name, using <a target="_blank" href="https://docs.sqlalchemy.org/en/14/orm/query.html#sqlalchemy.orm.Query.order_by">query.order_by</a>.
-                    <li>Reload and confirm the restaurants appear sorted.
+                    <li>Inspect the local DB tables using SQLTools extension.
+                    <li>Submit an info request and find new row in SQLTools.
+                    <li>Change the destinations route to return destinations
+                        ordered by name, using
+                        <a target="_blank" href="https://docs.sqlalchemy.org/en/20/tutorial/data_select.html#order-by">order_by</a>.
+                    <li>Reload and confirm the destinations appear sorted.
                 </ol>
                 <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
 
             <section>
-                <h3>Example: Flask Quiz</h3>
+                <h3>More Flask + DB examples</h3>
 
-                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/flask-db-quiz">tinyurl.com/flask-db-quiz</a></p>
 
-                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/">github.com/pamelafox/flask-db-quiz-example/</a></p>
+                <ul>
+                    <li><a  target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/">github.com/pamelafox/flask-db-quiz-example</a>
+                    <li><a target="_blank" href="https://github.com/pamelafox/translation-telephone">github.com/pamelafox/translation-telephone</a>
+                    <li><a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">github.com/pamelafox/flask-surveys-container-app</a>
+                </ul>
 
-                <p>Most of the server code is in <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example/blob/main/app.py">app.py</a>. Uses <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy</a> for database interaction.
-                </p>
-                
-                <p class="padded">Run the server:</p>
-                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
-                python3 -m flask --debug run
-                </code></pre>
-
+                <p>Also check out the <a target="_blank" href="https://flask.palletsprojects.com/en/3.0.x/tutorial/">Flask tutorial</a>.</p>
             </section>
 
             <section>
@@ -366,11 +336,9 @@
             </section>
 
             <section>
-                <h3>Example: Django Restaurant Reviews</h3>
+                <h3>Example: Django + PostgreSQL</h3>
 
-                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/django-db-reviews">tinyurl.com/django-db-reviews</a></p>
-
-                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app">github.com/Azure-Samples/msdocs-django-postgresql-sample-app</a></p>
+                <p class="smaller"><a  target="_blank" href="https://github.com/Azure-Samples/azure-django-postgres-flexible-appservice">github.com/Azure-Samples/azure-django-postgres-flexible-appservice</a></p>
 
                 <p class="padded">Important server files:<br>
                     <a target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app/blob/main/restaurant_review/models.py">models.py</a>
@@ -380,51 +348,61 @@
                 </p>
 
                 <p class="padded">Run DB migrations and server:</p>
-                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
-                python manage.py migrate
-                python manage.py runserver
+                <pre style="font-size:0.7em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                python3 src/manage.py migrate
+                python3 src/manage.py loaddata src/seed_data.json
+
+                python3 src/manage.py collectstatic
+                python3 -m gunicorn project.wsgi:application --reload --pythonpath src
                 </code></pre>
 
+            </section>
+
+            <section>
+                <h3>Django admin</h3>
+
+                <p>Django includes a built-in admin interface for managing data.</p>
+
+                <ul>
+                    <li>Create a superuser:
+
+                    <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
+                    python3 src/manage.py createsuperuser
+                    </code></pre>
+
+                    <li>Restart the server and navigate to "/admin"
+                    <li>Login with the superuser credentials.
+                </ul>
             </section>
 
             <section>
                 <h3>Exercise: Django app</h3>
 
                 <p>Using this repo:<br>
-                    <a  target="_blank" href="https://github.com/Azure-Samples/msdocs-django-postgresql-sample-app">github.com/Azure-Samples/msdocs-django-postgresql-sample-app</a></p>
+                    <p class="smaller"><a  target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice">github.com/Azure-Samples/azure-flask-postgres-flexible-appservice</a></p>
                 
                     <ol>
                     <li>Follow the readme steps to get the app running.
-                    <li>Add a new restaurant using the web interface.
+                    <li>Inspect the local DB tables using SQLTools extension.
                     <li>Follow the readme steps to get into the Django admin.
-                    <li>Add a new restaurant using the Django admin.
-                    <li>Change the index route to sort restaurants by name.
-                    <li>Add a new route that shows a list of all reviews.
+                    <li>Add a new destination using the Django admin.
+                    <li>Change the index route to sort destinations by name,
+                        using <a target="_blank" href="https://docs.djangoproject.com/en/4.2/ref/models/querysets/#order-by">order_by</a>.
                 </ol>
                 <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
 
 
             <section>
-                <h3>Example: Django Quiz</h3>
+                <h3>More Django examples</h3>
 
-                <p>👀 Demo: <a  target="_blank" href="https://tinyurl.com/django-db-quiz">tinyurl.com/django-db-quiz</a></p>
 
-                <p  class="padded">👩🏼‍💻 Repo: <a  target="_blank" href="https://github.com/pamelafox/django-quiz-app/">github.com/pamelafox/django-quiz-app/</a></p>
+                <ul>
+                    <li><a  target="_blank" href="https://github.com/pamelafox/django-quiz-app/">github.com/pamelafox/django-quiz-app/</a>
+                    <li><a target="_blank" href="https://github.com/Azure-samples/msdocs-django-postgresql-sample-app">github.com/Azure-samples/msdocs-django-postgresql-sample-app</a>
+                </ul>
 
-                <p class="padded">Important server files:<br>
-                    <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/models.py">models.py</a>
-                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/urls.py">urls.py</a>
-                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/views.py">views.py</a>
-                    , <a target="_blank" href="https://github.com/pamelafox/django-quiz-app/blob/main/quizzes/admin.py">admin.py</a>
-                </p>
-                
-                <p class="padded">Run DB migrations and server:</p>
-                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
-                python manage.py migrate
-                python manage.py runserver
-                </code></pre>
-
+                <p>Also check out the <a target="_blank" href="https://docs.djangoproject.com/en/4.2/intro/tutorial01/">Django tutorial</a>.</p>
             </section>
 
             <section class="heading-only">
@@ -532,7 +510,7 @@
             </section>
 
             <section>
-                <h3>Hosting the Flask quiz on Azure</h3>
+                <h3>Hosting Python + PostgreSQL on Azure</h3>
 
                 <p>
                 <img src="flaskdb.drawio.png" alt="Flask app architecture diagram: App Service, App Service Plan, PostGreSQL server, Log Analytics workspace">
@@ -545,25 +523,12 @@
             </section>
 
             <section>
-                <h3>Hosting the Django quiz on Azure</h3>
-
-                <p>
-                <img src="djangodb.drawio.png" alt="Flask app architecture diagram: App Service, App Service Plan, PostGreSQL server, Log Analytics workspace, Virtual network, DNS Zone">
-                </p>
-
-                <p>Using the <a target="_blank" href=https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview?WT.mc_id=python-79461-pamelafox">Azure Dev CLI</a>:</p>
-                <pre style="font-size:0.8em; margin-top: 0px;"><code data-trim data-noescape class="shell">
-                azd up
-                </code></pre>
-            </section>
-
-            <section>
                 <h3>Exercise: Deploying an app</h3>
 
                 <ol>
-                    <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/en-in/free/?WT.mc_id=python-81211-pamelafox">free Azure account</a>
+                    <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/free/?WT.mc_id=python-81211-pamelafox">free Azure account</a>
                     <li>Either open one of the previous projects in Codespaces 
-                        or follow <a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd?WT.mc_id=python-81211-pamelafox">these installation steps for the Azure Developer CLI.</a>
+                        or follow <a target="_blank" href="https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?WT.mc_id=python-81211-pamelafox">these installation steps for the Azure Developer CLI.</a>
                     <li>Run <code>azd up</code>. If prompted, login to your Azure account.
                     <li>If it deploys successfully, share the endpoint URL with your classmates.
                         If not, let us know what error you get. 🪲
@@ -597,7 +562,6 @@
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
     <script>
-        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
         Reveal.initialize({
             hash: true,
             center: false,
@@ -605,23 +569,12 @@
             showNotes: false,
             margin: 0.1,
             preloadIframes: true,
+            autoPlayMedia: true,
             plugins: [ RevealHighlight, RevealMenu ],
             pdfSeparateFragments: true
         });
-
-        // add HighlightJS-badge (options are optional)
-        var options = {
-            copyIconContent: "📄",
-            checkIconContent: "✅"
-        };
         window.highlightJsBadge();
 
-        if (window.location.search == "?print-pdf") {
-            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-            uncounted.forEach(node => {
-                node.parentNode.classList.add("no-print")
-            })
-        }
     </script>
     </body>
 </html>
