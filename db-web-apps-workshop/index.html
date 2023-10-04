@@ -230,20 +230,25 @@
             <section>
                 <h3>Querying with SQLAlchemy 2.0</h3>
 
-                <p>Get by primary key:</p>
+                <p class="padded">Get by primary key:</p>
                 <pre><code data-trim data-noescape class="python">
                 session.get(User, 42)
                 </code></pre>
 
-                <p>Get all rows in table:</p>
+                <p class="padded">Get all rows in table:</p>
                 <pre><code data-trim data-noescape class="python">
                 session.execute(select(User)).scalars().all()
                 </code></pre>
                 
-                <p>Finding rows by column value:</p>
+                <p class="padded">Finding rows by column value:</p>
                 <pre><code data-trim data-noescape class="python">
-                session.execute(select(User).where(User.title == "Coordinator")).scalars().all()
+                session.execute(select(User).where(
+                    User.title == "Coordinator")).scalars().all()
                 </code></pre>
+
+                <p class="padded">Play with queries in:<br>
+                <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">PostgreSQL SQLAlchemy Playground</a>
+                </p>
             </section>
 
             <section>
