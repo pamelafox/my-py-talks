@@ -8,87 +8,9 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
-        <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-dark.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
-        <link rel="stylesheet" type="text/css" href="../static/asciinema-player.css" />
-        <style>
-			.reveal {
-				font-family: "Work Sans", sans-serif;
-			}
-
-			.reveal .slides section {
-				text-align: left;
-				font-size: smaller;
-			}
-
-            .reveal section li {
-                margin-bottom: 12px;
-            }
-
-			.reveal pre {
-				background-color: #f5f5f5;
-				width: 100%;
-				border: 1px solid #ccc;
-				border-radius: 4px;
-				box-shadow: none;
-			}
-
-			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-				font-family: "Roboto", sans-serif;
-				color: #0072c1;
-			}
-
-			.reveal section.heading-only {
-				text-align:center;
-				padding-top:10%;
-			}
-
-            .no-code-badge .code-badge {
-                display: none;
-            }
-
-            .code-badge-language {
-                display: none;
-            }
-
-			.reveal h3 {
-				margin-bottom: 40px;
-			}
-
-            .smaller {
-                font-size: smaller;
-            }
-
-            code {
-                padding: 2px 4px;
-                font-size: 90%;
-                color: #0072c1;
-                background-color: #f9f2f4;
-                border-radius: 4px;
-            }
-
-            p.padded {
-                margin-top: 32px;
-            }
-
-            section .row {
-                display: flex;
-            }
-
-            section .column {
-                flex: 48%;
-                margin: 10px;
-            }
-
-			@media print
-			{
-				.no-print, .no-print *
-				{
-					display: none !important;
-				}
-			}
-
-		</style>
+        <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="../static/slides.css">
 	</head>
     <body>
     <div class="reveal">
@@ -133,36 +55,40 @@
                     <li>What interests you about containerization?
                     <li>What is the coolest/weirdest/cutest animal? 🐍
                 </ul>
-                <p>
-                    <a target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">Take the survey!</a>
-                </p>
             </section>
             
             <section>
-                <h3>Today's topics</h3>
+                <h3>Today's agenda</h3>
 
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="Bit (the raccoon) lecturing" width="300" style="float:right;">
-                <ul style="margin-top:20px; font-size:44px; line-height: 2em;">
+                <ul style="margin-top:20px; font-size:30px; line-height: 2em; float:left; width: 500px;">
                     <li>Intro to Containers
                     <li>Containerizing Flask
-                    <li>Running locally
+                    <li>👩🏾‍💻 Exercise: Run a container
+                    <li>Databases in containers
+                    <li>👩🏼‍💻 Exercise: Run multiple containers
                     <li>Deploying a container
+                    <li>👩🏻‍💻 Exercise: Deploy a container app
                 </ul>
             </section>
 
             <section>
                 <h3>Prerequisites</h3>
 
-                <p>Online development (Codespaces): <a target="_blank" href="https://github.com/signup">Github account</a></p>
+                <p>Option 1: Online development with Codespaces:
+                    <ul>
+                        <li><a target="_blank" href="https://github.com/signup">GitHub account</a></p>
+                    </ul>
+                </p>
 
-                <p>Local development (option 1):</p>
+                <p>Option 2: Local development with VS Code</p>
                 <ul>
                     <li><a target="_blank" href="https://code.visualstudio.com/Download">Visual Studio Code</a></li>
                     <li><a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers extension</a></li>
                     <li><a target="_blank" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></li>
                 </ul>
 
-                <p>Local development (option 2):</p>
+                <p>Option 3: Local development</p>
                 <ul>
                     <li>Code editor</li>
                     <li><a target="_blank" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></li>
@@ -230,14 +156,43 @@
             
             </section>
 
-            <section class="heading-only">
-                <h2>Containerizing<br>
-                Python apps</h2>
+            <section>
+                <h3>Image registries</h3>
 
-                <img src="../media/BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" width="400">
+                <p>A <strong>registry</strong> is a place to store and share images.</p>
 
+                <p>Commonly used image registries:</p>
+                    <ul>
+                        <li><a target="_blank" href="https://hub.docker.com/">Docker Hub</a>: contains many images, including official images for python, postgres, Unix systems, etc.
+                        <li><a target="_blank" href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry">GitHub container registry</a>
+                        <li><a target="_blank" href="https://azure.microsoft.com/en-us/services/container-registry/">Azure container registry</a>
+                        <li><a target="_blank" href="https://aws.amazon.com/ecr/">AWS container registry</a>
+                        <li><a target="_blank" href="https://cloud.google.com/container-registry">Google Cloud container registry</a>
+                    <br>
             </section>
 
+            <section>
+                <h3>Image layers</h3>
+
+                <p>A container image often starts off with a <strong>base image</strong>, 
+                    and then adds layers on top of it.</p>
+                
+                <p>For example:</p>
+                    <ul>
+                        <li>Base image: Ubuntu 20.04
+                        <li>Layer 1: Python 3.9
+                        <li>Layer 2: Flask 2.0
+                        <li>Layer 3: Your app
+                    </ul>
+                <p>Docker can cache each layer, which improves performance.</p>
+            </section>
+
+            <section class="heading-only"  data-background-image="background_headingonly.png">
+                <h2>Productionizing<br>
+                Flask apps</h2>
+
+                <img src="../media/BIT_PYTHON.svg" alt="Bit (the raccoon) in front of a computer and Python logo" width="400">
+            </section>
             
             <section>
                 <h3>Sample Flask app 
@@ -253,8 +208,9 @@
                 def index():
                    return render_template('index.html')
             
-                if __name__ == '__main__':
-                   app.run()
+                @app.route('/hello')
+                def hello():
+                    return render_template('hello.html', name=request.args.get('name'))
                 </code></pre>
 
                 <p>
@@ -271,18 +227,63 @@
                 <h3>Running Flask app locally</h3>
 
                 <p>Using the built-in Flask server:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                flask run
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
+                python3 -m flask run --port 50505 --debug
                 </code></pre>
 
-                <p>⚠️ <strong>Not recommended</strong> for production use.</p>
+                <p class="fragment">⚠️ The dev server is <strong>not recommended</strong> for production use.</p>
 
-                <!--
-                <p>Using production-level server:</p>
-                <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                gunicorn app:app
+            </section>
+
+            <section>
+                <h3>Running Flask with gunicorn</h3>
+
+                <p>Gunicorn is a production-level server
+                    that can run multiple worker processes.</p>
+
+                <p>Add <code>gunicorn</code> to <code>requirements.txt</code>:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                Flask==2.2.3
+                gunicorn==20.1.0
                 </code></pre>
-                -->
+
+                <p class="padded">Use <code>gunicorn</code> to run Flask app with multiple workers:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                python3 -m gunicorn app:app --workers 4 --bind 0.0.0.0:50505
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Configuring gunicorn</h3>
+
+                <p>Gunicorn can be configured with a <code>gunicorn.conf.py</code> file:</p>
+
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="python">
+                import multiprocessing
+                    
+                max_requests = 1000
+                max_requests_jitter = 50
+                log_file = "-"
+                bind = "0.0.0.0:50505"
+                
+                workers = (multiprocessing.cpu_count() * 2) + 1
+                threads = workers
+                timeout = 120
+                </code></pre>
+
+                <p>The run command can be simplified to:</p>
+                <pre style="font-size:0.7em; margin-top:0px;"><code data-trim data-noescape class="shell">
+                python3 -m gunicorn app:app
+                </code></pre>
+
+            </section>
+
+            <section class="heading-only">
+                <h2>Containerizing<br>
+                Python apps</h2>
+
+                <img src="../media/DATA_BIT.svg" alt="Bit (the raccoon) as Neo from the Matrix" width="400">
+
             </section>
 
             <section>
@@ -303,7 +304,7 @@
                 <table style="font-size: smaller;">
                     <tr>
                         <td>The base or parent image*
-                        <td><code>FROM python:3.9.13</code>
+                        <td><code>FROM python:3.11</code>
                     <tr>
                         <td>Additional software
                         <td><code>RUN pip3 install Flask gunicorn</code>
@@ -311,7 +312,7 @@
                         <td><code>WORKDIR /code</code><br>
                             <code>COPY . .</code>
                     <tr><td>Services to expose (storage/network)
-                        <td><code>EXPOSE 5000</code>
+                        <td><code>EXPOSE 50505</code>
                     <tr><td>Command to run upon launching container
                         <td><code>ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]</code>
                 </table>
@@ -325,7 +326,7 @@
 
                 <p>A complete file:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="docker">
-                FROM python:3.9.13
+                FROM python:3.11
 
                 WORKDIR /code
 
@@ -334,18 +335,36 @@
 
                 COPY . .
 
-                EXPOSE 5000
+                EXPOSE 50505
 
                 ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]
                 </code></pre>
+
+                <p class="smaller">📖 Learn more: <a target="_blank" href="https://gabnotes.org/docker-images-layers-and-cache/">Docker images layer and cache</a></p>
+
             </section>
+
+
+            <section>
+                <h3>Add a dockerignore file</h3>
+
+                <p>Prevent unnecessary files from being copied to the image:</p>
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="docker">
+                .git*
+                .venv/
+                **/*.pyc
+                __pycache__/
+                </code></pre>
+
+            </section>
+
 
             <section>
                 <h3>Building the image</h3>
 
                 <p>Using the <code>docker build</code> command:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                docker build --tag simpleflaskservercontainer .
+                docker build --tag flaskapp .
                 </code></pre>
 
                 <p>Using the <code>VS Code Docker extension</code>:</p>
@@ -358,7 +377,7 @@
 
                 <p>Using the <code>docker run</code> command:</p>
                 <pre style="font-size:0.7em;"><code data-trim data-noescape class="bash">
-                docker run --publish 5000:5000 simpleflaskservercontainer
+                docker run --publish 50505:50505 flaskapp
                 </code></pre>
                 
                 <p class="padded" style="margin-bottom:0px">Using Docker Desktop:</p>
@@ -410,7 +429,7 @@
 
                 <p>
                     👀 Demo: 
-                    <a class="smaller" target="_blank" href="https://flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io/surveys/3">flasksurveys-xvmcme-containerapp.redcoast-67e33cd1.eastus.azurecontainerapps.io</a>
+                    <a class="smaller" target="_blank" href="https://flasurveycon-b2ikkm-ca.ashysea-c408c9d0.eastus.azurecontainerapps.io/surveys">flasurveycon-b2ikkm-ca.ashysea-c408c9d0.eastus.azurecontainerapps.io/surveys</a>
                 </p>
                 <p>
                     👩🏼‍💻 Code: <a class="smaller" target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app">github.com/pamelafox/flask-surveys-container-app</a>
@@ -419,7 +438,7 @@
             </section>
 
             <section>
-                <h3>Data persistence</h3>
+                <h3>Data persistence in containers</h3>
             
                 <p>Data <em>can</em> be written to a container's file system, but:</p>
 
@@ -490,7 +509,7 @@
 
                 <pre style="font-size:0.7em; margin-top: -10px;"><code data-trim data-noescape class="bash">
                 docker run --rm -d --network postgres-net \
-                    --name flask-db-app -p 5000:5000 \
+                    --name flask-db-app -p 50505:50505 \
                     flasksurveyscontainerapp
                 </code></pre>
             </section>
@@ -522,13 +541,24 @@
                         build:
                             context: .
                         ports:
-                            - 5000:5000
+                            - 50505:50505
                         depends_on:
                             db:
                                 condition: service_healthy
                     volumes:
                         postgres-data:
                 </code></pre>
+            </section>
+
+            <section>
+                <h3>Run multiple containers</h3>
+
+                <p>Run the app and database containers:</p>
+
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
+                docker-compose up
+                </code></pre>
+
             </section>
 
             <section>
@@ -543,7 +573,7 @@
                  <ol>
                     <li>Follow the <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app#local-development-with-docker">Local development with Docker steps</a>.
                     <li>Make a survey in the app.
-                    <li>If you're in Codespaces, change the visibility of port 5000 to "Public" and share the URL of your survey with classmates.
+                    <li>If you're in Codespaces, change the visibility of port 50505 to "Public" and share the URL of your survey with classmates.
                  </ol>
                  <p>🙋🏼‍♀️🙋🏾‍♀️🙋🏽‍♀️ Let us know if you need any help! 🙋🏻‍♀️🙋🏽‍♂️🙋🏿‍♀️</p>
             </section>
@@ -556,11 +586,6 @@
 
             </section>
 
-            <!--TODO
-                <section>
-                <h3>Container registries</h3>
-            </section>
-            -->
 
             <section>
                 <h3>Hosting considerations</h3>
@@ -626,6 +651,66 @@
                     are all good options.</p>
             </section>
 
+
+            <section>
+                <h3>Storage in container apps</h3>
+
+                <p>For temporary storage, you can write to file system or
+                have an <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts?pivots=azure-cli#temporary-storage">
+                    ephemeral volume</a> in a container app.
+                </p>
+
+                <p class="fragment">For permanent storage, you can mount
+                    <a target="_blank" href="https://learn.microsoft.com/en-us/azure/container-apps/storage-mounts?pivots=azure-cli#azure-files">Azure Files</a>
+                    but performance is too limited to be useful for a database.
+                </p>
+
+                <p class="fragment">
+                Best approach for Azure: <br>
+                Use a managed database service <em>outside</em> the container.
+                </p>
+            </section>
+
+            <section>
+                <h3>Azure managed databases services</h3>
+
+                <style>
+                .fragment.background-green {
+                    background-color: transparent;
+                }
+                .fragment.background-green.visible {
+                    background-color: #04865a;
+                }
+                </style>
+
+                <p>These are just some of the options:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Azure CosmosDB
+                            <td>Distributed database with multiple APIs, including MongoDB and Cassandra.
+                        </tr>
+                        <tr>
+                            <td>Azure Cosmos DB for PostgreSQL</td>
+                            <td>Distributed database using PostgreSQL and the Citus extension. Can scale vertically and horizontally.
+                            </td>
+                          </tr>
+                        <tr class="fragment custom background-green">
+                            <td>Azure Database for PostgreSQL – Flexible Server</td>
+                            <td>Fully managed service with vertical scaling.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            
             <section>
                 <h3>Hosting on Azure Container Apps</h3>
 
@@ -658,10 +743,10 @@
                  </p>
 
                 <ol>
-                    <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/en-in/free/?WT.mc_id=python-81211-pamelafox">free Azure account</a>
+                    <li>Sign up for a <a target="_blank" href="https://azure.microsoft.com/en-in/free/?WT.mc_id=python-81211-pamelafox">free Azure account</a> and create a subscription.
                     <li>Either open the project in Codespaces 
                         or follow <a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd?WT.mc_id=python-81211-pamelafox">these installation steps for the Azure Developer CLI.</a>
-                    <li>Run <code>azd up</code>. If prompted, login to your Azure account.
+                    <li>Follow the <a target="_blank" href="https://github.com/pamelafox/flask-surveys-container-app#deployment">Deployment steps</a> in the README.
                     <li>If it deploys successfully, share the endpoint URL with your classmates.
                         If not, let us know about any bugs. 🪲
                     <li>Once you've verified the app is working, run <code>azd down</code> to un-deploy the app.
@@ -678,6 +763,7 @@
                 <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%" style="float:right;">
 
                 <ul style="float:left; width: 60%; display: grid; gap: 18px;">
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/training/paths/administer-containers-in-azure/">Administer containers in Azure</a>
                     <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/quickstarts-app-hosting">Hosting Python apps on Azure</a>
                     <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/developer/python/containers-in-azure-overview-python">Python Container Apps in Azure</a>
                     <li><a target="_blank" href="https://code.visualstudio.com/docs/python/python-tutorial">Getting Started with Python in VS Code</a>
@@ -696,7 +782,6 @@
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
-    <script src="../static/asciinema-player.min.js"></script>
     <script>
         const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
         Reveal.initialize({
@@ -710,27 +795,7 @@
             pdfSeparateFragments: true
         });
 
-        function checkForCasts(event) {
-            const playerDiv = event.currentSlide.querySelector('#azd-up-player');
-            if (playerDiv && !playerDiv.playerObject) {
-                playerDiv.playerObject = AsciinemaPlayer.create(
-                    'azd_up.cast',
-                    playerDiv,
-                    {cols: 80, rows: 20}
-                    );
-            }
-        }
-        Reveal.on( 'ready', checkForCasts);
-        Reveal.on( 'slidechanged', checkForCasts);
-
         window.highlightJsBadge();
-
-        if (window.location.search == "?print-pdf") {
-            var uncounted = document.querySelectorAll("[data-visibility='uncounted']");
-            uncounted.forEach(node => {
-                node.parentNode.classList.add("no-print")
-            })
-        }
 
     </script>
     </body>
