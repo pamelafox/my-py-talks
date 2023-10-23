@@ -1,0 +1,518 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Using GPT models with Python</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+        <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="../static/slides.css">
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1 style="font-size:3.2em;">Using GPT models<br>
+                    with Python
+                </h1>
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+            <section>
+                <h3>About me</h3>
+            
+                <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px; border-radius: 20px;">
+                <p>Python Cloud Advocate at Microsoft</p>
+                <p>Formerly: UC Berkeley, Khan Academy, Woebot, Coursera,Google</p>
+                <br>
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px;">
+                    <tr>
+                      <td>Mastodon
+                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                      </tr>
+                  </table>
+            </section>
+
+            <section class="heading-only">
+                <h2>LLMs & GPTs</h2>
+
+                <img src="../media/BIT_ML.svg" alt="A raccoon studying robotics" width="400">
+           </section>
+
+           <section>
+                <h3>The history of AI</h3>
+
+                <img src="ai_diagram.svg" alt="AI box with ML box inside with Deep Learning box inside with Generative AI inside" style="float: left; width: 370px;">
+
+                <ul style="float: right; width: 550px; font-size:0.7em">
+                    <li>1956: <strong>Artificial Intelligence​:</strong><br>
+                    The field of computer science that seeks to create intelligent machines that can replicate or exceed human intelligence
+                    <li>1997: <strong>Machine Learning:​</strong><br>
+                    Subset of AI that enables machines to learn from existing data and improve upon that data to make decisions or predictions​
+                    <li>2017: <strong>Deep Learning​:</strong><br>
+                    A machine learning technique in which layers of neural networks are used to process data and make decisions​
+                    <li>2021: <strong>Generative AI:</strong><br>
+                    Create new written, visual, and auditory content given prompts,
+                    often using Large Language Models or Diffusion models
+                </ul>
+            </section>
+
+            <section>
+                <h3>Large Language Models (LLMs)</h3>
+
+                <p>An LLM is a model that is so large
+                    that it achieves general-purpose language understanding and generation.
+                </p>
+
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigsk_RT3zBrzSTftNq6czTHYkv3izej5wCEhxNrjnoUrvIPt0aJLsV8s4zIgpnyoPysHobWFhHuzCU-B30AItGMAmYRMEWY_Pp--lLmQ6--oMMWrRciyDDv7qD1zf4Y--i7avr9EHv2nsz4Q7hHTY5-JeXFKHhbUttmVruMd8Py_fqCUtaAKCwHyOF_A/w640-h169/image2.png" alt="Diagram of sentiment classification task using input prompting" height="120">
+                <br>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhl5PSqGGHMWNxwav2cdB6GaoiHCrKESFwkRXQ6VJmJxVGCjcuQhqJsey9EiCQW6WUKaHDaMCmYj9LGxZaVuU5DpHTh9-Wl0pRzlTybDC2WES0_jSjmyGHcHKku9XZECXceG1TCtH5DNocVj-0PQHTztf_5Zzo7Ijrj8jlT_kClaW72fxzj4-3SQOwtNQ/s16000/image4.png" alt="Graphs comparing model scale to accuracy on tasks" height="200">
+
+                <p>From 
+                <a target="_blank" href="https://blog.research.google/2022/11/characterizing-emergent-phenomena-in.html">
+                   📖 Characterizing Emergent Phenomena in LLMs
+                </a>
+            </section>
+
+            <section>
+                <h3>LLMs in the wild</h3>
+                
+                <table style="font-size:0.9em; margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>Product
+                            <th>LLM
+                    <tbody>
+                    <r>
+                        <td>ChatGPT</td>
+                        <td>GPT-3.5/4</td>
+                    <tr style="background-color:azure">
+                        <th colspan="2">Web search</th>
+                    <tr style="background-color:azure">
+                        <td>Google: Bard</td>
+                        <td>PaLM 2</td>
+                    </tr>
+                    <tr style="background-color:azure">
+                        <td>Microsoft: Bing Chat</td>
+                        <td>ChatGPT 3.5/4</td>
+                    </tr>
+                    <tr style="background-color:bisque">
+                        <th colspan="2">Code</th>
+                    </tr>
+                    <tr style="background-color:bisque">
+                        <td>GitHub Copilot</td>
+                        <td>ChatGPT 3.5/4</td>
+                    </tr>
+                    <tr style="background-color:bisque">
+                        <td>Amazon CodeWhisperer</td>
+                        <td>?</td>
+                    </tr>
+                    <tr style="background-color:honeydew">
+                        <th colspan="2">Productivity</th>
+                    </tr>
+                    <tr style="background-color:honeydew">
+                        <td>Microsoft Word</td>
+                        <td>ChatGPT 3.5/4</td>
+                    </tr>
+                    <tr style="background-color:honeydew">
+                        <td>Neptyne</td>
+                        <td>ChatGPT 3.5/4</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h3>Generative Pretrained Transformer (GPT)</h3>
+                
+                <img src="multiple_attention_heads.png" alt="Diagram of multiple attention heads on tokens in a sentence" style="float: right; width: 300px;">
+                <p>GPT models are LLMs based on Transformer architecture from:
+                <br>
+                <a target="_blank" href="https://arxiv.org/abs/1706.03762">📖 "Attention is all you need" paper</a><br> by Google Brain
+                </p>
+                <br>
+                <p>Learn more:
+                <ul style="width: 60%; margin-right: 16px;">
+                    <li>Andrej Karpathy: <a href="https://www.youtube.com/watch?v=bZQun8Y4L2A&pp=ygUPYW5kcmVqIGthcnBhdGh5">🎥 State of GPT</a></li>
+                    <li>Andrej Karpathy: <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">🎥 Let's build GPT: from scratch, in code</a></li>
+                </ul>
+                <!-- my aifair links-->
+            </section>
+
+            <section>
+                <h3>GPT and GPT-like models</h3> 
+
+                <table style="margin:0; font-size:1.2em;">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Model</th>
+                            <th>Parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>OpenAI</td>
+                            <td>GPT-3.5</td>
+                            <td>175B</td>
+                        <tr>
+                            <td>
+                                OpenAI
+                            <td>GPT-4
+                            <td>Undisclosed
+                        <tr>
+                            <td>Google</td>
+                            <td>PaLM</td>
+                            <td>540B</td>
+                        <tr>
+                            <td>Meta</td>
+                            <td>LlaMA</td>
+                            <td>70B</td>
+                        <tr>
+                            <td>Anthropic</td>
+                            <td>Claude 2</td>
+                            <td>130B</td>
+                    </tbody>
+                </table>
+
+                <p><a target="_blank" href="https://platform.openai.com/docs/models/overview">🔗 OpenAI models overview</a></p>
+            </section>
+
+            <section>
+                <h3>Demo: Azure OpenAI Playground</h3>
+
+                <img src="screenshot_openaistudio.png" alt="Screenshot of Azure OpenAI Playground" style="border:1px solid #ccc; width:800px;">
+            </section>
+
+
+            <section class="heading-only">
+                <h2>Calling GPT models<br> from Python</h2>
+
+                <img src="../media/BIT_PYTHON.svg" alt="A raccoon conjuring Python from their laptop (like a Snake charmer)" width="400">
+            </section>
+
+            <section>
+                <h3>OpenAI API</h3>
+
+                <p>Request access from <a target="_blank" href="https://openai.com/">openai.com</a>
+                or <a href="https://aka.ms/oaiapply">Azure OpenAI</a>.</p>
+                </p>
+
+                <p>Once you have access, you can use the API from Python or any other language.</p>
+
+                <p>Install the OpenAI Python library:</p>
+                <pre><code data-trim data-noescape>
+                pip install openai
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>OpenAI API authentication</h3>
+
+                <p>For openai.com OpenAI, set your API key:</p>
+                <pre><code data-trim data-noescape>
+                openai.api_type = "openai"
+                openai.api_key = os.getenv("OPENAI_KEY")
+                </code></pre>
+
+                <p class="padded">For Azure OpenAI, use Azure default credentials:</p>
+                <pre style="font-size:0.8em"><code data-trim data-noescape>
+                openai.api_type = "azure_ad"
+                openai.api_base = "https://cog-7bsyuhdvztows.openai.azure.com/"
+                default_credential = azure.identity.DefaultAzureCredential()
+                openai.api_key =  default_credential.get_token(
+                    "https://cognitiveservices.azure.com/.default").token
+                </code></pre>
+
+            </section>
+
+            <section>
+                <h3>Call the Chat Completion API</h3>
+
+                <p>Using <a target="_blank" href="https://beta.openai.com/docs/api-reference/chat">ChatCompletion.create()</a>:</p>
+
+                <pre style="font-size:0.8em; height:480px;"><code data-trim data-noescape>
+                response = openai.ChatCompletion.create(
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ],
+                    max_tokens=400,
+                    temperature=1,
+                    top_p=0.95)
+
+                print(response["choices"][0]["message"]["content"])
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Stream the response</h3>
+
+                <pre style="font-size:0.8em; height:470px;"><code data-trim data-noescape>
+                response = openai.ChatCompletion.create(
+                    stream=True,
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ])
+                
+                for event in response:
+                    print(event.choices[0].delta.content)
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Use asynchronous calls</h3>
+
+                <p>Using Python async/await constructs:</p>
+                <pre><code data-trim data-noescape>
+                response = await openai.ChatCompletion.acreate(
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ])
+                </code></pre>
+                <br>
+                <p class="smaller">Learn more:
+                    <a target="_blank" href="http://blog.pamelafox.org/2023/09/best-practices-for-openai-chat-apps.html">
+                    📖 Best practices for OpenAI Chat apps: Concurrency
+                    </a>
+                </p>
+            </section>
+
+            <section>
+                <h3>ChatGPT: Pros and Cons</h3>
+
+                <p>Pros:</p>
+                <ul>
+                    <li>Creative 😊</li>
+                    <li>Great with patterns</li>
+                    <li>Good at syntax (natural and programming)</li>
+                </ul>
+
+                <div class="fragment">
+                <p>Cons:</p>
+                <ul>
+                    <li>Creative 😖</li>
+                    <li>Makes stuff up (unknowingly)</li>
+                    <li>Limited context window (4K-32K)</li>
+                </ul>
+                </div>
+            </section>
+
+            <section class="heading-only">
+                <h2>Retrieval Augmented Generation</h2>
+
+                <img src="../media/DATA_BIT.svg" alt="A raccoon that looks like Neo from Matrix movie" width="400">
+            </section>
+
+            <!-- pablos slides-->
+            <!-- my diagram -->
+            
+            <section>
+                <h3>Retrieval Augmented Generation (RAG)</h3>
+
+                <p>Use a retrieval system to find the best context for the generation model.</p>
+
+                <img src="rag.png" alt="RAG diagram" width="100%">
+            </section>
+
+            <section>
+                <h3>Retrieval + Generation</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50%">Retrieval system (Search)</th>
+                            <th>➡ Generative model (LLM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>Organize knowledge to fit needs of models
+                                    <li>Retrieve relevant information
+                                    <li>Ensure data freshness
+                                    <li>Enforce access control
+                                </ul>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <ul>
+                                    <li>Summarize information
+                                    <li>Answer questions
+                                    <li>Suggest follow-up questions
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Demo: OpenAI + Cognitive Search</h3>
+
+                <p><a target="https://github.com/Azure-Samples/azure-search-openai-demo">
+                    github.com/Azure-Samples/azure-search-openai-demo
+                </a></p>
+
+                <img src="chatscreen.png" alt="RAG demo" width="500px; border:1px solid #ccc;">
+
+            </section>
+
+            <section>
+                <h3>RAG flow</h3>
+
+                <img src="rag_flow.png" alt="RAG flow: User question, document search, LLM, response" width="100%">
+            </section>
+
+            <section>
+                <h3>RAG: Search step</h3>
+
+                <p>Query Azure Cognitive Search using both text and vectors:</p>
+
+                <img src="search_combo.png" alt="Search flow: vectors and keywords, combined with RRF algorithm, then semantic re-ranker step" width="30%" style="float: right;">
+
+                <pre style="float: left; width: 65%; font-size:0.8em; height:450px;"><code data-trim data-noescape>
+                r = await self.search_client.search(
+                    query_text,
+                    query_type=QueryType.SEMANTIC,
+                    top=top,
+                    vector=query_vector,
+                    vector_fields="embedding",
+                )
+
+                results = [doc["sourcepage"] +
+                            ": " + doc["content"]
+                           async for doc in r]
+                
+                content = "\n".join(results)
+                </code></pre>
+
+            </section>
+
+            <section>
+                <h3>RAG: Search results</h3>
+
+                <p>Use the search results to create a prompt for the LLM:</p>
+
+                <pre style="font-size:0.8em; height:460px;"><code data-trim data-noescape>
+                messages = [system_prompt]
+                messages.extend(few_shots)
+                user_content = f"{q}\nSources:\n {content}"
+                messages.append({"role": "user", "content": user_content})
+
+                chat_completion = await openai.ChatCompletion.acreate(
+                    deployment_id=self.chatgpt_deployment,
+                    model=self.chatgpt_model,
+                    messages=messages,
+                    temperature=0.3,
+                    max_tokens=1024,
+                    n=1,
+                )
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>More resources</h3>
+
+                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%" style="float:right;">
+
+                <ul style="float:left; width: 60%; display: grid; gap: 18px;">
+                    <li>Explanations:
+                    <ul><li><a target="_blank" href="https://simonwillison.net/2023/Jun/8/gpt-tokenizers/">How GPT tokenizers work</a>
+                    <li><a target="_blank" href="https://simonwillison.net/2023/Oct/23/embeddings/">Embeddings 101</a>
+                    </ul>
+                    <li>Prompting libraries:
+                    <ul>
+                    <li><a target="_blank" href="https://github.com/microsoft/semantic-kernel/blob/main/python/README.md">Semantic Kernel for Python</a>
+                    <li><a target="_blank" href="https://docs.langchain.com/docs/">Langchain</a>
+                    <li><a target="_blank" href="https://github.com/guidance-ai/guidance">Guidance</a>
+                    </ul>
+                    <li>Samples:
+                    <ul>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/chatgpt-quickstart">Azure ChatGPT Quickstart</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/azure-search-openai-demo">Azure Search + ChatGPT</a>
+                    </ul>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Microsoft for Startups Founders Hub</h3>
+
+                <p>Sign up in minutes at <a target="_blank" href="startups.microsoft.com">startups.microsoft.com</a></p>
+                <ul>
+                    <li>Get $150k of Azure credits to access OpenAI GPT-3.5 Turbo and GPT-4 through Azure OpenAI Service
+                    <li>Experiment with LLMs for free with $2,500 in OpenAI credits
+                    <li>Receive 1:1 advice from Microsoft AI experts
+                    <li>Free access to development and productivity tools like GitHub, Microsoft 365, LinkedIn Premium, and more
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+
+        window.highlightJsBadge();
+
+    </script>
+    </body>
+</html>
