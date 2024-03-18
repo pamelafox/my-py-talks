@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Teaching Modern Web Development with Python</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../static/slides.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only">
+                <h1 style="font-size:80px;  width: 100%;">Teaching Modern Web Development with Python</h1>
+
+                <img src="https://code.visualstudio.com/assets/docs/languages/python/python-editing.gif" alt="Animated GIF of autocomplete in Python code in VS Code" height="200">
+                <img src="https://code.visualstudio.com/assets/docs/python/testing/test-results.png" alt="Screenshot of Python tests in VS Code testing tab" height="200">
+                <div class="no-print" style="display: none; text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+
+            <section>
+                <h3>About me</h3>
+            
+                <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
+                <p>Python Cloud Advocate at Microsoft</p>
+                <p>Volunteer instructor for GDI (GirlDevelopIt)</p>
+                <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+                <br>
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px;">
+                    <tr>
+                      <td>Mastodon
+                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                    </tr>
+                    <tr>
+                        <td>LinkedIn
+                        <td><a target="_blank" href="https://www.linkedin.com/in/pamela-fox-5668b1b4/">www.linkedin.com/in/pamelafox</a></td>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                      </tr>
+                  </table>
+            </section>
+
+            <section>
+                <h3>What does a web developer need to know now?</h3>
+
+                <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="A bunch of raccoon students with computers" width="400" style="float:right; margin-left: 20px;">
+
+                <ul style="line-height:2em;">
+                    <li>Modern web frameworks</li>: API-first, async
+                    <li>Databases</li>
+                    <li>Generative AI</li> (If there's time)
+                    <li>Containerization with Docker</li>
+                    <li>Dev Environments</li>: Dev Containers, Codespaces
+                    <li>Coding assistance</li>: Linters, GitHub Copilot
+                    <li>Testing</li>: pytest, coverage, snapshot, fuzzing
+                    <li>Cloud deployment</li>: security, performance, scaling
+                </ul>
+            </section>
+
+            <section>
+                <h3>Choosing a language</h3>
+
+                <p>For the frontend:</p>
+
+                <ul>
+                    <li>HTML, CSS</li>
+                    <li>JavaScript or TypeScript (with build step)</li>
+                    <li>Frameworks: React, Vue, Svelte, Lit, Web Components</li>
+                </ul>
+
+                <p>For the backend:</p>
+
+                <ul>
+                    <li>Python</li>
+                    <li>Node.js</li>
+                    <li>Go</li>
+                    <li>Rust</li>
+                    <li>Java</li>
+                    <li>C#</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Why Python?</h3>
+
+                <p>Python is a great language for teaching web development because:</p>
+
+                <ul>
+                    <li>Many students already know Python</li>
+                    <li>Huge ecosystem, many libraries</li>
+                    <li>Also in data science, ML, and AI</li>
+                    <li>Multiple popular web frameworks</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Modern Python versions</h3>
+
+                <figure style="float:right; margin-left: 20px; height: 300px;">
+                    <img src="graph_pythonversion.png">
+                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
+                </figure>
+
+                <p>The current version of Python is 3.12. See <a target="_blank" href="https://www.python.org/downloads/">python.org/downloads</a> for the latest version of Python.</p>
+
+                <p>Try not to stay behind more than a year. New versions are faster and have <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/upgrade-your-python-version-for-easier-debugging/ba-p/3673785">better debugging messages</a>.</p>
+            </section>
+
+            <!-- TODO: Containers here? -->
+            <section>
+                <h3>Modern web frameworks</h3>
+
+                
+                <p>Python has a few modern web frameworks that are popular:</p>
+
+                <figure style="float:right;">
+                    <img src="graph_frameworks.png" alt="Graph of Python web framework popularity" style="width: 100%;">
+                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
+                </figure>
+
+                <ul>
+                    <li>Flask/Quart</li>: Lightweight, flexible
+                    <li>FastAPI</li>: Lightweight, popular for API-first development
+                    <li>Django</li>: Opinionated, includes database functionality
+                </ul>
+            </section>
+            
+            <section>
+                <h3>Flask/Quart</h3>
+
+                <p><a target="_blank" href="https://flask.palletsprojects.com/">Flask</a> is a lightweight web framework that includes routing and template rendering.</p>
+
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
+                from flask import Flask, render_template
+                app = Flask(__name__)
+
+                @app.get('/')
+                def hello_world():
+                    return render_template('index.html')
+                </code></pre>
+                
+                <p>For more functionality, bring in extensions like: Flask-SQLAlchemy for database ORM, WTForms for forms, etc.</p>
+
+                <p><a target="_blank" href="https://quart.palletsprojects.com/">Quart</a> is an asynchronous version of Flask.</p>
+
+                <p>Sample apps: <a target="_blank" href="https://github.com/pamelafox/simple-flask-server-example">Basic Flask server</a>, <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Flask + DB example</a></p>
+
+            </section>
+
+            <section>
+                <h3>Django</h3>
+
+                <p>Django is an opinionated web framework that includes:</p>
+
+                <figure style="float:right;">
+                    <img src="screenshot_django_admin.png" alt="Screenshot of Django admin" style="width: 200px;">
+                    <figcaption>Source: <a target="_blank" href="https://www.djangoproject.com/">Django website</a></figcaption>
+                </figure>
+
+                <ul>
+                    <li>ORM for database access</li>
+                    <li>Admin interface</li>
+                    <li>Forms, templates, and views</li>
+                    <li>Security features</li>
+                    <li>Internationalization</li>
+                    <li>Testing tools</li>
+                </ul>
+
+                <p>Sample apps: <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">Django quiz app</a></p>
+            </section>
+
+            <section>
+                <h3>FastAPI</h3>
+
+                <p><a target="_blank" href="https://fastapi.tiangolo.com/">FastAPI</a> is an async framework for building APIs (with auto-generated documentation) based on standard Python type hints.</p>
+
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
+                from fastapi import FastAPI
+                app = FastAPI()
+
+                @app.post("/items/")
+                async def create_item(item: Item):
+                    return item
+                </code></pre>
+
+                <p>Sample apps: <a target="_blank" href="https://github.com/pamelafox/simple-fastapi-container">Simple FastAPI app</a>, <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">Static Maps API</a></p>
+            </section>
+
+            <section>
+                <h3>The importance of async</h3>
+
+                <p>Programmers must understand async to build modern web apps that support concurrency.</p>
+
+                <p>A web app without async:</p>
+
+                <img src="diagram_sync.png" alt="Diagram of a synchronous web app" style="width: 100%;">
+
+                <p>A web app with async can handle new requests while waiting for an I/O op:</p>
+
+                <img src="diagram_async.png" alt="Diagram of an asynchronous web app" style="width: 100%;">
+
+                <p>Any app that has slow network requests, database queries, or file reads can benefit from async.</p>
+
+                <p>See also: <a target="_blank" href="https://fastapi.tiangolo.com/async/">FastAPI tutorial on async</a></p>
+            </section>
+
+            <section>
+                <h3>Which framework to teach?</h3>
+
+                <p>I like to teach all of them, so students can become framework-agnostic and choose the best tool for the job.</p>
+
+                <p>But if you have to choose one:</p>
+
+                <ul>
+                    <li>Flask: Easy to get started, but it can get hairy when you need more functionality</li>
+                    <li>Django: Includes everything, but it's a lot to learn at once. Good fit for very standard webapps like a blog or content site.</li>
+                    <li>FastAPI: Easy to get started, great fit if you're building an API</li>
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Databases</h2>
+                <img src="../media/DATA_BIT.svg" alt="A raccoon with a background of data" width="400">
+            </section>
+
+            <section>
+                <h3>Database options</h3>
+
+                <figure style="float:right;">
+                    <img src="graph_databases.png" alt="Graph of  database popularity" style="width: 100%;">
+                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/databases/">JetBrains Developers Survey 2023</a></figcaption>
+                </figure>
+
+                <p>Two main types of databases:</p>
+                <ul>
+                    <li>Relational databases</li>: PostgreSQL, MySQL, SQLite, MSSQL
+                    <li>NoSQL databases</li>: MongoDB, Redis
+                </ul>
+            </section>
+
+            <section>
+                <h3>PostgreSQL</h3>
+
+                <p><a target="_blank" href="https://www.postgresql.org/">PostgreSQL</a> is a popular open-source relational database that supports JSON, XML, and other data types.</p>
+
+                <pre><code data-trim data-noescape class="sql">
+                CREATE TABLE cities (
+                    name            varchar(80),
+                    location        point
+                );
+                INSERT INTO cities VALUES ('San Francisco', '(-194.0, 53.0)');
+                SELECT name FROM cities WHERE location <@ circle '((0,0), 300)';
+                </code></pre>
+
+                <p>There are many popular extensions for PostgreSQL like PostGIS for geospatial data
+                    and pgvector for vector similarity search.</p>
+
+                <p>Python libraries for PostgreSQL:
+                    <a target="_blank" href="https://www.psycopg.org/">psycopg (driver)</a>,
+                    <a target="_blank" href="https://www.sqlalchemy.org/">SQLAlchemy (ORM)</a>
+                </p>
+                <p>Playgrounds: <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">PostgreSQL playground</a>,
+                    <a target="_blank" href="https://github.com/pamelafox/pgvector-playground">pgvector playground</a></p>
+            </section>
+
+            <section>
+                <h3>Use an ORM!</h3>
+
+                <p>ORMs (Object-Relational Mappers) like SQLAlchemy and Django's ORM make it easier to work with databases,
+                    and they help protect against SQL injection attacks.</p>
+
+                <p>Example code using SQLAlchemy ORM:</p>
+
+                <pre><code data-trim data-noescape class="python">
+                class BlogPost(Base):
+                    __tablename__ = "blog_post"
+                    id: Mapped[int] = mapped_column(primary_key=True)
+                    title: Mapped[str] = mapped_column(String(30))
+                    content: Mapped[str]
+
+                b = BlogPost(title="My first post", content="Hello world")
+                session.add(b)
+                session.commit()
+                </code></pre>
+
+                <p>The ORM will generate the SQL for you, and it will handle things like escaping strings and converting
+                    Python types to SQL types.</p>
+            
+                <p>Playgrounds: <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">PostgreSQL playground</a>,
+                    <a target="_blank" href="https://github.com/pamelafox/pgvector-playground">pgvector playground</a></p>
+            </section>
+
+            <section>
+                <h3>MongoDB</h3>
+
+                <p><a target="_blank" href="https://www.mongodb.com/">MongoDB</a> is a popular source-available NoSQL database that stores data in JSON-like documents.</p>
+
+                <pre><code data-trim data-noescape class="python">
+                post = {
+                    "author": "Mike",
+                    "text": "My first blog post!",
+                    "tags": ["mongodb", "python", "pymongo"]
+                }
+                db.posts.insert_one(post)
+                </code></pre>
+
+                <p>Python libraries for MongoDB:
+                    <a target="_blank" href="https://pymongo.readthedocs.io/">pymongo (driver)</a>,
+                    <a target="_blank" href="https://beanie-odm.dev/">beanie (ODM)</a>
+                </p>
+            </section>
+
+
+            <section>
+                <h3>Redis</h3>
+
+                <p><a target="_blank" href="https://redis.io/">Redis</a> is an open-source in-memory data structure store that can be used as a database, cache, or message broker.</p>
+
+                <pre><code data-trim data-noescape class="python">
+                import redis
+                r = redis.Redis(host='localhost', port=6379, db=0)
+                r.set('session-id-123', 'user-id-456')
+                </code></pre>
+
+                <p>Python libraries for Redis:
+                    <a target="_blank" href="https://redis-py.readthedocs.io/">redis-py (driver)</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Which database to teach?</h3>
+
+                <p>My personal preference is to teach PostgreSQL, because it can be used in so many
+                    different types of applications, and most students do not need the extreme scalability of NoSQL databases
+                    or the fast caching abilities of Redis.</p>
+                
+                <p>Also, SQL is a good skill to have, given the popularity of SQL databases.</p>
+
+            </section>
+
+            <section>
+                <h2>Containerization with Docker</h2>
+            </section>
+
+
+            <section>
+                <h2>Dev Environments</h2>
+            </section>
+
+            <section>
+                <h3>Modern dev environments</h3>
+
+                <p>In a company, the goal of a dev environment is to make it easy for a developer to work on multiple projects,
+                    and for all developers on a particular project to have the same environment.</p>
+
+                <p>An good dev environment is <strong>replicable</strong>
+                    and <strong>isolated</strong>.</p>
+                
+                <p>Options:</p>
+                <ul>
+                    <li>Virtual environments</li>
+                    <li>Docker containers</li>
+                    <li>Dev containers</li>
+                    <li>GitHub Codespaces</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Virtual environments</h3>
+
+                <p>Python has a built-in tool for creating virtual environments:</p>
+
+                <pre><code data-trim data-noescape class="bash">
+                python -m venv myenv
+                source myenv/bin/activate
+                pip install -r requirements.txt
+                </code></pre>
+
+                <p>Virtual environments are good for isolating Python dependencies, but they do <strong>not</strong> isolate the rest of the environment.</p>
+            </section>
+
+
+            <section>
+                <h3>More example repos</h3>
+
+                <p>All of these repos are equipped with Dev Containers:</p>
+
+                <table style="font-size:20px;">
+                    <thead>
+                        <tr>
+                            <th>
+                            <th>App Service
+                            <th>Functions
+                            <th>Container Apps
+                    <tbody>
+                        <tr style="border-top:4px solid white;">
+                            <td>Django + PG
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">Quiz app</a>
+                                <br>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd">+ VNET:
+                                    Reviews app</a>
+                                <br>
+                                <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">+ VNET: Booking
+                                    app</a>
+                                <br>
+                                <a target="_blank"
+                                    href="https://github.com/cookiecutter/cookiecutter-django/discussions/4205">cookiecutter</a>
+                            <td>
+
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/Azure-Samples/azure-django-postgres-aca">Booking app</a>
+
+                        <tr style="border-top:4px solid white;">
+                            <td>Flask
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-server-example">Simple App</a>
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-api-azure-function">Simple API</a>
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/simple-flask-server-container">Simple App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-flask-api-container">Simple
+                                    API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-gallery-container-app">+
+                                    CDN: App</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-charts-api-container-app">+
+                                    CDN: API</a><br>
+                        <tr>
+                            <td>+ PostgreSQL
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Quiz
+                                    app</a><br>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/msdocs-flask-postgresql-sample-app-azd">+ VNET:
+                                    Reviews app</a>
+                            <td>
+
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
+                        <tr style="border-top:4px solid white;">
+                            <td>FastAPI
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/pamelafox/scikitlearn-model-to-fastapi-app">Salary API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-on-azure-functions">Simple
+                                    API</a><br>
+                                <a target="_blank" href="https://github.com/pamelafox/fastapi-azure-function-apim">+
+                                    APIM: Simple API</a><Br>
+                                <a target="_blank" href="https://github.com/pamelafox/staticmaps-function">+ CDN: Maps
+                                    API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/pamelafox/simple-fastapi-container">Simple
+                                    API</a>
+                        <tr>
+                            <td>+ MongoDB
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo">Todo
+                                    API</a>
+                            <td>
+                                <a target="_blank"
+                                    href="https://github.com/Azure-Samples/todo-python-mongo-swa-func">Todo API</a>
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-aca">Todo
+                                    API</a>
+                </table>
+
+            </section>
+
+            <section data-background-image="background_standard.png">
+                <h3>Thank you!</h3>
+
+                <img src="https://developer.microsoft.com/en-us/advocates/media/profiles/pamela-fox.png"
+                    alt="Photo of Pamela smiling with a stuffed elephant"
+                    style="width: 350px; float:right; border-radius: 12px;">
+
+                <p>Grab the slides @ <span class="aka">aka.ms/superstream-vscode</span> </p>
+
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
+                    <tr>
+                        <td>Mastodon
+                        <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                    </tr>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                    </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                    </tr>
+                </table>
+                <br>
+                <p style="clear:both; margin-top: 30px; font-size:smaller;">Let me know about your experiences with VS
+                    Code + Python!</p>
+
+            </section>
+
+            <section class="heading-only" data-background-image="background_headingonly.png">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [RevealHighlight, RevealMenu],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+    </script>
+</body>
+
+</html>
