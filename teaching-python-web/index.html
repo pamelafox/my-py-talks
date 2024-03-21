@@ -20,11 +20,10 @@
 
             <section class="heading-only">
                 <h1 style="font-size:80px;  width: 100%;">Teaching Modern Web Development with Python</h1>
-
                 <img src="https://code.visualstudio.com/assets/docs/languages/python/python-editing.gif" alt="Animated GIF of autocomplete in Python code in VS Code" height="200">
                 <img src="https://code.visualstudio.com/assets/docs/python/testing/test-results.png" alt="Screenshot of Python tests in VS Code testing tab" height="200">
-                <div class="no-print" style="display: none; text-align: left; margin-top: 100px; font-size: 70%;">
-                    Tips for navigating the slides:
+                <div class="no-print" style="font-size: 70%;">
+                    <p>Tips for navigating the slides:</p>
                     <ul>
                         <li>Press O or Escape for overview mode.</li>
                         <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
@@ -70,43 +69,54 @@
             </section>
 
             <section>
-                <h3>What does a web developer need to know now?</h3>
+                <h3>Web development in 2024</h3>
 
                 <img src="../media/BIT_PUBLIC_SPEAKING.svg" alt="A bunch of raccoon students with computers" width="400" style="float:right; margin-left: 20px;">
 
-                <ul style="line-height:2em;">
-                    <li>Modern web frameworks</li>: API-first, async
+		<p>Today we'll talk about...</p>
+                <ul style="width:60%">
+                    <li>Development environments</li>
+                    <li>Modern web frameworks</li>
                     <li>Databases</li>
-                    <li>Generative AI</li> (If there's time)
-                    <li>Containerization with Docker</li>
-                    <li>Dev Environments</li>: Dev Containers, Codespaces
-                    <li>Coding assistance</li>: Linters, GitHub Copilot
-                    <li>Testing</li>: pytest, coverage, snapshot, fuzzing
-                    <li>Cloud deployment</li>: security, performance, scaling
+                    <li>Containerization</li>
+                    <li>Developer tools</li>
+                    <li>AI-Assisted coding</li>
+                    <li>Testing</li>
+                    <li>Cloud deployment</li>
                 </ul>
             </section>
 
             <section>
                 <h3>Choosing a language</h3>
 
+		<img height="300" src="https://pamelafox.github.io/my-py-talks/flask-web-apps-workshop/client_server_HTTP.png">
+		<div style="display:grid; grid-template-columns: 1fr 1fr">
+		<div>
                 <p>For the frontend:</p>
 
-                <ul>
+                <ul style="line-height:1em">
                     <li>HTML, CSS</li>
-                    <li>JavaScript or TypeScript (with build step)</li>
-                    <li>Frameworks: React, Vue, Svelte, Lit, Web Components</li>
+                    <li>JavaScript or TypeScript</li>
+                    <li>Frameworks: React, Vue, Svelte, Lit, Web Components, HTMX</li>
                 </ul>
+		</div>
 
+		<div>
                 <p>For the backend:</p>
 
-                <ul>
+                <ul style="line-height:1em; column-count: 2">
                     <li>Python</li>
                     <li>Node.js</li>
-                    <li>Go</li>
-                    <li>Rust</li>
                     <li>Java</li>
                     <li>C#</li>
+                    <li>Go</li>
+		    <li>PHP</li>
+                    <li>Ruby</li>
+                    <li>Rust</li>
                 </ul>
+		</div>
+		</div>
+
             </section>
 
             <section>
@@ -127,30 +137,158 @@
 
                 <figure style="float:right; margin-left: 20px; height: 300px;">
                     <img src="graph_pythonversion.png">
-                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
                 </figure>
 
                 <p>The current version of Python is 3.12. See <a target="_blank" href="https://www.python.org/downloads/">python.org/downloads</a> for the latest version of Python.</p>
 
-                <p>Try not to stay behind more than a year. New versions are faster and have <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/upgrade-your-python-version-for-easier-debugging/ba-p/3673785">better debugging messages</a>.</p>
+                <p>Try not to stay behind more than a year. New versions are faster due to efforts of the <a target="_blank" href="https://devblogs.microsoft.com/python/python-311-faster-cpython-team/">Faster CPython team</a>.</p>
+
+		<div class="fragment">
+		<p>New versions also have <a target="_blank" href="https://techcommunity.microsoft.com/t5/educator-developer-blog/upgrade-your-python-version-for-easier-debugging/ba-p/3673785">better debugging messages</a>:</p>
+
+                <pre style="font-size:0.8em; width:65%; margin-left:0"><code data-trim data-noescape class="repl">
+		schwarzschild_blackhole = 1916
+		>>> schwarschild_blackhole 
+		Traceback (most recent call last): 
+		  File "", line 1, in  
+		NameError: name 'schwarschild_blackhole' is not defined.
+		Did you mean: schwarzschild_blackhole? 
+		</code></pre>
+		</div>
+
             </section>
 
-            <!-- TODO: Containers here? -->
+
+            <section class="heading-only">
+                <h2>Development environments</h2>
+
+                <img src="../media/BIT_DEV.svg" alt="A raccoon with a background of code" width="400">
+            </section>
+
+
+            <section>
+                <h3>Modern dev environments</h3>
+
+                <p>In a company, the goal of a dev environment is to make it easy for a developer to work on multiple projects,
+                    and for all developers on a particular project to have the same environment.</p>
+
+                <p>An good dev environment is <strong>replicable</strong>
+                    and <strong>isolated</strong>.</p>
+                
+                <p>Options:</p>
+                <ul style="line-height:1.2em;">
+                    <li>Virtual environments</li>
+                    <li>Docker containers</li>
+                    <li>Dev containers</li>
+                    <li>GitHub Codespaces</li>
+                </ul>
+            </section>
+
+
+            <section>
+                <h3>Virtual environments</h3>
+
+                <p>Python has a built-in tool for creating virtual environments:</p>
+
+                <pre class="no-code-badge"><code data-trim data-noescape class="bash">
+                % python -m venv .venv
+                % source .venv/bin/activate
+                </code></pre>
+
+                <p class="padded">Then you can install dependencies with pip:</p>
+
+                <pre class="no-code-badge"><code data-trim data-noescape class="bash">
+                (.venv) % python -m pip install numpy
+                (.venv) % python -m pip install -r requirements.txt
+                </code></pre>
+
+                <p class="padded fragment">Virtual environments are good for isolating Python dependencies, but they do <strong>not</strong> isolate the rest of the environment.</p>
+
+            </section>
+
+            <section>
+                <h3>Dev Containers</h3>
+
+                <figure style="float:right; margin-left: 30px; height: 370px;">
+                    <img src="screenshot_devcontainerjson.png" alt="Screenshot of a Python devcontainer.json" style="border: 1px solid grey;">
+                    <figcaption style="font-size:0.5em;"><a target="_blank" href="https://github.com/pamelafox/python-project-template/blob/main/.devcontainer/devcontainer.json">Full devcontainer.json</a></figcaption>
+                </figure>
+                <p>Dev Containers define a complete development environment for a project,
+                    using a <code>.devcontainer/devcontainer.json</code> file
+                    that configures a Docker image and other settings.</p>
+                <br>
+                <p>Benefits:</p>
+                <ul>
+                    <li>Consistent environment</li>
+                    <li>Easy to set up</li>
+                    <li>Isolated from the host machine</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Opening dev containers in VS Code</h3>
+                <p>To use a repository that has a dev container defined, first install:</p>
+                    <ul>
+                        <li><a target="_blank" href="http://www.docker.com/products/docker-desktop">Docker Desktop</a></li>
+                        <li><a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers extension</a></li>
+                    </ul>
+
+                <p>Then, open the repository in VS Code, and you will be prompted to "Reopen in Container". Select that option and wait... (First build takes time ⏱️)</p>
+
+                <img src="screenshot_devcontainer_open.png" alt="Screenshot of VS Code prompt to reopen in a dev container">
+            </section>
+
+            <section>
+                <h3>Opening dev containers in GitHub Codespaces</h3>
+
+                <p>GitHub Codespaces is a cloud-based development environment that can be used to develop any GitHub repository.</p>
+
+                <p>If no <code>devcontainer.json</code> is in the repository, it will try using the default "universal" container.
+                    If a <code>devcontainer.json</code> is present, it will use that.</p>
+                
+                <img src="screenshot_codespaces.png" alt="Screenshot of Code tab on GitHub repository with option to open in GitHub codespaces" style="height:350px; border: 1px solid grey;">
+            </section>
+
+            <section>
+                <h3>Creating a dev container</h3>
+
+                <p>Start from existing dev container definitions and modify as needed:</p>
+
+                <ul>
+                    <li><a target="_blank" href="https://github.com/pamelafox/python-3.11-playground">Simple Python 3.11 dev container</a></li>
+                    <li><a target="_blank" href="https://github.com/pamelafox/python-project-template">Python project template (linting extensions, pytest)</a></li>
+                    <li><a target="_blank" href="https://github.com/pamelafox/sqlalchemy-sqlite-playground">SQLite + SQLAlchemy + SQLTools extension</a></li>
+                    <li><a target="_blank" href="https://github.com/pamelafox/postgresql-playground">PostgreSQL + SQLAlchemy + SQLTools extension</a></li>
+                    <li><a target="_blank" href="https://github.com/pamelafox/python-web-apps?tab=readme-ov-file#example-projects">Python web app repos with dev containers</a></li>
+                    <li><a target="_blank" href="https://github.com/manekinekko/awesome-devcontainers">Awesome DevContainers</li>
+                </ul>
+
+                <p>Learn more about dev containers: <a target="_blank" href="https://containers.dev/implementors/json_reference/">containers.dev</a></p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Python web frameworks</h2>
+
+                <img src="../media/BIT_PYTHON.svg" alt="A raccoon summoning Python from a laptop" width="400">
+            </section>
+
             <section>
                 <h3>Modern web frameworks</h3>
 
+
+                <figure style="float:right; width: 40%; border-left: 1px solid grey; padding-left: 12px;">
+                    <img src="graph_frameworks.png" alt="Graph of Python web framework popularity" style="width: 100%;">
+                    <figcaption style="font-size:0.5em">Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
+                </figure>
                 
                 <p>Python has a few modern web frameworks that are popular:</p>
 
-                <figure style="float:right;">
-                    <img src="graph_frameworks.png" alt="Graph of Python web framework popularity" style="width: 100%;">
-                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/python/">JetBrains Developers Survey 2023</a></figcaption>
-                </figure>
 
-                <ul>
-                    <li>Flask/Quart</li>: Lightweight, flexible
-                    <li>FastAPI</li>: Lightweight, popular for API-first development
-                    <li>Django</li>: Opinionated, includes database functionality
+                <ul style="width: 55%">
+                    <li><a target="_blank" href="https://flask.palletsprojects.com/en/3.0.x/">Flask</a> / <a target="_blank" href="https://quart.palletsprojects.com/en/latest/">Quart</a>: Lightweight, flexible</li>
+                    <li><a target="_blank" href="https://fastapi.tiangolo.com/">FastAPI</a>: Lightweight, popular for API-first development</li>
+                    <li><a target="_blank" href="https://www.djangoproject.com/">Django</a>: Opinionated, includes database functionality</li>
                 </ul>
             </section>
             
@@ -179,12 +317,13 @@
             <section>
                 <h3>Django</h3>
 
-                <p>Django is an opinionated web framework that includes:</p>
-
                 <figure style="float:right;">
-                    <img src="screenshot_django_admin.png" alt="Screenshot of Django admin" style="width: 200px;">
-                    <figcaption>Source: <a target="_blank" href="https://www.djangoproject.com/">Django website</a></figcaption>
+                    <img src="screenshot_django_admin.png" alt="Screenshot of Django admin" style="height: 300px;">
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://www.djangoproject.com/">Django website</a></figcaption>
                 </figure>
+
+                <p>Django is an opinionated web framework with:</p>
+
 
                 <ul>
                     <li>ORM for database access</li>
@@ -201,12 +340,23 @@
             <section>
                 <h3>FastAPI</h3>
 
+
+                <figure style="float:right;">
+                    <img src="screenshot_fastapidocs.png" alt="Screenshot of FastAPI generated documentation" style="height: 400px;">
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://fastapi.tiangolo.com/#interactive-api-docs">FastAPI documentation</a></figcaption>
+                </figure>
+
                 <p><a target="_blank" href="https://fastapi.tiangolo.com/">FastAPI</a> is an async framework for building APIs (with auto-generated documentation) based on standard Python type hints.</p>
 
-                <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
+                <pre style="font-size:0.8em; width:65%; margin-left:0;"><code data-trim data-noescape class="python">
                 from fastapi import FastAPI
                 app = FastAPI()
 
+                class Item(BaseModel):
+                    name: str
+                    description: Optional[str] = None
+                    price: float
+                
                 @app.post("/items/")
                 async def create_item(item: Item):
                     return item
@@ -218,17 +368,17 @@
             <section>
                 <h3>The importance of async</h3>
 
-                <p>Programmers must understand async to build modern web apps that support concurrency.</p>
+                <p>We need async to build modern web apps that support concurrency.</p>
 
                 <p>A web app without async:</p>
 
-                <img src="diagram_sync.png" alt="Diagram of a synchronous web app" style="width: 100%;">
+                <img src="diagram_sync.png" alt="Diagram of a synchronous web app" style="width: 40%;">
 
                 <p>A web app with async can handle new requests while waiting for an I/O op:</p>
 
-                <img src="diagram_async.png" alt="Diagram of an asynchronous web app" style="width: 100%;">
+                <img src="diagram_async.png" alt="Diagram of an asynchronous web app" style="width: 40%;">
 
-                <p>Any app that has slow network requests, database queries, or file reads can benefit from async.</p>
+                <p>Any app with slow network requests, DB queries, or file reads can benefit.</p>
 
                 <p>See also: <a target="_blank" href="https://fastapi.tiangolo.com/async/">FastAPI tutorial on async</a></p>
             </section>
@@ -238,13 +388,26 @@
 
                 <p>I like to teach all of them, so students can become framework-agnostic and choose the best tool for the job.</p>
 
-                <p>But if you have to choose one:</p>
+                <p>But if you have to choose one...</p>
 
                 <ul>
                     <li>Flask: Easy to get started, but it can get hairy when you need more functionality</li>
                     <li>Django: Includes everything, but it's a lot to learn at once. Good fit for very standard webapps like a blog or content site.</li>
                     <li>FastAPI: Easy to get started, great fit if you're building an API</li>
                 </ul>
+            </section>
+
+
+            <section>
+                <h3>Teaching materials for web frameworks</h3>
+
+                <p>Get workshop materials for Flask, Django, and FastAPI from
+                    <a target="_blank" href="https://github.com/pamelafox/python-web-apps?tab=readme-ov-file#workshops">
+                        https://github.com/pamelafox/python-web-apps
+                    </a>
+                </p>
+
+                <p>Attend our live streams covering those workshops in June.</p>
             </section>
 
             <section class="heading-only">
@@ -255,16 +418,18 @@
             <section>
                 <h3>Database options</h3>
 
-                <figure style="float:right;">
-                    <img src="graph_databases.png" alt="Graph of  database popularity" style="width: 100%;">
-                    <figcaption>Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/databases/">JetBrains Developers Survey 2023</a></figcaption>
+                <figure style="float:right;" style="width:30%;">
+                    <img src="graph_databases.png" alt="Graph of  database popularity">
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://www.jetbrains.com/lp/devecosystem-2023/databases/">JetBrains Developers Survey 2023</a></figcaption>
                 </figure>
 
+                <div style="float:left; width: 60%;">
                 <p>Two main types of databases:</p>
                 <ul>
-                    <li>Relational databases</li>: PostgreSQL, MySQL, SQLite, MSSQL
-                    <li>NoSQL databases</li>: MongoDB, Redis
+                    <li><strong>Relational databases</strong>: PostgreSQL, MySQL, SQLite, MSSQL, ...</li>
+                    <li><strong>NoSQL databases</strong>: MongoDB, Redis, ...</li>
                 </ul>
+                </div>
             </section>
 
             <section>
@@ -295,8 +460,8 @@
             <section>
                 <h3>Use an ORM!</h3>
 
-                <p>ORMs (Object-Relational Mappers) like SQLAlchemy and Django's ORM make it easier to work with databases,
-                    and they help protect against SQL injection attacks.</p>
+                <p>ORMs (Object-Relational Mappers) like SQLAlchemy and Django's ORM make it easier to work with databases
+                    and protect against SQL injection attacks.</p>
 
                 <p>Example code using SQLAlchemy ORM:</p>
 
@@ -312,8 +477,8 @@
                 session.commit()
                 </code></pre>
 
-                <p>The ORM will generate the SQL for you, and it will handle things like escaping strings and converting
-                    Python types to SQL types.</p>
+                <aside class="notes">The ORM will generate the SQL for you, and it will handle things like escaping strings and converting
+                    Python types to SQL types.</aside>
             
                 <p>Playgrounds: <a target="_blank" href="https://github.com/pamelafox/postgresql-playground">PostgreSQL playground</a>,
                     <a target="_blank" href="https://github.com/pamelafox/pgvector-playground">pgvector playground</a></p>
@@ -359,7 +524,7 @@
             <section>
                 <h3>Which database to teach?</h3>
 
-                <p>My personal preference is to teach PostgreSQL, because it can be used in so many
+                <p>My personal preference is to teach <strong>PostgreSQL</strong>, because it can be used in so many
                     different types of applications, and most students do not need the extreme scalability of NoSQL databases
                     or the fast caching abilities of Redis.</p>
                 
@@ -368,53 +533,521 @@
             </section>
 
             <section>
+                <h3>Teaching materials for databases</h3>
+
+                <p>Get workshop materials for "Databases" from
+                    <a target="_blank" href="https://github.com/pamelafox/python-web-apps?tab=readme-ov-file#workshops">
+                        https://github.com/pamelafox/python-web-apps
+                    </a>
+                </p>
+
+                <p>Attend my live stream covering the workshop in June.</p>
+            </section>
+
+            <section class="heading-only">
                 <h2>Containerization with Docker</h2>
+
+                <img src="../media/BIT_STUDENTS.svg" alt="A raccoon with a background of containers" width="400">
+            </section>
+
+            <section>
+                <h3>Docker overview</h3>
+
+                <p>The Docker engine runs multiple Docker containers,
+                    where each container is an isolated environment.</p>
+
+                <img src="containers-example.svg" alt="Diagram of two Docker containers running on top of one Docker engine running on top of an Operating System on top of Hardware" width="700">
+            
+            </section>
+
+            <section>
+                <h3>Docker images</h3>
+
+                <p>A <strong>container image</strong> is a software package that includes
+                    everything needed to run an application.
+                    <br>
+                    A <strong>container</strong> is a running instance of a container image. 
+                </p>
+                <img src="images.svg" alt="Diagram of two Docker images, one with Python/PostgreSQL/Django, the other with Ruby/MySQL/Rails, and one running Django container" width="650">
+            
             </section>
 
 
             <section>
-                <h2>Dev Environments</h2>
+                <h3>Dockerfile for Flask</h3>
+
+                <p>A <strong>Dockerfile</strong> is a text file that contains instructions for building a Docker image.</p>
+
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="docker">
+                FROM python:3.11
+
+                WORKDIR /code
+
+                COPY requirements.txt .
+                RUN pip3 install -r requirements.txt
+
+                COPY . .
+
+                EXPOSE 50505
+
+                ENTRYPOINT ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]
+                </code></pre>
+
             </section>
 
             <section>
-                <h3>Modern dev environments</h3>
+                <h3>Why use Docker?</h3>
 
-                <p>In a company, the goal of a dev environment is to make it easy for a developer to work on multiple projects,
-                    and for all developers on a particular project to have the same environment.</p>
-
-                <p>An good dev environment is <strong>replicable</strong>
-                    and <strong>isolated</strong>.</p>
-                
-                <p>Options:</p>
+                <p>Local development:</p>
                 <ul>
-                    <li>Virtual environments</li>
-                    <li>Docker containers</li>
-                    <li>Dev containers</li>
-                    <li>GitHub Codespaces</li>
+                    <li>Consistent environment</li>
+                    <li>Isolated from host machine</li>
+                    <li>Easy to set up</li>
+                </ul>
+
+                <p>Production:</p>
+                <ul>
+                    <li>Easy to scale</li>
+                    <li>Supported by cloud providers</li>
+                    <li>Portable across cloud providers/platforms</li>
                 </ul>
             </section>
 
             <section>
-                <h3>Virtual environments</h3>
+                <h3>Teaching materials for Docker</h3>
 
-                <p>Python has a built-in tool for creating virtual environments:</p>
+                <p>Get workshop materials for "Containerization" from
+                    <a target="_blank" href="https://github.com/pamelafox/python-web-apps?tab=readme-ov-file#workshops">
+                        https://github.com/pamelafox/python-web-apps
+                    </a>
+                </p>
 
-                <pre><code data-trim data-noescape class="bash">
-                python -m venv myenv
-                source myenv/bin/activate
-                pip install -r requirements.txt
-                </code></pre>
+                <p>Attend my live stream covering the workshop in June.</p>
 
-                <p>Virtual environments are good for isolating Python dependencies, but they do <strong>not</strong> isolate the rest of the environment.</p>
+                <!-- TODO: awesome docker containers website -->
             </section>
 
+            <section class="heading-only">
+                <h2>Coding assistance</h2>
+
+                <img src="../media/BIT_COWORKING.png" alt="Screenshot of Bit the raccoon coworking with friends" width="300">
+            </section>
+
+            <section>
+                <h3>Modern coding assistance</h3>
+
+                <p>Modern coding assistance tools can help students write better code, faster,
+                    and can make coding more accessible.</p>
+
+                <ul>
+                    <li><strong>Intellisense</strong>: Pylance</li>
+                    <li><strong>Debugger</strong>: Debugpy</li>
+                    <li><strong>Linters</strong>: Ruff, Pylance</li>
+                    <li><strong>Formatters</strong>: Ruff, Black</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Intellisense</h3>
+
+                <p>Intellisense is an IDE feature that provides code completions, parameter info, quick info, and member lists.</p>
+
+                <p>In VS Code use the
+                    <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a>
+                    which includes the
+                    <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance">Pylance extension</a>.</p>
+                
+                <img src="screenshot_intellisense.png" alt="Screenshot of Python code in VS Code with intellisense" style="border: 1px solid grey; height: 300px;">
+
+                <img src="https://code.visualstudio.com/assets/docs/languages/python/python-editing.gif" alt="IntelliSense and autocomplete for Python code" style="height:300px;">
+
+                <aside class="notes">Check VS code docs for GIFs</aside>
+
+            </section>
+
+            <section>
+                <h3>Debuggers</h3>
+
+                <p>Debuggers help you step through code, set breakpoints, and inspect variables.</p>
+
+                <p>In VS Code, use the
+                    <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a>
+                    which includes the
+                    <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy">Debugpy extension</a>.</p>
+            
+                <img src="screenshot_debugger.png" alt="Screenshot of Python code in VS Code with debugger" style="border: 1px solid grey; height: 300px;">
+            </section>
+
+            <section>
+                <h3>Linters</h3>
+
+                <p>A linter identifies code style issues as well as possible bugs.
+                    The most common linter is <a target="_blank" href="https://pypi.org/project/flake8/">flake8</a>
+                    but there's a new faster linter called <a target="_blank" href="https://pypi.org/project/ruff/">ruff</a>.
+                  </p>
+    
+                <p class="padded">Run <code>ruff</code> on a file or folder:</p>
+                <pre style="font-size:1.0em;"><code data-trim data-noescape class="bash">
+                % python -m ruff check .
+                </code></pre>
+                
+                <p class="padded">In VS Code, use the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff">Ruff extension</a> for in-IDE linting.</p>
+ 
+                <img src="screenshot_ruff.png" alt="Screenshot of Python code in VS Code with ruff error pop-up" style="border: 1px solid grey; height: 200px;">
+            </section>
+
+            <section>
+                <h3>Formatters</h3>
+
+                <p>A formatter automatically formats code to a consistent style. 
+                    The most popular formatter is <a target="_blank" href="https://black.readthedocs.io/en/stable/">black</a>,
+                    which is PEP 8 compliant and fairly opinionated.
+                </p>
+    
+                <p class="padded">Run black on a file or folder:</p>
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
+                python3 -m black --verbose .
+                </code></pre>
+                
+                <p>In VS Code, use the <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter">Black extension</a> for in-IDE formatting.</p>
+
+                <p class="padded">You can also use ruff as a formatter:</p>
+                <pre style="font-size:0.9em;"><code data-trim data-noescape class="bash">
+                python -m ruff format .
+                </code></pre>
+            </section>
+
+            <section class="heading-only">
+                <h2>AI-Assisted Coding
+                    <br>with GitHub Copilot
+                </h2>
+                <img src="../media/BIT_ML.svg" alt="A raccoon building a robot and reading" width="400">
+            </section>
+
+            <section>
+                <h3>GitHub Copilot</h3>
+
+                <p>GitHub Copilot works particularly well for writing web apps,
+                    since there are many common patterns across web apps.</p>
+
+                <p>Getting started with GitHub Copilot for students:
+                    <br><a target="_blank" href="https://aka.ms/Copilot4Students">
+                        aka.ms/Copilot4Students
+                    </a>
+                </p>
+
+                <img width="500" src="https://techcommunity.microsoft.com/t5/image/serverpage/image-id/439591i24C5D5C80C0EFA0B/image-size/large?v=v2&px=999">
+
+                <p>Get Copilot today! <a target="_blank" href="https://gh.io/sigcse2024">gh.io/sigcse2024</a></p>
+            </section>
+                
+            <section>
+                <h3>Many ways to invoke Copilot</h3>
+
+                <ul>
+                    <li><strong>Editor</strong>: Just type and it will suggest code
+                        <img src="screenshot_copilot_complete.png" alt="Screenshot of Copilot completing Python code" height="150">
+                    </li>
+                    <li><strong>Chat</strong>: Ask questions about your code or code topics.
+                        <img src="screenshot_copilot_chat2.png" alt="Screenshot of Copilot chat" height="120">
+                    </li>
+                    <li><strong>Context menu</strong>: Ask it to explain, fix, or test selected code.
+                        <img src="screenshot_copilot_inline.png" alt="Screenshot of Copilot inline chat" height="80">
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Prompting Copilot</h3>
+
+                <ul>
+                    <li>Provide context
+                        <ul>
+                            <li>Open files
+                            <li>Comments
+                            <li>Imports
+                            <li>Names
+                            <li>Types
+                        </ul>
+                    </li>
+                    <li>Be predictable
+                        <ul>
+                            <li>Naming conventions
+                            <li>Software architecture patterns
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>📖 <a target="_blank" href="http://blog.pamelafox.org/2023/06/best-practices-for-prompting-github.html">Blog: Best practices for prompting GitHub Copilot in VS Code</a><br>
+                    🎥 <a target="_blank" href="https://www.youtube.com/watch?v=ImWfIDTxn7E">Video: Best practices for prompting GitHub Copilot in VS Code</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Avoiding Copilot confabulations</h3>
+
+                <ul>
+                    <li>Paste in example code from docs</li>
+                    <li>Be wary when asking about niche libraries</li>
+                </ul>
+
+                <p>Find out ASAP if Copilot made something up:</p>
+                <ul>
+                    <li>Use real-time linters to check your work</li>
+                    <li>Write tests for your code</li>
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Testing</h2>
+
+                <img src="../media/BIT_BUG.svg" alt="A raccoon dressed like a ladybug" width="400">
+            </section>
+
+            <section>
+                <h3>Testing pyramid</h3>
+
+                <img src="software_testing_pyramid.png" alt="Software testing pyramid" height="450"/>
+
+                <p>Should you start at top or bottom? Start somewhere, atleast!</p>
+            </section>
+
+            <section>
+                <h3>Unit testing in Python</h3>
+
+                <img src="screenshot_pytest.png" alt="Screenshot of pytest tests for summer library" style="height: 300px; float:right; border: 1px solid grey; margin-left: 10px;">
+                
+                <p>Most commonly used libraries:</p>
+                <ul>
+                    <li><a target="_blank" href="http://docs.python.org/3/library/unittest.html">unittest</a>: Built-in, but verbose/Java-y</li>
+                    <li><a target="_blank" href="https://docs.pytest.org/en/7.x/">pytest</a>: Most popular, with many plugins</li>
+                    <li><a target="_blank" href="https://pypi.org/project/pytest-snapshot/">pytest-snapshot</a>: Snapshot testing</li>
+                    <li><a target="_blank" href="https://pypi.org/project/hypothesis/">hypothesis</a>: Property-based testing</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Code coverage matters</h3>
+
+                <p>Code coverage is a measure of how much of your code is tested by your tests,
+                    either in terms of lines of code or branches of code.</p>
+
+                <p>Set a minimum threshold for code coverage, and use a tool like <a target="_blank" href="https://coverage.readthedocs.io/en/7.x/">coverage</a> to measure it.</p>
+
+                <figure>
+                    <img src="screenshot_cov.png" alt="Screenshot of coverage report" style="height: 300px;">
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://github.com/Azure-Samples/azure-search-openai-demo/actions/runs/8362065685/job/22891730142">GitHub actions</a></figcaption>
+                </figure>
+            </section>
+            
+            <section>
+                <h3>End-to-end testing</h3>
+
+                <ul>
+                    <li><a target="_blank" href="https://pypi.org/project/selenium/">selenium</a>: Can be used for a wide variety of browsers
+                    <li><a target="_blank" href="https://playwright.dev/python/docs/library">playwright</a>: More limited browser-wise, but faster/less flaky 😊
+                </ul>
+
+                <pre><code data-trim data-noescape class="python">
+                def test_destinations(page: Page, live_server_url: str):
+                    page.goto(live_server_url)
+                    page.get_by_role("link", name="Destinations").click()
+                    expect(page).to_have_title("ReleCloud - Destinations")
+                    check_for_violations(page)
+                </code></pre>
+
+                <aside class="notes">
+                    maybe show some code or trace.playwright.dev here
+                </aside>
+            </section>
+
+            <section>
+                <h3>Integrating testing into projects</h3>
+
+                <ul>
+                    <li>Local: Run tests with <code>python -m pytest</code> or <code>python -m unittest</code></li>
+                    <li>CI/CD: Run tests on every commit/push</li>
+                    <li>Code coverage: Set a minimum threshold</li>
+                </ul>
+
+                <p>For student projects, you could give them the tests and ask them to write the code to pass the tests,
+                    or you could give them the code and ask them to write the tests - or both!</p>
+            </section>
+
+            <section>
+                <h3>Teaching materials for testing</h3>
+                
+                <p>Get workshop materials for "Testing Web Apps" from
+                    <a target="_blank" href="https://github.com/pamelafox/python-web-apps">
+                        github.com/pamelafox/python-web-apps
+                    </a>
+                </p>
+
+                <p>Attend my live stream covering the workshop in June.</p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Cloud deployment</h2>
+
+                <img src="../media/BIT_AZURE.png" alt="A raccoon with a background of clouds and Azure logo" width="400">
+            </section>
+
+            <section>
+                <h3>Why cloud deployment?</h3>
+
+                <img src="screenshot_azurefree.png" alt="Screenshot of Azure student free credits" style="height: 400px; float:right; border:1px solid grey; margin-left: 10px;">
+
+                <p>Cloud deployment is a good way to:</p>
+
+                <ul>
+                    <li>Make an app accessible to others</li>
+                    <li>Get experience with cloud services</li>
+                    <li>Learn about security, performance, and scaling</li>
+                </ul>
+
+                <p>Azure is a good choice for students because of the <a target="_blank" href="https://azure.microsoft.com/en-us/free/students/">free credits</a> and the many services that are available.</p>
+
+                <p><a target="_blank" href="https://aka.ms/azureforstudents">
+                    🔗 aka.ms/azureforstudents
+                    </a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Azure hosting options</h3>
+                
+                <style>
+                table.deploy-stack {
+                    border-spacing: 30px; 
+                    border-collapse: separate;
+                    border: 0px;
+                }
+
+                table.deploy-stack th, table.deploy-stack td {
+                    font-size: 20px;
+                    border-bottom: 0px none;
+                    border-radius: 12px;
+                    text-align: center;
+                    vertical-align: middle;
+                    padding: 8px;
+                }
+                </style>
+                <table class="deploy-stack">
+                    <tr>
+                        <th>
+                        <td>
+                        <td style="background-color: #00bc70; color: white;">Azure Container Apps
+                        <td>
+                        <td style="background-color: #00bc70; color: white;">Azure Functions
+                    </tr> 
+                    <tr>
+                        <th>
+                        <td style="background-color: #00bc70; color: white;">Azure Kubernetes Service
+                        <td style="background-color: #0070c0; color: white;">Container Management
+                        <td style="background-color: #00bc70; color: white;">Azure App Service
+                        <td style="background-color: #0070c0; color: white;">Serverless
+                        
+                    </tr>
+                    <tr>
+                        <th>Environment
+                        <td colspan="2" style="background-color:#0070c0; color: white;">Containers
+                        <td colspan="2" style="background-color:#0070c0; color: white;">PaaS
+                    </tr>
+                    <tr>
+                        <th>Cloud
+                        <td colspan="4" style="background-color:#ccc;">Azure
+                    </tr>
+                </table>
+                <p>For students,
+                    <span style="background-color: #00bc70; color: white; padding-left: 8px; padding-right: 8px; border-radius: 8px;">App Service</span> or 
+                    <span style="background-color: #00bc70; color: white; padding-left: 8px; padding-right: 8px; border-radius: 8px;">Container Apps</span>
+                    are good options.
+                </p>
+            </section>
+
+
+
+            <section>
+                <h3>Additional Azure services</h3>
+
+                <p>Most web apps need more than just hosting:</p>
+
+                <table>
+                    <tr>
+                        <th>Databases
+                        <td>PostGreSQL, MySQL, CosmosDB, ...
+                    <tr>
+                        <th>Storage
+                        <td>Blob Storage, Files, Archive Storage, ...
+                    <tr>
+                        <th>Networking
+                        <td>DNS Zone, Virtual Network, VPN Gateway, ...
+                    <tr>
+                        <th>Caching
+                        <td>CDN, Front Door, ...
+                    <tr>
+                        <th>Security
+                        <td>Key Vault, Security Center, ...
+                    <tr>
+                        <th>Machine Learning + AI
+                        <td>OpenAI, Translator, Bot Service, Computer Vision, ...
+                    <tr>
+                        <th colspan="2">...and more!
+                </table>
+            </section>
+
+            <section>
+                <h3>Azure architecture for web apps</h3>
+
+                <img src="diagram_azureapp.png" alt="Diagram of Azure architecture for web apps with App Service, PostgreSQL, Key Vault" width="400">
+
+                <ul>
+                    <li><strong>App Service plan</strong>: sets up scaling rules and environment for app</li>
+                    <li><strong>App Service webapp</strong>: actual app with endpoint</li>
+                    <li><strong>PostgreSQL</strong>: database for app</li>
+                    <li><strong>Key Vault</strong>: store secrets like database password</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Ways to deploy to Azure</h3>
+
+                <figure style="float:right;">
+                    <img src="https://pamelafox.github.io/my-py-talks/iac-deploys/screenshot_portal_template.png" alt="Screenshot of Azure Portal for Create Web App template" style="height: 500px; border: 1px solid black;">
+                    <figcaption style="font-size:0.5em;">Source: <a target="_blank" href="https://learn.microsoft.com/en-us/azure/app-service/tutorial-python-postgresql-app?tabs=flask%2Cwindows&pivots=azure-portal">Deploy a web app to Azure</a></figcaption>
+                </figure>
+
+                <p>UI based:</p>
+                <ul>
+                    <li>Azure Portal
+                    <li>VS Code Azure extension
+                </ul>
+
+                <p>Command based:</p>
+
+                <ul>
+                    <li>GitHub Actions
+                    <li>Azure CLI
+                        <pre style="font-size:0.8em;" class="no-code-badge"><code data-trim data-noescape class="bash">
+                        az webapp up --name myapp --sku F1
+                        </code></pre>
+                    <li>Azure Developer CLI (+ infrastructure as code) 🥰
+                        <pre style="font-size:0.8em;" class="no-code-badge"><code data-trim data-noescape class="bash">
+                        azd up
+                        </code></pre>
+                </ul>
+
+                <aside class="notes">
+                    see https://pamelafox.github.io/my-py-talks/iac-deploys/#/26
+                </aside>
+            </section>
 
             <section>
                 <h3>More example repos</h3>
 
-                <p>All of these repos are equipped with Dev Containers:</p>
+                <p>All of these repos are set up for easy Azure deployment.</p>
 
-                <table style="font-size:20px;">
+                <table style="font-size:20px; margin-left: 0px;">
                     <thead>
                         <tr>
                             <th>
@@ -425,28 +1058,27 @@
                         <tr style="border-top:4px solid white;">
                             <td>Django + PG
                             <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-django-postgres-flexible-appservice">Travel app</a>
+                                <br>
                                 <a target="_blank" href="https://github.com/pamelafox/django-quiz-app">Quiz app</a>
                                 <br>
                                 <a target="_blank"
                                     href="https://github.com/pamelafox/msdocs-django-postgresql-sample-app-azd">+ VNET:
                                     Reviews app</a>
                                 <br>
-                                <a target="_blank" href="https://github.com/tonybaloney/django-on-azure">+ VNET: Booking
-                                    app</a>
-                                <br>
-                                <a target="_blank"
-                                    href="https://github.com/cookiecutter/cookiecutter-django/discussions/4205">cookiecutter</a>
+                            
                             <td>
 
                             <td>
-                                <a target="_blank"
-                                    href="https://github.com/Azure-Samples/azure-django-postgres-aca">Booking app</a>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-django-postgres-flexible-aca">Travel app</a>
 
-                        <tr style="border-top:4px solid white;">
+
+                        <tr style="border-top:4px solid black;">
                             <td>Flask
                             <td>
                                 <a target="_blank"
                                     href="https://github.com/pamelafox/simple-flask-server-example">Simple App</a>
+                                
                             <td>
                                 <a target="_blank"
                                     href="https://github.com/pamelafox/simple-flask-api-azure-function">Simple API</a>
@@ -462,6 +1094,8 @@
                         <tr>
                             <td>+ PostgreSQL
                             <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-appservice">
+                                    Travel app</a><br>
                                 <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Quiz
                                     app</a><br>
                                 <a target="_blank"
@@ -470,9 +1104,12 @@
                             <td>
 
                             <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-flask-postgres-flexible-aca">
+                                    Travel app</a><br>
                                 <a target="_blank"
                                     href="https://github.com/pamelafox/flask-surveys-container-app">Surveys App</a>
-                        <tr style="border-top:4px solid white;">
+
+                        <tr style="border-top:4px solid black;">
                             <td>FastAPI
                             <td>
                                 <a target="_blank"
@@ -488,6 +1125,15 @@
                                 <a target="_blank" href="https://github.com/pamelafox/simple-fastapi-container">Simple
                                     API</a>
                         <tr>
+                            <td>+ PostgreSQL
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-fastapi-postgres-flexible-appservice">
+                                    Travel app</a>
+                            <td>
+                            <td>
+                                <a target="_blank" href="https://github.com/Azure-Samples/azure-fastapi-postgres-flexible-aca">
+                                    Travel app</a>
+                        <tr>
                             <td>+ MongoDB
                             <td>
                                 <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo">Todo
@@ -499,6 +1145,39 @@
                                 <a target="_blank" href="https://github.com/Azure-Samples/todo-python-mongo-aca">Todo
                                     API</a>
                 </table>
+
+            </section>
+
+            <section>
+                <h3>Microsoft resources for Edu</h2>
+                
+                <ul>
+                    <li><a target="_blank" href="https://learn.microsoft.com/en-us/azure/education-hub/">Azure Education Hub</a>: Grant credits and software to students</li>
+                    <li><a target="_blank" href="https://classroom.github.com/">GitHub Classroom</a>: Assignments, autograding, and feedback</li>
+                    <li><a target="_blank" href="https://azure.microsoft.com/en-us/free/students/">Azure for Students</a>: Free Azure credits for students</li>
+                    <li><a target="_blank" href="https://education.github.com/pack">GitHub Student Developer Pack</a>: Free software and services for students</li>
+                </ul>
+
+                <p>Get Copilot today! <a target="_blank" href="https://gh.io/sigcse2024">🔗 gh.io/sigcse2024</a></p>
+
+                <p>Get Azure today! <a target="_blank" href="https://aka.ms/azureforstudents">
+                    🔗 aka.ms/azureforstudents
+                    </a>
+                </p>
+            </section>
+
+            <section>
+                <h3>Sign up for Microsoft.Source</h3>
+                
+                <img src="qrcode.png" alt="QR code for Microsoft.Source" style="width: 400px; float:right; margin-left: 20px;">
+                
+                <p>Receive a regular digest of relevant technical content, events, and training.</p>
+
+                <p>Get the best of the newest resources, tools, and guidance to help developers quickly build and deploy on Azure.</p>
+                
+                <p>Get links from today's session.</p>
+                <br>
+                <p><a target="_blank" href="https://aka.ms/AApmimn">🔗 aka.ms/AApmimn</a></p>
 
             </section>
 
@@ -531,8 +1210,6 @@
                     </tr>
                 </table>
                 <br>
-                <p style="clear:both; margin-top: 30px; font-size:smaller;">Let me know about your experiences with VS
-                    Code + Python!</p>
 
             </section>
 
