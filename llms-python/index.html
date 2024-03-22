@@ -21,6 +21,9 @@
                     Large Language Models<br>
                     with Python
                 </h1>
+                <p style="font-size:1.5em;">
+                    <a target="_blank" href="https://aka.ms/llms-python">aka.ms/llms-python</a>
+                </p>
                 <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
                     Tips for navigating the slides:
                     <ul>
@@ -496,16 +499,74 @@
                 </code></pre>
             </section>
 
+            <section class="heading-only">
+                <h2>Responsible AI</h2>
+
+                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="400">
+
+            </section>
+
+            <section>
+                <h3>Risks of LLMs</h3>
+
+                <ul>
+                    <li>Ungrounded outputs and errors
+                    <li>Jailbreaks & prompt injection attacks
+                    <li>Harmful content & code
+                    <li>Copyright infringement
+                    <li>Manipulation and human-like behavior
+                </ul>
+            </section>
+
+            <section>
+                <h3>Mitigation layers</h3>
+
+                <img src="llm_mitigations.png" alt="Diagram of mitigation layers: model, safety system, metaprompt, UI" width="100%">
+            </section>
+
+            <section>
+                <h3>Azure AI Content Safety</h3>
+
+                <p>A configurable system to detect safety violations:</p>
+                <img src="screenshot_filterlevels.png" alt="Diagram of Azure AI Content Safety filter levels UI" style="width:30%; float: right; border: 1px solid grey;">
+                <ul style="width:60%;">
+                    <li>Detects violations in prompts and responses
+                    <li>Detects jailbreak attempts
+                    <li>Detects protected material use
+                </ul>
+            </section>
+
+            <section>
+                <h3>Handling violations in Python</h3>
+
+                <p>Catch and handle violations in your code:</p>
+
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
+                try:
+                    response = client.chat.completions.create(
+                        model=MODEL_NAME,
+                        messages=[
+                            {"role": "system", "content": "You are helpful."},
+                            {"role": "user", "content": "How to make a bomb?"}
+                        ]
+                    )
+                    print(response.choices[0].message.content)
+                except openai.APIError as error:
+                    if error.code == "content_filter":
+                        print("Please remember our code of conduct.")
+                </code></pre>
+            </section>
+
             <section>
                 <h3>More resources</h3>
 
-                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="35%" style="float:right;">
 
-                <ul style="float:left; width: 60%; display: grid; gap: 18px;">
+                <ul>
                     <li>Explanations:
                     
                     <ul>
                         <li><a target="_blank" href="https://github.com/microsoft/generative-ai-for-beginners/">Generative AI for Beginners</a>
+                        <li><a target="_blank" href="https://www.youtube.com/watch?v=3Fz8FEujD1U">Evaluating and Designing Responsible AI Systems</a>
                         <li><a target="_blank" href="https://simonwillison.net/2023/Jun/8/gpt-tokenizers/">How GPT tokenizers work</a>
                         <li><a target="_blank" href="https://simonwillison.net/2023/Oct/23/embeddings/">Embeddings 101</a>
                     </ul>
@@ -513,7 +574,6 @@
                     <ul>
                     <li><a target="_blank" href="https://docs.langchain.com/docs/">Langchain</a>
                     <li><a target="_blank" href="https://github.com/microsoft/semantic-kernel/blob/main/python/README.md">Semantic Kernel for Python</a>
-                    <li><a target="_blank" href="https://github.com/guidance-ai/guidance">Guidance</a>
                     </ul>
                     <li>Samples:
                     <ul>
