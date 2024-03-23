@@ -321,6 +321,10 @@
 
                 print(response.choices[0].message.content)
                 </code></pre>
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat.py">Full example: chat.py</a>
+                </p>
             </section>
 
             <section>
@@ -341,7 +345,14 @@
                 for event in completion:
                     print(event.choices[0].delta.content)
                 </code></pre>
+
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_stream.py">Full example: chat.py</a>
+                </p>
             </section>
+
+            <!-- TODO: Add history, tokens -->
 
             <section>
                 <h3>Use asynchronous calls</h3>
@@ -363,6 +374,11 @@
                     <a target="_blank" href="http://blog.pamelafox.org/2023/09/best-practices-for-openai-chat-apps.html">
                     📖 Best practices for OpenAI Chat apps: Concurrency
                     </a>
+                </p>
+
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_async.py">Full example: chat.py</a>
                 </p>
             </section>
 
@@ -555,6 +571,11 @@
                     if error.code == "content_filter":
                         print("Please remember our code of conduct.")
                 </code></pre>
+
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_safety.py">Full example: chat.py</a>
+                </p>
             </section>
 
             <section>
