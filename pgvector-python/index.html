@@ -1,0 +1,618 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>pgvector for Python developers</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/a11y-light.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500|Work+Sans:400,700">
+    <style>
+			.reveal {
+				font-family: "Work Sans", sans-serif;
+			}
+
+			.reveal .slides section {
+				text-align: left;
+				font-size: smaller;
+			}
+
+      .slide-number-a {
+          background-color: #747474;
+      }
+
+      .reveal section li {
+          margin-bottom: 12px;
+      }
+
+			.reveal pre {
+				width: 100%;
+				border-left: 2px solid #ccc;
+        border-right: 2px solid #ccc;
+				box-shadow: none;
+        font-size: 24px;
+			}
+
+      .reveal .code-badge {
+        right: 10px;
+      }
+
+      .reveal code {
+          font-family: "Roboto Mono", monospace;
+      }
+
+			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+				font-family: "Roboto", sans-serif;
+				color: #0072c1;
+			}
+
+			.reveal section.heading-only {
+				text-align:center;
+				padding-top:10%;
+			}
+
+      .no-code-badge .code-badge {
+          display: none;
+      }
+
+      .code-badge-language {
+          display: none;
+      }
+
+			.reveal h3 {
+				margin-bottom: 40px;
+			}
+
+      .smaller {
+          font-size: smaller;
+      }
+
+      code {
+          padding: 2px 4px;
+          font-size: 90%;
+          color: #0072c1;
+          background-color: #f9f2f4;
+          border-radius: 4px;
+      }
+
+      p.padded {
+          margin-top: 32px;
+      }
+
+      section .row {
+          display: flex;
+      }
+
+      section .column {
+          flex: 48%;
+          margin: 10px;
+      }
+
+      .reveal pre.overflow-in-print {
+        height: 400px;
+        overflow-y: scroll;
+      }
+      .print-pdf .reveal pre.overflow-in-print {
+        height: auto;
+        overflow-y: visible;
+      }
+
+			@media print
+			{
+				.no-print, .no-print *, .code-badge, .slide-menu-button
+				{
+					display: none !important;
+				}
+        .reveal pre.overflow-in-print {
+          height: 2000px;
+          overflow-y: visible;
+        }
+			}
+
+      .aka {
+        font-family: "Roboto Mono", monospace;
+        background-color: #1c6192;
+        color: white;
+        padding: 8px;
+        border-radius: 6px;
+        display: inline-block;
+      }
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+
+                <h1 style="font-size:2.5em; text-align: left;">pgvector for Python developers
+                </h1>
+
+
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
+                    Tips for navigating the slides:<br>
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section data-visibility="hidden">
+                <h3>About me</h3>
+
+                <p>Python Cloud Advocate at Microsoft</p>
+                <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+                <br>
+                <p>Find me online at:</p>
+                <table style="width:40%; float: left; font-size:28px;">
+                    <tr>
+                      <td>Mastodon
+                      <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                    </tr>
+                    <tr>
+                        <td>Twitter
+                        <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>GitHub
+                        <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                      </tr>
+                    <tr>
+                        <td>Website
+                        <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                      </tr>
+                  </table>
+            </section>
+
+            <section class="heading-only">
+              <h2>Vectors 101</h2>
+            </section>
+
+            <section>
+                <h3>What are vectors?</h3>
+
+                <img src="screenshot_telephone_vector.png" alt="Vector space diagram with telephone dot highlighted" style="width: 550px; float:right; margin-left: 20px;">
+
+                <p>Vectors are lists of numbers that represent items in a high-dimensional space.</p>
+
+                <p>For example, a vector representing the string "apple" might be <code>[0.5, 0.3, 0.8]</code>.</p>
+
+                <p>Each number in the vector is a <strong>dimension</strong> of the space.</p>
+
+                <aside class="notes">
+                  https://projector.tensorflow.org/
+                </aside>
+            </section>
+
+            <section>
+              <h3>Why care about vector embeddings?</h3>
+
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+                <div>
+                  <h4>Similarity</h4>
+                  <p>Find similar items in a large dataset, useful for recommendations.</p>
+                  <img src="screenshot_telephone_similar.png" alt="Vector space diagram with telephone and similar items highlighted" style="width: 500px;">
+                </div>
+
+                <div>
+                  <h4>Search</h4>
+                  <p>Find items that are similar to a query.</p>
+                  <img src="screenshot_devices_search.png" alt="Vector space diagram with devices and search query highlighted" style="width: 500px;">
+                </div>
+
+              <aside class="notes">
+                https://projector.tensorflow.org/
+
+                todo: drawing of vector space
+                similarity - distance betwern rows
+                search - distance between query and rows
+              </aside>
+          </section>
+
+            <section>
+              <h3>Generating vectors</h3>
+
+              <p>Use a model to generate vectors for items:</p>
+
+              <p>
+              input → model → vector
+              </p>
+
+
+              <p>
+              "telephone" → word2vec → [0.5, 0.3, 0.8, ..]
+              </p>
+
+              <div class="fragment">
+              <p class="padded">Popular models:</p>
+              <table style="margin: 0;">
+                <thead>
+                  <tr>
+                    <th>Model
+                    <th>Input types
+                    <th>Dimensions
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Word2Vec
+                    <td>Word
+                    <td>50-300
+                  </tr>
+                  <tr>
+                    <td>OpenAI text-embedding-ada-002
+                    <td>Text
+                    <td>1536
+                  </tr>
+                  <tr>
+                    <td>OpenAI text-embedding-3
+                    <td>Text
+                    <td>256-3072
+                  </tr>
+                  <tr>
+                    <td>Azure Computer Vision Multi-modal
+                    <td>Text or Image
+                    <td>1024
+                </tbody>
+              </table>
+            </div>
+
+            </section>
+
+            <section>
+              <h3>Vector distance metrics</h3>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+                <div>
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Taxicab_norm_or_Manhattan_norm">Manhattan (L1)</a></h4>
+                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 200px; float: left;">
+                </div>
+
+                <div class="fragment" data-fragment-index="1">
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">Inner (dot) product</a></h4>
+                  <img src="distance_negativeinner.svg" alt="Inner product formula" style="width: 420px;">
+                </div>
+
+                <div>
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean (L2)</a></h4>
+                  <img src="distance_euclidean.svg" alt="Euclidean distance formula" style="width: 200px; float:left; margin-right:30px;">
+                  <p class="smaller" style="margin-top:20px;">Generally preferred over Manhattan.</p>
+                </div>
+
+                <div class="fragment" data-fragment-index="1">
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_distance">Cosine distance</a></h4>
+                  <img src="distance_cosine.svg" alt="Two vectors with cosine distance calculated" style="width: 200px; float:left; margin-right:30px;">
+
+                  <p class="smaller" style="margin-top:20px;">Same as inner product for normalized vectors.</p>
+                </div>
+
+              </div>
+
+              <aside class="notes">
+                https://weaviate.io/blog/distance-metrics-in-vector-search
+                https://gregorygundersen.com/blog/2018/06/26/dot-product/
+                https://help.openai.com/en/articles/6824809-embeddings-frequently-asked-questions
+                https://www.mathsisfun.com/algebra/vectors-dot-product.html
+              </aside>
+            </section>
+
+            <section class="heading-only">
+              <h2>Storing vectors in PostgreSQL</h2>
+            </section>
+
+            <section>
+              <h3>Using the pgvector extension</h3>
+
+              <p>To use the <code>pgvector</code> extension in PostgreSQL:</p>
+              
+              <ol>
+                <li>Install the extension per the instructions at:
+                  <br>
+                  <a target="_blank" href="https://github.com/pgvector/pgvector">
+                    https://github.com/pgvector/pgvector
+                  </a>
+                <li>Enable the extension:<br>
+
+                  <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
+                    CREATE EXTENSION vector;
+                  </code></pre>
+                </ol>
+
+              <p>Try the extension in the pgvector dev container @ <span class="aka">aka.ms/pgvector-playground</span></p>
+              
+              <aside class="notes">
+                Demonstrate in pgvector-playground,
+                using psycopg example
+              </aside>
+            </section>
+
+            <section>
+              <h3>Storing and querying vectors</h3>
+
+              <ul style="width:100%">
+                <li>Create a table with a <code>vector</code> column:
+
+                  <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
+                  CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3));
+                  </code></pre>
+
+                <li>Insert vectors into the table:
+
+                  <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
+                    INSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]');
+                  </code></pre>
+
+                <li>Query using the distance operators:
+
+                  <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
+                    SELECT * FROM items ORDER BY embedding <=> '[3,1,2]' LIMIT 5;
+                  </code></pre>
+
+                  <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
+                    SELECT embedding <=> '[3,1,2]' AS distance FROM items;
+                  </code></pre>
+                </ul>
+
+            </section>
+
+            <section>
+              <h3>Distance operators</h3>
+
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+                <div>
+                  <h4> <code>&lt;+&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Taxicab_norm_or_Manhattan_norm">Manhattan (L1)</a> </h4>
+                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 200px; float: left;">
+                  
+                </div>
+
+                <div>
+                  <h4><code>&lt;#&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">Negative inner (dot) product</a>  </h4>
+                  <img src="distance_negativeinner.svg" alt="Inner product formula" style="width: 420px; float:left; margin-right:30px;">
+                  <p style="font-size:0.6em;">Note that pgvector multiplies the dot product by -1, so 11 becomes -11 in this case.</p>
+                </div>
+
+                <div>
+                  <h4><code>&lt;-&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean (L2)</a> </h4>
+                  <img src="distance_euclidean.svg" alt="Euclidean distance formula" style="width: 200px; float:left; margin-right:30px;">
+                  
+                  
+                </div>
+
+                <div>
+                  <h4><code>&lt;=&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_distance">Cosine distance</a> </h4>
+                  <img src="distance_cosine.svg" alt="Two vectors with cosine distance calculated" style="width: 200px; float:left; margin-right:30px;">
+                  
+                </div>
+
+              </div>
+
+
+              <aside class="notes">
+                https://weaviate.io/blog/distance-metrics-in-vector-search
+
+                Try changing the operators in the query
+
+                ALTER EXTENSION vector UPDATE TO '0.7.0'
+
+                inner product:
+                Range: -1 to 1 (for normalized vectors)
+                -1 = same
+                1 = more different
+
+                cosine distance:
+                Range: 0 - 2
+                0 = same
+                2 = most different
+                Implemented with 1 - cosine so that lower is the same
+              </aside>
+            </section>
+
+
+
+            <section>
+              <h3>Approximate nearest neighbors (ANN) indexes</h3>
+
+              <p>Use ANN indexes for fast vector searches:</p>
+
+              <ul>
+                <li>HNSW (Hierarchical Navigable Small World)
+
+                <pre><code data-trim data-noescape>
+                  CREATE INDEX ON items USING hnsw (embedding vector_ip_ops);
+                </code></pre>
+
+                <li>IVFflat (Inverted File with Flat indexes) 
+
+                <pre><code data-trim data-noescape>
+                  CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
+                </code></pre>
+
+              </ul>
+            </section>
+
+
+            <section class="heading-only">
+              <h2>Using pgvector with Python</hjson>
+            </section>
+
+            <section>
+              <h3>Using the pgvector package</h3>
+
+              <p>Install the <code>pgvector</code> package:</p>
+
+              <pre><code data-trim data-noescape>
+                pip install pgvector
+              </code></pre>
+
+              <p>Then use it with one of these libraries:</p>
+
+              <ul>
+                <li>psycopg2, psycopg3
+                <li>asyncpg
+                <li>SQLAlchemy
+                <li>SQLModel
+                <li>Django
+                <li>Peewee
+              </ul>
+
+              <p>Learn more @ 
+              <a target="_blank" href="https://github.com/pgvector/pgvector-python">
+                https://github.com/pgvector/pgvector-python
+              </a></p>
+
+              <aside class="notes">
+              More examples in the pgvector-playground
+              Ask the audience, which one is your favorite??
+              </aside>
+              
+            </section>
+
+            <section>
+              <h3>Building a similar items API</h3>
+
+              <pre><code data-trim data-noescape>
+                query = select(Item).where(Item.id == target_id)
+                target_item = session.execute(query).scalars().first()
+
+                closest = session.scalars(
+                    select(Item).order_by(Item.embedding.cosine_distance(target_item.embedding)).limit(5)
+                )
+                for item in closest:
+                    print(item.title)
+              </code></pre>
+
+              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/similar-items-fastapi">
+                  aka.ms/pgvector-similar-items
+                </a></p>
+
+              <aside class="notes">
+                Show the code in rag-on-postgres
+              </aside>
+            </section>
+
+            <section>
+              <h3>Building a search API</h3>
+
+              <p>Search for items similar to a query:</p>
+              <pre><code data-trim data-noescape>
+                target_embedding = get_embedding_from_text(query)
+
+                closest = session.scalars(
+                  select(Item).order_by(Item.embedding.cosine_distance(target_embedding)).limit(5)
+                )
+                for item in closest:
+                    print(item.title)
+              </code></pre>
+
+              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/rag-on-postgres">
+                aka.ms/pgvector-search
+              </a></p>
+              
+              <aside class="notes">
+                Show the code in rag-on-postgres
+              </aside>
+            </section>
+
+            <section>
+              <h3>Building a hybrid search API</h3>
+
+              <p>Combine full-text search with vector search:</p>
+
+              <pre class="no-code-badge" style="font-size:0.6em; height:450px;"><code data-trim data-noescape>
+              WITH semantic_search AS (
+                  SELECT id, RANK () OVER (ORDER BY embedding <=> %(embedding)s) AS rank FROM documents
+                  ORDER BY embedding <=> %(embedding)s LIMIT 20
+              ),
+              keyword_search AS (
+                  SELECT id, RANK () OVER (ORDER BY ts_rank_cd(to_tsvector('english', content), query) DESC)
+                  FROM documents, plainto_tsquery('english', %(query)s) query
+                  WHERE to_tsvector('english', content) @@ query
+                  ORDER BY ts_rank_cd(to_tsvector('english', content), query) DESC LIMIT 20
+              )
+              SELECT
+                  COALESCE(semantic_search.id, keyword_search.id) AS id,
+                  COALESCE(1.0 / (%(k)s + semantic_search.rank), 0.0) +
+                  COALESCE(1.0 / (%(k)s + keyword_search.rank), 0.0) AS score
+              FROM semantic_search
+              FULL OUTER JOIN keyword_search ON semantic_search.id = keyword_search.id
+              ORDER BY score DESC LIMIT 5
+              </code></pre>
+
+
+              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/rag-on-postgres">
+                aka.ms/pgvector-hybridsearch
+              </a></p>
+              
+              <aside class="notes">
+                Show the code in rag-on-postgres
+              </aside>
+            </section>
+            
+            <section>
+              <h3>Thank you!</h3>
+
+              <img src="pamela_elephant.png" alt="Photo of Pamela smiling with a stuffed elephant" style="width: 350px; float:right; border-radius: 12px;">
+
+              <p>Grab the slides @ <span class="aka">aka.ms/pgvector-python</span> </p>
+
+              <p>Play around in the pgvector dev container @ <span class="aka">aka.ms/pgvector-playground</span></p>
+              
+              <p>Find me online at:</p>
+              <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
+                  <tr>
+                    <td>Mastodon
+                    <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+                  </tr>
+                  <tr>
+                      <td>Twitter
+                      <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+                    </tr>
+                  <tr>
+                      <td>GitHub
+                      <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+                    </tr>
+                  <tr>
+                      <td>Website
+                      <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+                  </tr>
+              </table>
+              <br>
+              <p style="clear:both; margin-top: 30px;">Let me know about your experiences with PostgreSQL and pgvector!</p>
+              
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+
+
+    </script>
+    </body>
+</html>
