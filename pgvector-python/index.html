@@ -131,6 +131,7 @@
                 <h1 style="font-size:2.5em; text-align: left;">pgvector for Python developers
                 </h1>
 
+                <img src="python_elepant.png" alt="Python in a fast car with an elephant in a cannon, with vectors coming out of them" style="width: 900px; margin-top: 20px;">
 
                 <!--<div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%;">
                     Tips for navigating the slides:<br>
@@ -172,67 +173,58 @@
 
             <section class="heading-only">
               <h2>Vectors 101</h2>
+
+              <img src="vectors.svg" alt="Vector space diagram with an oranges vector and apples vector" style="width: 500px; margin-top:-20px;">
             </section>
 
             <section>
                 <h3>What are vectors?</h3>
 
-                <img src="screenshot_telephone_vector.png" alt="Vector space diagram with telephone dot highlighted" style="width: 550px; float:right; margin-left: 20px;">
+                <img src="vectors_with_numbers.svg" alt="Vector space diagram with an oranges vector and apples vector" style="width: 550px; float:right; margin-left: 20px; margin-top:-100px;">
 
                 <p>Vectors are lists of numbers that represent items in a high-dimensional space.</p>
 
-                <p>For example, a vector representing the string "apple" might be <code>[0.5, 0.3, 0.8]</code>.</p>
+                <p>For example, a vector representing the string "apple" might be <code>[0.3, 0.5, 0.8]</code>.</p>
 
                 <p>Each number in the vector is a <strong>dimension</strong> of the space.</p>
 
-                <aside class="notes">
-                  https://projector.tensorflow.org/
-                </aside>
             </section>
 
-            <section>
-              <h3>Why care about vector embeddings?</h3>
-
-
-              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
-                <div>
-                  <h4>Similarity</h4>
-                  <p>Find similar items in a large dataset, useful for recommendations.</p>
-                  <img src="screenshot_telephone_similar.png" alt="Vector space diagram with telephone and similar items highlighted" style="width: 500px;">
-                </div>
-
-                <div>
-                  <h4>Search</h4>
-                  <p>Find items that are similar to a query.</p>
-                  <img src="screenshot_devices_search.png" alt="Vector space diagram with devices and search query highlighted" style="width: 500px;">
-                </div>
-
-              <aside class="notes">
-                https://projector.tensorflow.org/
-
-                todo: drawing of vector space
-                similarity - distance betwern rows
-                search - distance between query and rows
-              </aside>
-          </section>
 
             <section>
               <h3>Generating vectors</h3>
 
               <p>Use a model to generate vectors for items:</p>
-
-              <p>
-              input → model → vector
-              </p>
-
-
-              <p>
-              "telephone" → word2vec → [0.5, 0.3, 0.8, ..]
-              </p>
+              <table style="margin: 0;">
+                <thead>
+                  <tr>
+                    <th>Input 
+                    <th>→
+                    <th>Model
+                    <th>→
+                    <th>Vector
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="fragment">"dog"
+                    <td>
+                    <td class="fragment">word2vec
+                    <td>
+                    <td class="fragment">[0.017198, -0.007493, -0.057982, ..]
+                  </tr>
+                  <tr class="fragment">
+                    <td>"cat"
+                    <td>
+                    <td>word2vec
+                    <td>
+                    <td>[0.004059, 0.06719, -0.093874, ...]
+                </tbody>
+              </table>
 
               <div class="fragment">
-              <p class="padded">Popular models:</p>
-              <table style="margin: 0;">
+              <p class="padded">Popular models (find more on <a target="_blank" href="https://huggingface.co/spaces/mteb/leaderboard">HuggingFace</a>):</p>
+              <table style="margin: 0;" class="smaller">
                 <thead>
                   <tr>
                     <th>Model
@@ -267,26 +259,78 @@
             </section>
 
             <section>
+              <h3>Why care about vector embeddings?</h3>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
+                <div>
+                  <h4>Similarity</h4>
+                  <p>Find similar items in a large dataset, useful for recommendations.</p>
+                  <img src="screenshot_telephone_similar.png" alt="Vector space diagram with telephone and similar items highlighted" style="width: 500px;">
+                </div>
+
+                <div>
+                  <h4>Search</h4>
+                  <p>Find items that are similar to a query.</p>
+                  <img src="screenshot_devices_search.png" alt="Vector space diagram with devices and search query highlighted" style="width: 500px;">
+                </div>
+
+
+
+              <aside class="notes">
+                https://projector.tensorflow.org/
+                https://github.com/cohere-ai/notebooks/blob/main/notebooks/llmu/Introduction_Text_Embeddings.ipynb?ref=cohere-ai.ghost.io
+                todo: drawing of vector space
+                similarity - distance betwern rows
+                search - distance between query and rows
+              </aside>
+          </section>
+
+          <section>
+            <h3>Visualizing vectors</h3>
+
+            <ul>
+              <li>
+              <a target="_blank" href="https://pamelafox.github.io/vectors-comparison/">
+                🔗 https://pamelafox.github.io/vectors-comparison/
+                <br>
+                <img src="screenshot_vectors_comparison.png" alt="Screenshot of vectors comparison tool" style="width: 500px;">
+              </a>
+              <li>
+              <a target="_blank" href="https://projector.tensorflow.org/">
+                🔗 https://projector.tensorflow.org/
+                <br>
+                <img src="screenshot_tensorflow.png" alt="Screenshot of TensorFlow Projector" style="width: 500px;">
+              </a>
+            </ul>
+          </section>
+
+
+            <section>
               <h3>Vector distance metrics</h3>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
                 <div>
                   <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Taxicab_norm_or_Manhattan_norm">Manhattan (L1)</a></h4>
-                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 200px; float: left;">
+                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 200px; float: left; margin-right:40px;">
+                  <div style="margin-top:40px; text-align:center;">
+                  <code>[1, 2, 3]</code>
+                  <br>vs.<br>
+                  <code>[3, 1, 2]</code>
+                  </div>
                 </div>
 
-                <div class="fragment" data-fragment-index="1">
+                <div class="fragment" data-fragment-index="2">
                   <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">Inner (dot) product</a></h4>
                   <img src="distance_negativeinner.svg" alt="Inner product formula" style="width: 420px;">
                 </div>
 
-                <div>
+                <div class="fragment" data-fragment-index="1">
                   <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean (L2)</a></h4>
                   <img src="distance_euclidean.svg" alt="Euclidean distance formula" style="width: 200px; float:left; margin-right:30px;">
                   <p class="smaller" style="margin-top:20px;">Generally preferred over Manhattan.</p>
                 </div>
 
-                <div class="fragment" data-fragment-index="1">
+                <div class="fragment" data-fragment-index="3">
                   <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_distance">Cosine distance</a></h4>
                   <img src="distance_cosine.svg" alt="Two vectors with cosine distance calculated" style="width: 200px; float:left; margin-right:30px;">
 
@@ -305,6 +349,8 @@
 
             <section class="heading-only">
               <h2>Storing vectors in PostgreSQL</h2>
+
+              <img src="screenshot_pgvector_table.png" alt="Screenshot of a table in pgvector with an id and embedding column" style="width: 600px;">
             </section>
 
             <section>
@@ -312,20 +358,25 @@
 
               <p>To use the <code>pgvector</code> extension in PostgreSQL:</p>
               
-              <ol>
+              <ol style="margin-top:20px;">
                 <li>Install the extension per the instructions at:
                   <br>
                   <a target="_blank" href="https://github.com/pgvector/pgvector">
-                    https://github.com/pgvector/pgvector
+                    github.com/pgvector/pgvector
                   </a>
                 <li>Enable the extension:<br>
 
                   <pre style="width:100%;"><code  style="padding:16px;" data-trim data-noescape>
-                    CREATE EXTENSION vector;
+                    CREATE EXTENSION IF NOT EXISTS vector;
                   </code></pre>
                 </ol>
 
-              <p>Try the extension in the pgvector dev container @ <span class="aka">aka.ms/pgvector-playground</span></p>
+              <p class="padded">🔗 Try the extension in the pgvector dev container @ 
+                
+                <a target="_blank" href="https://github.com/pamelafox/pgvector-playground">
+                  github.com/pamelafox/pgvector-playground
+                </a>
+              </p>
               
               <aside class="notes">
                 Demonstrate in pgvector-playground,
@@ -360,6 +411,11 @@
                   </code></pre>
                 </ul>
 
+                <aside class="notes">
+                  Show the queries in pgvector-playground,
+                  in psycopg example
+                </aside>
+
             </section>
 
             <section>
@@ -368,28 +424,49 @@
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px;">
                 <div>
-                  <h4> <code>&lt;+&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Taxicab_norm_or_Manhattan_norm">Manhattan (L1)</a> </h4>
-                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 200px; float: left;">
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Norm_(mathematics)#Taxicab_norm_or_Manhattan_norm">Manhattan (L1)</a> </h4>
+                  <img src="distance_manhattan.svg" alt="Manhattan distance formula" style="width: 150px; float: left;">
+                  <div style="margin-top:40px; text-align:center;">
+                  <code style="font-size:0.7em;">'[1, 2, 3]' &lt;+&gt; '[3, 1, 2]'</code> 
+                  <br>or<br>
+                  <code style="font-size:0.6em;">l1_distance('[1, 2, 3]', '[3, 1, 2]')</code>
+                  </div>
+                </div>
+
+                <div>
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">Negative inner (dot) product</a>  </h4>
+                  <img src="distance_negativeinner.svg" alt="Inner product formula" style="width: 240px; float:left; margin-right:30px;">
+                
+                  <div style="margin-top:40px; text-align:center;">
+                    <code style="font-size:0.7em;">v1 &lt;#&gt; v2</code> 
+                    <br>or<br>
+                    <code style="font-size:0.6em;">inner_product(v1, v2)</code>
+                  </div>
+                  <p style="font-size:0.6em;">* pgvector multiplies the dot product by -1, so 11 becomes -11</p>
+                
+                </div>
+
+                <div>
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean (L2)</a> </h4>
+                  <img src="distance_euclidean.svg" alt="Euclidean distance formula" style="width: 140px; float:left; margin-right:30px;">
+                  
+                  <div style="margin-top:40px; text-align:center;">
+                    <code style="font-size:0.7em;">v1 &lt;-&gt; v2</code> 
+                    <br>or<br>
+                    <code style="font-size:0.6em;">l2_distance(v1, v2)</code>
+                  </div>
                   
                 </div>
 
                 <div>
-                  <h4><code>&lt;#&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">Negative inner (dot) product</a>  </h4>
-                  <img src="distance_negativeinner.svg" alt="Inner product formula" style="width: 420px; float:left; margin-right:30px;">
-                  <p style="font-size:0.6em;">Note that pgvector multiplies the dot product by -1, so 11 becomes -11 in this case.</p>
-                </div>
-
-                <div>
-                  <h4><code>&lt;-&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean (L2)</a> </h4>
-                  <img src="distance_euclidean.svg" alt="Euclidean distance formula" style="width: 200px; float:left; margin-right:30px;">
+                  <h4><a target="_blank" href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_distance">Cosine distance</a> </h4>
+                  <img src="distance_cosine.svg" alt="Two vectors with cosine distance calculated" style="width: 140px; float:left; margin-right:30px;">
                   
-                  
-                </div>
-
-                <div>
-                  <h4><code>&lt;=&gt;</code> <a target="_blank" href="https://en.wikipedia.org/wiki/Cosine_similarity#Cosine_distance">Cosine distance</a> </h4>
-                  <img src="distance_cosine.svg" alt="Two vectors with cosine distance calculated" style="width: 200px; float:left; margin-right:30px;">
-                  
+                  <div style="margin-top:40px; text-align:center;">
+                    <code style="font-size:0.7em;">v1 &lt;=&gt; v2</code> 
+                    <br>or<br>
+                    <code style="font-size:0.6em;">cosine_distance(v1, v2)</code>
+                  </div>
                 </div>
 
               </div>
@@ -422,25 +499,39 @@
 
               <p>Use ANN indexes for fast vector searches:</p>
 
-              <ul>
-                <li>HNSW (Hierarchical Navigable Small World)
+              <h4>HNSW (Hierarchical Navigable Small World)</h4>
 
-                <pre><code data-trim data-noescape>
-                  CREATE INDEX ON items USING hnsw (embedding vector_ip_ops);
-                </code></pre>
+              <img src="screenshot_hnswgraph.png" alt="Multi-level search space for HNSW" style="width: 300px; float:right; margin-left: 20px;">
 
-                <li>IVFflat (Inverted File with Flat indexes) 
+              <pre style="float:left; width: 70%;"><code data-trim data-noescape>
+                CREATE INDEX ON items USING hnsw (embedding vector_ip_ops);
+              </code></pre>
+
+              <p>Based on algorithm from <a target="_blank" href="https://arxiv.org/pdf/1603.09320">
+                arxiv.org/pdf/1603.09320</a>
+              </p>
+              <p>Learn more from this tutorial: <a target="_blank" href="https://github.com/brtholomy/hnsw">
+                https://github.com/brtholomy/hnsw</a></p>
+
+              <div style="clear:both;" class="fragment">
+              <h4>IVFflat (Inverted File with Flat indexes)</h4>
 
                 <pre><code data-trim data-noescape>
                   CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);
                 </code></pre>
+              </div>
 
-              </ul>
+              <aside class="notes">
+                https://github.com/brtholomy/hnsw
+              </aside>
             </section>
 
 
             <section class="heading-only">
-              <h2>Using pgvector with Python</hjson>
+              <h2>Using pgvector with Python</h2>
+
+              <img src="python_elepant.png" alt="Python in a fast car with an elephant in a cannon, with vectors coming out of them" style="width: 900px; margin-top: 20px;">
+
             </section>
 
             <section>
@@ -478,7 +569,7 @@
             <section>
               <h3>Building a similar items API</h3>
 
-              <pre><code data-trim data-noescape>
+              <pre><code data-trim data-noescape class="python">
                 query = select(Item).where(Item.id == target_id)
                 target_item = session.execute(query).scalars().first()
 
@@ -489,12 +580,12 @@
                     print(item.title)
               </code></pre>
 
-              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/similar-items-fastapi">
-                  aka.ms/pgvector-similar-items
+              <p>Full code in: <br><a target="_blank" href="https://github.com/Azure-Samples/rag-postgres-openai-python">
+                github.com/Azure-Samples/rag-postgres-openai-python
                 </a></p>
 
               <aside class="notes">
-                Show the code in rag-on-postgres
+                Show the code in https://github.com/Azure-Samples/rag-postgres-openai-python
               </aside>
             </section>
 
@@ -502,7 +593,7 @@
               <h3>Building a search API</h3>
 
               <p>Search for items similar to a query:</p>
-              <pre><code data-trim data-noescape>
+              <pre><code data-trim data-noescape class="python">
                 target_embedding = get_embedding_from_text(query)
 
                 closest = session.scalars(
@@ -512,9 +603,9 @@
                     print(item.title)
               </code></pre>
 
-              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/rag-on-postgres">
-                aka.ms/pgvector-search
-              </a></p>
+              <p>Full code in: <br><a target="_blank" href="https://github.com/Azure-Samples/rag-postgres-openai-python">
+                github.com/Azure-Samples/rag-postgres-openai-python
+                </a></p>
               
               <aside class="notes">
                 Show the code in rag-on-postgres
@@ -547,9 +638,9 @@
               </code></pre>
 
 
-              <p>Demo @ <a target="_blank" href="https://github.com/pamelafox/rag-on-postgres">
-                aka.ms/pgvector-hybridsearch
-              </a></p>
+              <p>Full code in: <br><a target="_blank" href="https://github.com/Azure-Samples/rag-postgres-openai-python">
+                github.com/Azure-Samples/rag-postgres-openai-python
+                </a></p>
               
               <aside class="notes">
                 Show the code in rag-on-postgres
@@ -559,12 +650,10 @@
             <section>
               <h3>Thank you!</h3>
 
-              <img src="pamela_elephant.png" alt="Photo of Pamela smiling with a stuffed elephant" style="width: 350px; float:right; border-radius: 12px;">
+              <img src="pamela_elephant.png" alt="Photo of Pamela smiling with a stuffed elephant" style="width: 250px; float:right; border-radius: 12px;">
 
-              <p>Grab the slides @ <span class="aka">aka.ms/pgvector-python</span> </p>
+              <p>Grab the slides @<br> <span class="aka">pamelafox.github.io/my-py-talks/pgvector-python/</span> </p>
 
-              <p>Play around in the pgvector dev container @ <span class="aka">aka.ms/pgvector-playground</span></p>
-              
               <p>Find me online at:</p>
               <table style="width:40%; float: left; font-size:28px; margin-bottom: 40px;">
                   <tr>
