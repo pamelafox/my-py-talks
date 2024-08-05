@@ -446,7 +446,7 @@
 
                 <p>Use a retrieval system to find the best context for the generation model.</p>
 
-                <img src="rag.png" alt="RAG diagram" width="100%">
+                <img src="rag_postgres.png" alt="RAG diagram" width="100%">
             </section>
 
             <section>
@@ -482,7 +482,35 @@
             </section>
 
             <section>
-                <h3>Demo: OpenAI + Cognitive Search</h3>
+                <h3>Demo: OpenAI + PostgreSQL</h3>
+
+                <p><a target="https://github.com/Azure-Samples/rag-postgres-openai-python/">
+                   github.com/Azure-Samples/rag-postgres-openai-python/
+                </a></p>
+
+                <img src="screenshot_ragpg.png" alt="RAG demo" width="500px; border:1px solid #ccc;">
+            </section>
+
+            <section>
+                <h3>Advanced RAG with query rewriting</h3>
+
+                <p>Use query rewriting to improve search results:</p>
+
+                <img src="rag_postgres_advanced.png" alt="RAG query rewriting" width="100%">
+            </section>
+
+
+            <section>
+                <h3>RAG on documents</h3>
+
+                <p>Answer questions about documents (PDFs/docx/etc).</p>
+
+                <img src="rag_flow.png" alt="RAG diagram" width="100%">
+            </section>
+
+
+            <section>
+                <h3>Demo: OpenAI + Azure AI Search</h3>
 
                 <p><a target="https://github.com/Azure-Samples/azure-search-openai-demo">
                     github.com/Azure-Samples/azure-search-openai-demo
@@ -490,59 +518,6 @@
 
                 <img src="chatscreen.png" alt="RAG demo" width="500px; border:1px solid #ccc;">
 
-            </section>
-
-            <section>
-                <h3>RAG flow</h3>
-
-                <img src="rag_flow.png" alt="RAG flow: User question, document search, LLM, response" width="100%">
-            </section>
-
-            <section>
-                <h3>RAG: Search step</h3>
-
-                <p>Query Azure Cognitive Search using both text and vectors:</p>
-
-                <img src="search_combo.png" alt="Search flow: vectors and keywords, combined with RRF algorithm, then semantic re-ranker step" width="30%" style="float: right;">
-
-                <pre style="float: left; width: 65%; font-size:0.8em; height:450px;"><code data-trim data-noescape>
-                r = await self.search_client.search(
-                    query_text,
-                    query_type=QueryType.SEMANTIC,
-                    top=top,
-                    vector=query_vector,
-                    vector_fields="embedding",
-                )
-
-                results = [doc["sourcepage"] +
-                            ": " + doc["content"]
-                           async for doc in r]
-                
-                content = "\n".join(results)
-                </code></pre>
-
-            </section>
-
-            <section>
-                <h3>RAG: Search results</h3>
-
-                <p>Use the search results to create a prompt for the LLM:</p>
-
-                <pre style="font-size:0.8em; height:460px;"><code data-trim data-noescape>
-                messages = [system_prompt]
-                messages.extend(few_shots)
-                user_content = f"{q}\nSources:\n {content}"
-                messages.append({"role": "user", "content": user_content})
-
-                chat_completion = await client.chat.completions.create(
-                    deployment_id=self.chatgpt_deployment,
-                    model=self.chatgpt_model,
-                    messages=messages,
-                    temperature=0.3,
-                    max_tokens=1024,
-                    n=1,
-                )
-                </code></pre>
             </section>
 
             <section class="heading-only">
