@@ -1,0 +1,728 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Using LLMs with Python</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+        <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="../static/slides.css">
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="heading-only" style="padding-top:5%">
+                <h1 style="font-size:2.5em;">
+                    Intro to<br>
+                    Large Language Models<br>
+                    with Python
+                </h1>
+
+                <h2 style="font-size:1.5em;">
+                    <a target="_blank" href="https://aka.ms/llms-python-slides">aka.ms/llms-python-slides</a>
+                </h2>
+
+                <div style="margin-top:40px;">
+                    Pamela Fox, Python Cloud Advocate at Microsoft<br>
+                    <a target="_blank" href="https://github.com/pamelafox">@pamelafox</a>, <a target="_blank" href="https://www.pamelafox.org/">pamelafox.org</a>
+                </div>
+                <div class="no-print" style="text-align: left; margin-top: 100px; font-size: 70%; display:none;">
+                    Tips for navigating the slides:
+                    <ul>
+                        <li>Press O or Escape for overview mode.</li>
+                        <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+                        <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+                    </ul>
+                </div>
+
+                <aside class="speaker-notes">
+                </aside>
+            </section>
+
+            <section class="heading-only">
+                <h2>LLMs & GPTs</h2>
+
+                <img src="../media/BIT_ML.svg" alt="A raccoon studying robotics" width="400">
+           </section>
+            
+            <section>
+                <h3>You've probably used an LLM...</h3>
+                
+                <img src="screenshot_bingcopilot.png" alt="Screenshot of Bing Copilot answering a question about salary payment" style="float: right; width: 400px; border: 1px solid grey; margin-left: 10px;">
+                <img src="screenshot_copilot.png" alt="Screenshot of GitHub Copilot answering a question about Python generators" style="float: left; width: 200px; border: 1px solid grey; margin-left: 10px;">
+
+                <img src="screenshot_chatgpt.png" alt="Screenshot of ChatGPT answering a question about lunch recipes" style="float: left; width: 300px; border: 1px solid grey; margin-left: 20px;">
+
+                <img src="screenshot_copilot_complete.png" alt="Screenshot of GitHub Copilot completing a Python function" style="float: left; width: 400px; border: 1px solid grey; margin-left: 20px;">
+
+                <img src="screenshot_copilot_inline.png" alt="Screenshot of GitHub Copilot inline chat" style="float: left; width: 400px; border: 1px solid grey; margin-left: 20px;">
+
+                <p class="smaller" style="clear:both;">ChatGPT, GitHub Copilot, Bing Copilot, and many other tools are powered by LLMs.</p>
+            </section>
+
+            <section>
+                <h3>Large Language Models (LLMs)</h3>
+
+                <p>An LLM is a machine learning model that is so large
+                    that it achieves general-purpose language understanding and generation.
+                </p>
+
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigsk_RT3zBrzSTftNq6czTHYkv3izej5wCEhxNrjnoUrvIPt0aJLsV8s4zIgpnyoPysHobWFhHuzCU-B30AItGMAmYRMEWY_Pp--lLmQ6--oMMWrRciyDDv7qD1zf4Y--i7avr9EHv2nsz4Q7hHTY5-JeXFKHhbUttmVruMd8Py_fqCUtaAKCwHyOF_A/w640-h169/image2.png" alt="Diagram of sentiment classification task using input prompting" height="120">
+                <br>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhl5PSqGGHMWNxwav2cdB6GaoiHCrKESFwkRXQ6VJmJxVGCjcuQhqJsey9EiCQW6WUKaHDaMCmYj9LGxZaVuU5DpHTh9-Wl0pRzlTybDC2WES0_jSjmyGHcHKku9XZECXceG1TCtH5DNocVj-0PQHTztf_5Zzo7Ijrj8jlT_kClaW72fxzj4-3SQOwtNQ/s16000/image4.png" alt="Graphs comparing model scale to accuracy on tasks" height="200">
+
+                <p>From 
+                <a target="_blank" href="https://blog.research.google/2022/11/characterizing-emergent-phenomena-in.html">
+                   📖 Characterizing Emergent Phenomena in LLMs
+                </a>
+            </section>
+
+
+            <section>
+                <h3>Generative Pretrained Transformer (GPT)</h3>
+                
+                <img src="multiple_attention_heads.png" alt="Diagram of multiple attention heads on tokens in a sentence" style="float: right; width: 300px;">
+                <p>GPT models are LLMs based on Transformer architecture from:
+                <br>
+                <a target="_blank" href="https://arxiv.org/abs/1706.03762">📖 "Attention is all you need" paper</a><br> by Google Brain
+                </p>
+                <br>
+                <p>Learn more:
+                <ul style="width: 60%; margin-right: 16px;">
+                    <li>Andrej Karpathy: <a href="https://www.youtube.com/watch?v=bZQun8Y4L2A&pp=ygUPYW5kcmVqIGthcnBhdGh5">🎥 State of GPT</a></li>
+                    <li>Andrej Karpathy: <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">🎥 Let's build GPT: from scratch, in code</a></li>
+                </ul>
+            </section>
+
+
+            <section>
+                <h3>Hosted Large Language Models</h3> 
+
+                <p>Hosted LLMs can only be accessed via API,
+                    from a company hosting the model and infrastructure for you.
+                </p>
+
+                <table style="margin:0; font-size:1.2em;">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Model</th>
+                            <th>Parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>OpenAI
+                            <td><a target="_blank" href="https://platform.openai.com/docs/models/gpt-3-5-turbo">GPT-3.5</a>
+                            <td>175B
+                        <tr>
+                            <td>OpenAI
+                            <td><a target="_blank" href="https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo">GPT-4</a>
+                            <td>Undisclosed
+                        <tr>
+                            <td>OpenAI
+                            <td><a target="_blank" href="https://platform.openai.com/docs/models/gpt-4o">GPT-4o</a>
+                            <td>Undisclosed
+                        <tr>
+                            <td>Google
+                            <td><a target="_blank" href="https://deepmind.google/technologies/gemini/#gemini-1.5">Gemini 1, 1.5</a>
+                            <td>Undisclosed
+                        <tr>
+                            <td>Anthropic</td>
+                            <td><a target="_blank" href="https://www.anthropic.com/news/claude-3-family">Claude 3 family</a></td>
+                            <td>Undisclosed</td>
+                    </tbody>
+                </table>
+
+                <p><a target="_blank" href="https://platform.openai.com/docs/models/overview">🔗 OpenAI models overview</a></p>
+            </section>
+
+            <section>
+                <h3>Demo: Azure OpenAI Playground</h3>
+
+                <p>All Azure OpenAI deployments come with a playground:</p>
+                <img src="screenshot_openaistudio.png" alt="Screenshot of Azure OpenAI Playground" style="border:1px solid #ccc; width:800px;">
+
+                <p>OpenAI.com offers a <a target="_blank" href="https://platform.openai.com/playground/chat">similar playground</a>.</p>
+            </section>
+
+            <section>
+                <h3>Local LLMs</h3>
+
+                <p>A local LLM can be downloaded and used by anyone,
+                    as long as they have the computational resources to run it.</p>
+
+                <table style="font-size:0.9em; margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>Company
+                            <th>LLM
+                            <th>Parameters
+                    <tbody>
+                        <tr>
+                            <td>Meta
+                            <td><a target="_blank" href="https://llama.meta.com/llama3">Llama 3</a>
+                            <td>8b, 70B, 405B
+                        <tr>
+                            <td>Google
+                            <td>Gemma
+                            <td>2b, 7b
+                        <tr>
+                            <td>Microsoft research
+                            <td><a target="_blank" href="https://azure.microsoft.com/en-us/blog/introducing-phi-3-redefining-whats-possible-with-slms/">Phi-3</a>
+                            <td>3.8B
+                        <tr>
+                            <td>Mistral AI
+                            <td>Mistral
+                            <td>7b
+                        <tr>
+                            <td>Mistral AI
+                            <td>Mixtral
+                            <td>8x7b
+                        <tr>
+                            <td>Researchers
+                            <td>Llava
+                            <td>7b, 13b, 34b
+                </table>
+            </section>
+
+            <section>
+                <h3>Demo: Ollama</h3>
+
+                <p><a target="_blank" href="https://ollama.com/">Ollama</a>
+                    is a tool for easily running local LLMs on your computer.
+                </p>
+
+                <img src="screenshot_ollama.png" alt="Screenshot of Ollama running a local LLM that answers a question" style="border:1px solid #ccc; width:800px;">
+
+                <p>You can also run it from GitHub Codespaces:
+                    <a target="_blank" href="https://github.com/pamelafox/ollama-python-playground">🔗 aka.ms/ollama-python: Ollama Python Playground</a>
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Using LLMs<br> in Python</h2>
+
+                <img src="../media/BIT_PYTHON.svg" alt="A raccoon conjuring Python from their laptop (like a Snake charmer)" width="400">
+                
+            </section>
+
+            <section>
+                <h3>OpenAI API</h3>
+
+                <p>The <a target="_blank" href="https://platform.openai.com/docs/overview">OpenAI API</a> is an HTTP API with endpoints for different tasks,
+                    like <strong>chat completions</strong> and <strong>embeddings</strong>.
+                </p>
+
+                <p>The official OpenAI Python SDK is available on PyPI:</p>
+                <pre><code data-trim data-noescape class="shell">
+                pip install openai
+                </code></pre>
+
+                <p>The API is compatible with models hosted many places:</p>
+                <ul>
+                    <li><a target="_blank" href="https://openai.com/">Openai.com account</a>
+                    <li><a href="https://aka.ms/oaiapply">Azure OpenAI account</a>
+                    <li><a target="_blank" href="https://github.com/marketplace/models">GitHub models</a>
+                    <li>Local LLM with OpenAI-compatible API (<a target="_blank" href="https://ollama.com/">Ollama</a>/<a target="_blank" href="https://github.com/Mozilla-Ocho/llamafile">llamafile</a>)</a>
+                </p>
+            </section>
+
+            <section>
+            <h3>OpenAI demos repo</h3>
+
+                <p>This repository contains many Python demos and supports multiple OpenAI hosts:</p>
+                <a target="_blank" href="https://github.com/pamelafox/python-openai-demos">🔗 Python OpenAI Demos</a><br>
+
+                <p>Use these links to open it with your OpenAI host of choice:</p>
+
+                <ul>
+                    <li><a href="https://aka.ms/python-openai-openai" target="_blank">aka.ms/python-openai-openai</a>
+                    <li><a href="https://aka.ms/python-openai-azure" target="_blank">aka.ms/python-openai-azure</a>
+                    <li><a href="https://aka.ms/python-openai-ollama" target="_blank">aka.ms/python-openai-ollama</a>
+                    <li><a href="https://aka.ms/python-openai-github" target="_blank">aka.ms/python-openai-github</a>
+                </ul>
+            </section>
+
+            <section>
+                <h3>API authentication for OpenAI hosts</h3>
+
+                <p>For openai.com OpenAI, set your API key:</p>
+                <pre><code data-trim data-noescape class="python">
+                client = openai.OpenAI(api_key="your-api-key")
+                </code></pre>
+                <br>
+                <p class="padded">For Azure OpenAI, use Azure default credentials:</p>
+                <pre style="font-size:0.8em"><code data-trim data-noescape class="python">
+                azure_credential = azure.identity.DefaultAzureCredential()
+                token_provider = get_bearer_token_provider(azure_credential,
+                    "https://cognitiveservices.azure.com/.default")
+                client = openai.AzureOpenAI(
+                    api_version="2024-03-01-preview",
+                    azure_endpoint=f"https://your-openai-service.openai.azure.com",
+                    azure_ad_token_provider=token_provider,
+                )
+                </code></pre>
+                
+            </section>
+        
+            <section>
+                <h3>API Authentication for OpenAI-like hosts</h3>
+                <p class="padded">For Ollama, no key is needed:</p>
+                <pre><code data-trim data-noescape class="python">
+                client = openai.OpenAI(base_url="http://localhost:11434/v1",
+                    api_key="nokeyneeded",
+                )</code></pre>
+                
+                <br>
+                <p class="padded">For GitHub, pass PAT (personal access token) as key:</p>
+                <pre><code data-trim data-noescape class="python">
+                client = openai.OpenAI(base_url="https://models.inference.ai.azure.com",
+                        api_key=os.getenv("GITHUB_TOKEN"))
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Call the Chat Completion API</h3>
+
+                <p>Using <a target="_blank" href="https://beta.openai.com/docs/api-reference/chat">chat completions API</a>:</p>
+
+                <pre style="font-size:0.8em; height:480px;"><code data-trim data-noescape class="python">
+                response = client.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ],
+                    max_tokens=400,
+                    temperature=1,
+                    top_p=0.95)
+
+                print(response.choices[0].message.content)
+                </code></pre>
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat.py">Full example: chat.py</a>
+                </p>
+            </section>
+        
+
+            <section>
+                <h3>Stream the response</h3>
+
+                <pre style="font-size:0.8em; height:470px;"><code data-trim data-noescape class="python">
+                completion = client.chat.completions.create(
+                    stream=True,
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ])
+                
+                for event in completion:
+                    print(event.choices[0].delta.content)
+                </code></pre>
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_stream.py">Full example: chat.py</a>
+                </p>
+            </section>
+
+            <!-- TODO: Add history, tokens -->
+
+            <section data-visibility="hidden">
+                <h3>Use asynchronous calls</h3>
+
+                <p>Using Python async/await constructs:</p>
+                <pre><code data-trim data-noescape class="python">
+                response = await client.chat.completions.create(
+                    messages = [
+                        {"role":"system",
+                        "content":"You are a helpful assistant.."
+                        },
+                        {"role":"user",
+                        "content":"What can I do on my trip to Tokyo?"
+                        }
+                    ])
+                </code></pre>
+                <br>
+                <p class="smaller">Learn more:
+                    <a target="_blank" href="http://blog.pamelafox.org/2023/09/best-practices-for-openai-chat-apps.html">
+                    📖 Best practices for OpenAI Chat apps: Concurrency
+                    </a>
+                </p>
+
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_async.py">Full example: chat.py</a>
+                </p>
+            </section>
+
+
+            <section>
+                <h3>LLMs: Pros and Cons</h3>
+
+                <p>Pros:</p>
+                <ul>
+                    <li>Creative 😊</li>
+                    <li>Great with patterns</li>
+                    <li>Good at syntax (natural and programming)</li>
+                </ul>
+
+                <div class="fragment">
+                <p>Cons:</p>
+                <ul>
+                    <li>Creative 😖</li>
+                    <li>Makes stuff up (unknowingly)</li>
+                    <li>Limited context window (4K-32K)</li>
+                </ul>
+                </div>
+            </section>
+
+            <section class="heading-only">
+                <h2>Improving LLM output</h2>
+
+                <img src="../media/BIT_ML.svg" alt="A raccoon studying robotics" width="400">
+
+            </section>
+            
+
+            <section>
+                <h3>Ways to improve LLM output</h3>
+
+                <ul>
+                    <li><strong>Prompt engineering</strong>: Request a specific tone and format
+                    <li><strong>Few-shot examples</strong>: Demonstrate desired output format
+                    <li><strong>Chained calls</strong>: Get the LLM to reflect, slow down, break it down
+                    <li><strong>Function calling</strong>: Get more structured output 
+                    <li><strong>Retrieval Augmented Generation (RAG)</strong>: Supply just-in-time facts
+                    <li><strong>Fine tuning</strong>: Teach LLM new facts/syntax by permanently altering weights
+                </ul>
+            </section>
+
+            <section>
+                <h3>Prompt engineering</h3>
+
+                <p>The first message sent to the language model is called the "system message" or "system prompt", and it sets the overall instructions for the model.</p>
+
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    temperature=0.7,
+                    n=1,
+                    messages=[
+                        {"role": "system",
+                         "content": "Respond as Elmo, like you're talking to a 5 year old."},
+                        {"role": "user",
+                         "content": "Why do volcanoes erupt?"},
+                    ],
+                )</code></pre>
+            </section>
+
+            <section>
+                <h3>Few-shot examples</h3>
+
+                <p>Another way to guide a language model is to provide "few shots", a sequence of example question/answers that demonstrate how it should respond.</p>
+
+                <pre style="font-size:0.65em;"><code data-trim data-noescape class="python">
+                    response = client.chat.completions.create(
+                        model=MODEL_NAME,
+                        temperature=0.7,
+                        n=1,
+                        messages=[
+                            {"role": "system", "content": "You are a Socratic tutor that helps students with their homework by giving clues."},
+                            {"role": "user", "content": "What is the capital of France?"},
+                            {"role": "assistant", "content": "Can you remember the name of the city that is known for the Eiffel Tower?"},
+                            {"role": "user", "content": "What is the square root of 144?"},
+                            {"role": "assistant", "content": "What number multiplied by itself equals 144?"},
+                            {"role": "user", "content": "What is the atomic number of oxygen?"},
+                            {"role": "assistant", "content": "How many protons does an oxygen atom have?"},
+                            {"role": "user", "content": "What is the largest planet in our solar system?"},
+                        ],
+                    )
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Function calling</h3>
+
+                <p>Use function calling to get more structured output:</p>
+
+                <pre style="font-size:0.6em; height:520px;"><code data-trim data-noescape class="python">
+                tools = [
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": "lookup_weather",
+                            "description": "Lookup the weather for a given city name.",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "city_name": {
+                                        "type": "string",
+                                        "description": "The city name",
+                }}}}}]
+
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    messages=[
+                        {"role": "system", "content": "You are a weather chatbot."},
+                        {"role": "user", "content": "Hi, whats the weather like in berkeley?"}
+                    ],
+                    tools=tools,
+                )
+                </code></pre>
+
+            </section>
+
+            <section>
+                <h3>RAG: Retrieval Augmented Generation</h3>
+
+                <p>A way to get an LLM to answer questions accurately, by first retrieving relevant info from a knowledge source and then generating a response based on that info.
+                </p>
+
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                sources = search_data("What's the fastest electric car?")
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    temperature=0.7,
+                    n=1,
+                    messages=[
+                        {"role": "system", "content": "Answer according to the sources provided."},
+                        {"role": "user", "content": USER_MESSAGE + "\nSources: " + sources},
+                    ],
+                )
+                </code></pre>
+
+                <p>Full RAG samples:<br>
+                    <a target="_blank" href="https://aka.ms/ragchat">aka.ms/ragchat: Azure OpenAI + Search</a><br>
+                    <a target="_blank" href="https://aka.ms/rag-postgres">aka.ms/rag-postgres: Azure RAG + Postgres</a>
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>LLM libraries</h2>
+            
+                <img src="../media/BIT_STUDENTS.svg" alt="Raccoons around a table" width="400">
+            </section>
+
+            <section>
+                <h3>LLM libraries</h3>
+
+                <p>Many Python packages offer a layer of abstraction for working with LLMs:</p>
+
+                <ul>
+                    <li><a target="_blank" href="https://docs.langchain.com/docs/">Langchain</a>: Orchestration
+                    <li><a target="_blank" href="https://pypi.org/project/semantic-kernel/">Semantic Kernel</a>: Orchestration
+                    <li><a target="_blank" href="https://microsoft.github.io/autogen/">Autogen</a>: Orchestration for agentic flows
+                    <li><a target="_blank" href="https://docs.llamaindex.ai/en/stable/">Llamaindex</a>: Orchestration for RAG and Agents
+                    <li><a target="_blank" href="https://github.com/BerriAI/litellm">Litellm</a>: Wrapper over multiple hosts
+                </ul>
+
+                <p>...and many more!</p>
+            </section>
+
+            <section>
+                <h3>Langchain</h3>
+
+                <p>Connecting to Azure OpenAI with Langchain:</p>
+
+                <pre style="font-size:0.7em;"><code data-trim data-noescape class="python">
+                from langchain_openai import AzureChatOpenAI
+
+                llm = AzureChatOpenAI(
+                    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+                    azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+                    openai_api_version=os.getenv("AZURE_OPENAI_VERSION"),
+                    azure_ad_token_provider=token_provider,
+                )
+                prompt = ChatPromptTemplate.from_messages(
+                    [("system", "You are a helpful assistant that uses emojis."),
+                    ("user", "{input}")]
+                )
+                chain = prompt | llm
+                response = chain.invoke({"input": "write a haiku about a hungry cat"})
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Llamaindex</h3>
+
+                <p>Connecting to Azure OpenAI with Llamaindex:</p>
+
+                <pre style="font-size:0.7em; height:470px;"><code data-trim data-noescape class="python">
+                from llama_index.llms.azure_openai import AzureOpenAI
+
+                llm = AzureOpenAI(
+                    model=os.getenv("OPENAI_MODEL"),
+                    deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+                    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+                    api_version=os.getenv("AZURE_OPENAI_VERSION"),
+                    use_azure_ad=True, azure_ad_token_provider=token_provider,
+                )
+                chat_msgs = [
+                    ChatMessage(role=MessageRole.SYSTEM,
+                                content=("You are a helpful assistant uses emojis.")),
+                    ChatMessage(role=MessageRole.USER,
+                                content="Write a haiku about a hungry cat"),
+                ]
+                response = llm.chat(chat_msgs)
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Choosing an LLM library?</h3>
+
+                <p>Consider:</p>
+
+                <ul>
+                    <li>Does it support every LLM/host that you need?
+                    <li class="fragment">Does it support the features you need (streaming, keyless auth, etc)?
+                    <li class="fragment">How easy is it to use and debug?
+                    <li class="fragment">Is it actively maintained?
+                    <li class="fragment">Are the trade-offs worth the benefit?
+                </ul>
+            </section>
+
+            <section class="heading-only">
+                <h2>Responsible AI</h2>
+
+                <img src="../media/BIT_COWORKING.png" alt="Raccoons with laptops" width="400">
+
+            </section>
+
+            <section>
+                <h3>Risks of LLMs</h3>
+
+                <ul>
+                    <li>Ungrounded outputs and errors
+                    <li>Jailbreaks & prompt injection attacks
+                    <li>Harmful content & code
+                    <li>Copyright infringement
+                    <li>Manipulation and human-like behavior
+                </ul>
+            </section>
+
+            <section>
+                <h3>Mitigation layers</h3>
+
+                <img src="llm_mitigations.png" alt="Diagram of mitigation layers: model, safety system, metaprompt, UI" width="100%">
+            </section>
+
+            <section>
+                <h3>Azure AI Content Safety</h3>
+
+                <p>A configurable system to detect safety violations:</p>
+                <img src="screenshot_filterlevels.png" alt="Diagram of Azure AI Content Safety filter levels UI" style="width:30%; float: right; border: 1px solid grey;">
+                <ul style="width:60%;">
+                    <li>Detects violations in prompts and responses
+                    <li>Detects jailbreak attempts
+                    <li>Detects protected material use
+                </ul>
+            </section>
+
+            <section>
+                <h3>Handling violations in Python</h3>
+
+                <p>Catch and handle violations in your code:</p>
+
+                <pre style="font-size:0.8em;"><code data-trim data-noescape class="python">
+                try:
+                    response = client.chat.completions.create(
+                        model=MODEL_NAME,
+                        messages=[
+                            {"role": "system", "content": "You are helpful."},
+                            {"role": "user", "content": "How to make a bomb?"}
+                        ]
+                    )
+                    print(response.choices[0].message.content)
+                except openai.APIError as error:
+                    if error.code == "content_filter":
+                        print("Please remember our code of conduct.")
+                </code></pre>
+
+
+                <p>
+                    <a target="_blank" href="https://github.com/pamelafox/python-openai-demos/blob/main/chat_safety.py">Full example: chat.py</a>
+                </p>
+            </section>
+
+            <section>
+                <h3>More resources</h3>
+
+                <ul>
+                    <li>Explanations:
+                    
+                    <ul>
+                        <li><a target="_blank" href="https://github.com/microsoft/generative-ai-for-beginners/">Microsoft: Generative AI for Beginners</a>
+                        <li><a target="_blank" href="https://github.com/microsoft/Phi-3CookBook">Microsoft: Phi-3 Cookbook</a>
+                        <li><a target="_blank" href="https://simonwillison.net/2023/Jun/8/gpt-tokenizers/">Simon Willison: How GPT tokenizers work</a>
+                        <li><a target="_blank" href="https://simonwillison.net/2023/Oct/23/embeddings/">Simon Willison: Embeddings 101</a>
+                    </ul>
+                    <li>Samples:
+                    <ul>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/openai-chat-app-quickstart">Azure OpenAI Chat App</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/openai-chat-vision-quickstart">Azure OpenAI Chat + Vision App</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/azure-search-openai-demo">Azure Search + OpenAI RAG App</a>
+                    <li><a target="_blank" href="https://github.com/Azure-Samples/rag-postgres-openai-python/">Azure RAG + Postgres</a>
+                    <li><a target="_blank" href="https://azure.github.io/awesome-azd/?tags=python&tags=openai">More Python + AI samples</a>
+                    </ul>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Upcoming events</h3>
+
+                <p>Join next week's stream to learn how to use GPT vision models in Python:<br>
+
+                    <a target="https://aka.ms/GPTPy/814B">aka.ms/GPTPy/814B</a>
+                </p>
+
+                <p class="fragment">Join us in September for RAGHack, a 2-week hackathon to build RAG applications:
+                    <br>
+                    <a target="https://aka.ms/raghack">aka.ms/raghack</a>
+                    <br>
+                    <img src="https://private-user-images.githubusercontent.com/45178151/355634636-fbd0cc5a-75e7-4f7e-bc57-f23c4f0b3f23.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjMwNDk3ODMsIm5iZiI6MTcyMzA0OTQ4MywicGF0aCI6Ii80NTE3ODE1MS8zNTU2MzQ2MzYtZmJkMGNjNWEtNzVlNy00ZjdlLWJjNTctZjIzYzRmMGIzZjIzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MDclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODA3VDE2NTEyM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFkYWJjOTg2YWE3MWMzNTU4MmM2NGJmMGI0Mjc1Njk3YzFmNWUyMTU5ZjE3ZmY1ZWY4ZTUwZGU3NTVkNGJhYWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.oTEggc-OnAE_YjKEFipCmyria3JQDwYmCLdkVHbsf5U" alt="RAGHack logo" width="700">
+                </p>
+            </section>
+
+            <section class="heading-only">
+                <h2>Any questions?</h2>
+                <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        const srcUrlPrefix = "https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/";
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+
+        window.highlightJsBadge();
+
+    </script>
+    </body>
+</html>
