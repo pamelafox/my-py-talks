@@ -177,11 +177,11 @@
 
   <p class="padded">Install the package:</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pip install playwright
+  python -m pip install playwright
   </code></pre>
   <p class="padded">Install the browsers:</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m playwright install --with-deps
+  python -m playwright install --with-deps
   </code></pre>
 </section>
 
@@ -231,7 +231,7 @@
 
   <p>You can run the tests the standard way:</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest
+  python -m pytest
   </code></pre>
 
   <div class="fragment">
@@ -241,7 +241,7 @@
 
   <p>Then, run them separately with:</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest tests/e2e.py
+  python -m pytest tests/e2e.py
   </code></pre>
 
   <p>The plugin supports <a target="_blank" href="https://playwright.dev/python/docs/test-runners#cli-arguments">options</a> like <code>--headless</code>, <code>--browser</code>.</p>
@@ -250,18 +250,33 @@
 </section>
 
 <section>
+  <h3>Understanding test failures</h3>
+
+  <p>Pass in one of these options to get more info on test failures:</p>
+
+  <ul>
+    <li><code>--tracing=retain-on-failure</code>: Save a trace of the test run</li>
+    <li><code>--video=retain-on-failure</code>: Record a video of the test run</li>
+    <li><code>--screenshot=only-on-failure</code>: Take a screenshot on failure</li>
+  </ul>
+  <p class="padded">You can view the trace in the online <a target="_blank" href="https://trace.playwright.dev/">Playwright Trace Viewer</a>
+    or with the CLI:</p>
+  <pre><code data-trim data-noescape class="shell">
+  python -m playwright show-trace trace.zip
+  </code></pre>
+</section>
+
+<section>
   <h3>Generating test code</h3>
 
   <p>Playwright has a <a target="_blank" href="https://playwright.dev/python/docs/cli#codegen">codegen</a> command
-    that generates test code as you interact with the page.</p>
+    to generate optimal test code as you interact with a page.</p>
   
-  <p>Run it with:</p>
   <pre><code data-trim data-noescape class="shell">
   python -m playwright codegen https://flaskcon.com/2025/
   </code></pre>
 
-  <p>As you interact with the page, it will generate test code for you
-    with the optimal page selectors.</p>
+  <img src="screenshot_playwright_codegen.png" alt="Screenshot of Playwright codegen window" width="800" style="border:1px solid #ccc;">
 </section>
 
 
@@ -367,8 +382,8 @@ with sync_playwright() as p:
     a Python package that runs the axe-core JavaScript library on a Playwright <code>Page</code>.</p>
 
   <pre><code data-trim data-noescape class="python">
-  python3 -m pip install -U axe-playwright-python
-  python3 -m playwright install --with-deps
+  python -m pip install -U axe-playwright-python
+  python -m playwright install --with-deps
   </code></pre>
 
   <pre class="padded"><code data-trim data-noescape class="python">
@@ -455,7 +470,7 @@ def test_a11y(page: Page):
   <p>When we run the test, we get a report of the violations.</p>
 
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest test_axe_count.py
+  python -m pytest test_axe_count.py
   </code></pre>
 
   <pre><code data-trim data-noescape class="python">
@@ -523,8 +538,8 @@ E               URL: https://dequeuniversity.com/rules/axe/4.4/image-alt?applica
     that combines Playwright, axe-core, and snapshot testing.</p>
 
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pip install pytest-axe-playwright-snapshot
-  python3 -m playwright install --with-deps
+  python -m pip install pytest-axe-playwright-snapshot
+  python -m playwright install --with-deps
   </code></pre>
 
   <p class="padded">A test from a <a target="_blank" href="https://github.com/pamelafox/flask-db-quiz-example">Flask app</a>:</p>
@@ -544,7 +559,7 @@ E               URL: https://dequeuniversity.com/rules/axe/4.4/image-alt?applica
 
   <p><strong>First run:</strong> (saves the snapshot)</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest --snapshot-update
+  python -m pytest --snapshot-update
   </code></pre>
 
   <div class="fragment">
@@ -560,7 +575,7 @@ E               URL: https://dequeuniversity.com/rules/axe/4.4/image-alt?applica
   <div class="fragment">
   <p class="padded"><strong>Subsequent runs:</strong> (compares new snapshot to old.)</p>
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest
+  python -m pytest
   </code></pre>
   <p>Only update the snapshots if you're okay with the change in violations.</p>
   </div>
@@ -623,7 +638,7 @@ E               URL: https://dequeuniversity.com/rules/axe/4.4/image-alt?applica
   <p>Once you have Playwright tests, you can run them against the deployed version of your app.</p>
 
   <pre><code data-trim data-noescape class="shell">
-  python3 -m pytest --exitfirst src/tests/smoke/smoketests.py --live-server-url $URI
+  python -m pytest --exitfirst src/tests/smoke/smoketests.py --live-server-url $URI
   </code></pre>
 
   <p><a href="https://github.com/Azure-Samples/azure-django-postgres-flexible-aca/blob/main/.github/workflows/azure-dev.yml">GitHub Actions workflow: Deployment and smoke test</a></p>
