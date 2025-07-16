@@ -127,7 +127,10 @@
     to make requests to the app and check the response:</p>
 
   <pre><code data-trim data-noescape class="python">
-  def test_homepage(client):
+  from flaskapp import app
+
+  def test_homepage():
+      client = app.test_client()
       response = client.get("/")
       assert response.status_code == 200
       assert b"I am a human" in response.data
