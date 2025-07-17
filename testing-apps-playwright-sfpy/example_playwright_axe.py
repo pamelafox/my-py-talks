@@ -7,5 +7,5 @@ with sync_playwright() as playwright:
     page = browser.new_page()
     page.goto("https://pybay.org/")
     results = Axe().run(page)
-    print(results.response)
+    print(results.generate_snapshot())
     browser.close()
