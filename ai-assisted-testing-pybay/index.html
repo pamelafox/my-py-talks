@@ -408,75 +408,95 @@ async def bees_search(
 
   <p>Example test to check the /bees/active endpoint:</p>
 
-  <pre><code data-trim data-noescape class="python">def test_bees_active_basic(test_client):
-    params = {
-        "lat": 37.7694, "lon": -122.4862, # Golden Gate Park
-        "start_date": "2012-03-01", "end_date": "2012-03-31",
-        "radius_km": 20, "limit": 10, "absolute_activity": True,
-    }
-    r = test_client.get("/bees/active", params=params)
-    assert r.status_code == 200
-    body = r.json()
-    assert "data" in body and isinstance(body["data"], list)
-    assert "meta" in body and isinstance(body["meta"], dict)
-    assert body["meta"].get("months") == [3]
-    assert body["meta"].get("candidate_cap") >= body["meta"].get("candidate_count", 0)
-    for item in body["data"]:
-        assert {"taxon_id", "scientific_name", "activity_score"}.issubset(item.keys())
-        assert item["activity_score"] >= 0
-    assert len(body["data"]) &lt;= params["limit"]
+  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.2em;">def test_bees_active_basic(test_client):
+    resp = test_client.get("/bees/active", params={"lat": 37.757, "lon": -122.441})
+    assert resp.status_code == 200
+    js = resp.json()
+    assert "data" in js and isinstance(js["data"], list)
+    assert "meta" in js and isinstance(js["meta"], dict)
+    assert js["meta"]["count"] == len(js["data"])
+    assert "months" in js["meta"] and len(js["meta"]["months"]) in (1, 2)
+    first = js["data"][0]
+    for f in ["taxon_id", "scientific_name", "activity_score"]:
+        assert f in first
   </code></pre>
 
-  <p>Test results:</p>
-  <p>9 tests passed, 1 test skipped</p>
-  <p>65% coverage of routes.py</p>
-  <p>Time taken: 1.0m 49.1s</p>
-  <p>Tokens used: 515,865</p>
+  <table style="width: 100%; border: 1px solid #ccc;">
+    <thead>
+      <tr>
+        <th>Tests passed?</th>
+        <th>Coverage of routes.py</th>
+        <th>Time</th>
+        <th>Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>❌ 8/10</td>
+        <td>75%</td>
+        <td>1m 49s</td>
+        <td>515,865</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>🔗 See: 
+    <a target="_blank" href="test_gen_runs/gpt5_tests.py">Full tests file</a> | 
+    <a target="_blank" href="test_gen_runs/gpt5_logs.json">Copilot logs</a>
+  </p>
 </section>
 
 <section>
   <h3>LLM-written tests: Claude 4.5</h3>
 
   <p>Example test to check the /bees/active endpoint:</p>
-  <pre><code data-trim data-noescape class="python">def test_bees_active_with_all_params(self, test_client):
-        """Test /bees/active with all optional parameters."""
-        today = date.today()
-        start = today - timedelta(days=15)
-        response = test_client.get(
-            f"/bees/active?lat=37.7749&lon=-122.4194&start_date={start}&end_date={today}"
-            "&radius_km=50&limit=10&min_activity=0.1&sort=activity_desc"
-            "&require_research_grade=true&absolute_activity=false"
-        )
+  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.2em;">
+    def test_bees_active_basic(self, test_client):
+        response = test_client.get("/bees/active?lat=37.7749&lon=-122.4194")
         assert response.status_code == 200
         data = response.json()
         assert "data" in data
-        assert len(data["data"]) &lt;= 10
-        assert data["meta"]["radius_km"] == 50
-        assert data["meta"]["sort"] == "activity_desc"
-        assert data["meta"]["require_research_grade"] is True
-        assert data["meta"]["absolute_activity"] is False
+        assert "meta" in data
+        assert isinstance(data["data"], list)
+        assert "count" in data["meta"]
+        assert "lat" in data["meta"]
+        assert "lon" in data["meta"]
   </code></pre>
 
-  <p>61/61 Tests passed!</p>
-  <p>96% coverage of routes.py</p>
-  <p>Time taken: 6.0m 29.0s</p>
-  <p>Tokens required: 1,326,619</p>
-</section>
+  <table style="width: 100%; border: 1px solid #ccc;">
+    <thead>
+      <tr>
+        <th>Tests passed?</th>
+        <th>Coverage of routes.py</th>
+        <th>Time</th>
+        <th>Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>✅ 61/61</td>
+        <td>96%</td>
+        <td>6m 29.0s</td>
+        <td>1,326,619</td>
+      </tr>
+    </tbody>
+  </table>
 
-<section>
-  <h3>LLM-written tests: Local model</h3>
 
-  <p>❌ Tests failed</p>
+  <p>🔗 See: 
+    <a target="_blank" href="test_gen_runs/claude45_tests.py">Full tests file</a> | 
+    <a target="_blank" href="test_gen_runs/claude45_logs.json">Copilot logs</a>
+  </p>
 </section>
 
 <section>
   <h3>LLM-written tests: Overall results</h3>
 
-  <table>
+  <table style="width: 100%; border: 1px solid #ccc;">
     <thead>
       <tr>
         <th>LLM</th>
-        <th>Tests</th>
+        <th>Tests passed?</th>
         <th>Coverage</th>
         <th>Tokens</th>
         <th>Time</th>
@@ -485,43 +505,38 @@ async def bees_search(
     <tbody>
       <tr>
         <td>GPT-5</td>
-        <td>9 passed, 1 skipped</td>
-        <td>65%</td>
-        <td>515,865</td>
-        <td>1.0m 49.1s</td>
+        <td>❌ 8/10 passed</td>
+        <td>75%</td>
+        <td>598,980</td>
+        <td>1.0m 47.7s</td>
       </tr>
       <tr>
         <td>Claude 4.5</td>
-        <td>61/61 passed</td>
+        <td>✅ 61/61 passed</td>
         <td>96%</td>
         <td>1,326,619</td>
-        <td>6.0m 29.0s</td>
+        <td>6m 29s</td>
       </tr>
       <tr>
         <td>GPT-5-mini</td>
-        <td>4/4 passed</td>
+        <td>✅ 4/4 passed</td>
         <td>81%</td>
         <td>493,132</td>
-        <td>1.0m 40.5s</td>
+        <td>1m 41s</td>
       </tr>
       <tr>
         <td>GPT-5-codex</td>
-        <td>9/9 passed</td>
+        <td>✅ 9/9 passed</td>
         <td>85%</td>
         <td>429,049</td>
-        <td>2.0m 57.0s</td>
+        <td>2m 57s</td>
       </tr>
       <tr>
         <td>Gemini 2.5</td>
-        <td>7/7 passed</td>
+        <td>✅ 7/7 passed</td>
         <td>81%</td>
         <td>374,071</td>
-        <td>2.0m 14.9s</td>
-      </tr>
-      <tr>
-        <td>Qwen 3 Max</td>
-        <td>20/23</td>
-        <td>51%</td>
+        <td>2m 15s</td>
       </tr>
     </tbody>
   </table>
@@ -532,45 +547,60 @@ async def bees_search(
 <section>
   <h3>Problem #1: Not enough coverage!</h3>
 
-  <p>LLM-generated tests often miss edge cases and have incomplete coverage.</p>
+  <p>How do humans get 100% coverage?
+    <br>By reviewing coverage reports! Let's see if the LLM can do that too...</p>
 
-  <p>How do humans get 100% coverage? By reviewing coverage reports! Let's see if the LLM can do that too.</p>
+  <p>The prompt addendum:</p>
+  <pre style="font-family:monospace; font-size: 0.8em; background-color: #eaeaea; padding: 8px; white-space: pre-wrap;">
+The goal is for the tests to cover all lines of code.
+Generate a coverage report with:
 
-  <p>Adding to the prompt:</p>
-  <pre><code data-trim data-noescape class="text">
-  The goal is for the tests to cover all lines of code.
-  Generate a coverage report with:
+pytest --cov --cov-report=annotate:cov_annotate
 
-  pytest --cov --cov-report=annotate:cov_annotate
-
-  Open the cov_annotate directory to view the annotated source code.
-  There will be one file per source file. If a file has 100% source coverage, it means all lines are covered by tests, so you do not need to open the file.
-  For each file that has less than 100% test coverage, find the matching file in cov_annotate and review the file.
-  If a line starts with a ! (exclamation mark), it means that the line is not covered by tests.
-  Add tests to cover the missing lines.
-  Keep running the tests and improving coverage until all lines are covered.
-  </code></pre>
+Open the cov_annotate directory to view the annotated source code.
+There will be one file per source file. If a file has 100% source coverage, it means all lines are covered by tests, so you do not need to open the file.
+For each file that has less than 100% test coverage, find the matching file in cov_annotate and review the file.
+If a line starts with a ! (exclamation mark), it means that the line is not covered by tests.
+Add tests to cover the missing lines.
+Keep running the tests and improving coverage until all lines are covered.</pre>
 </section>
 
 <section>
   <h3>Can LLMs achieve 100% coverage?</h3>
 
-  <p>After 7 calls to <code>pytest --cov</code> and 10 more tests, GPT-5 got to 100% coverage:</p>
+  <p>Sonnet 4.5 gave up at 98% with this explanation:</p>
 
-  <pre><code data-trim data-noescape class="shell">
-============================================ tests coverage =============================================
-___________________________ coverage: platform linux, python 3.12.11-final-0 ____________________________
+  <blockquote style="width:100%; background-color: #eaeaea; font-family:monospace; font-size:0.8em;">
+  Excellent! We now have 54 passing tests with 98% coverage on the routes.py file. The 4 missing lines are defensive edge cases that are difficult to test with real data:
+  <br><br>
+  Lines 281, 284: Array length validation fallbacks (would need corrupted database data)
+  <br>
+  Lines 320, 322: Number formatting for millions/thousands (would need species with extremely high observation counts)
+  </blockquote>
 
-Name                                    Stmts   Miss  Cover   Missing
----------------------------------------------------------------------
-src/backend/fastapi_app/api/models.py      67      0   100%
-src/backend/fastapi_app/api/routes.py     190      0   100%
----------------------------------------------------------------------
-TOTAL                                     257      0   100%
-========================================== 21 passed in 5.74s ===========================================
-  </code></pre>
+  <table style="width: 100%; border:1px solid #ccc;">
+    <thead>
+      <tr>
+        <th>Tests passed?</th>
+        <th>Coverage of routes.py</th>
+        <th>Time</th>
+        <th>Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>✅ 54/54</td>
+        <td>98%</td>
+        <td>4.0m 56s</td>
+        <td>1,225,737</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <p>Full tests: gpt5_tests_100cov.py</p>
+  <p>🔗 See: 
+    <a target="_blank" href="test_gen_runs/claude45_100cov_tests.py">Full tests file</a> | 
+    <a target="_blank" href="test_gen_runs/claude45_100cov_logs.json">Copilot logs</a>
+  </p>
 </section>
 
 <section>
@@ -584,7 +614,7 @@ TOTAL                                     257      0   100%
   <!--TODO: maybe delete this slide-->
 </section>
 
-<section>
+<section class="heading-only">
   <h3>Let's bring in the specialists!</h3>
 </section>
 
@@ -593,24 +623,28 @@ TOTAL                                     257      0   100%
 
   <p>These LLM-generated tests are highly repetitive:</p>
 
-  <pre><code data-trim data-noescape class="python">def test_bees_active_sort_activity_desc(self, test_client):
-        response = test_client.get("/bees/active",
-            params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_desc"})
-        assert response.status_code == 200
-        data = response.json()
-        scores = [item["activity_score"] for item in data["data"]]
-        assert scores == sorted(scores, reverse=True)
+  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.1em;">
+def test_bees_active_sort_activity_desc(self, test_client):
+    response = test_client.get("/bees/active",
+        params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_desc"})
+    assert response.status_code == 200
+    data = response.json()
+    scores = [item["activity_score"] for item in data["data"]]
+    assert scores == sorted(scores, reverse=True)
 
-    def test_bees_active_sort_activity_asc(self, test_client):
-        response = test_client.get("/bees/active",
-            params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_asc"})
-        assert response.status_code == 200
-        data = response.json()
-        scores = [item["activity_score"] for item in data["data"]]
-        assert scores == sorted(scores)
-   </code></pre> 
+def test_bees_active_sort_activity_asc(self, test_client):
+    response = test_client.get("/bees/active",
+        params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_asc"})
+    assert response.status_code == 200
+    data = response.json()
+    scores = [item["activity_score"] for item in data["data"]]
+    assert scores == sorted(scores)
+  </code></pre> 
 
-   <p>From claude45_tests_cov.py</p>
+  
+  <aside class="notes">
+    From Claude 4.5
+  </aside>
 </section>
 
 <section>
@@ -618,52 +652,39 @@ TOTAL                                     257      0   100%
 
   <p>When the only thing different in a test is a value, <strong>parameterize</strong> the value(s):</p>
 
-  <pre><code data-trim data-noescape class="python">@pytest.mark.parametrize(
-        "sort_param,reverse",
-        [
-            ("activity_desc", True),
-            ("activity_asc", False),
-        ],
-    )
-    def test_bees_active_sort(self, test_client, sort_param, reverse):
-        """Test bees/active with different sort parameters."""
-        response = test_client.get(
-            "/bees/active",
-            params={
-                "lat": 37.7749,
-                "lon": -122.4194,
-                "sort": sort_param,
-            },
-        )
+  <pre><code data-trim data-noescape class="python">
+@pytest.mark.parametrize(
+    "sort_param, reverse",
+    [("activity_desc", True),
+    ("activity_asc", False)])
+def test_bees_active_sort(self, test_client, sort_param, reverse):
+        response = test_client.get("/bees/active", params={
+                "lat": 37.7749, "lon": -122.4194, "sort": sort_param})
         assert response.status_code == 200
         data = response.json()
-
         values = [item["activity_score"] for item in data["data"]]
         assert values == sorted(values, reverse=reverse)
   </code></pre>
+
+  <p>🔗 <a target="_blank" href="https://docs.pytest.org/en/stable/example/parametrize.html">
+    Pytest: Parametrizing tests</a></p>
 </section>
 
 <section>
   <h3>Solution: Use fixtures for common test components</h3>
 
-  <p>If multiple tests require the same object/mock/instance,
-    move that into a fixture and store in conftest.py</p>
+  <p>If multiple tests require the same thing,
+    make it <strong>pytest fixture</strong>.</p>
 
-  <p>Example: A fixture that makes and cleans up a test trip:</p>
-  <pre><code data-trim data-noescape class="python">@pytest_asyncio.fixture
+  <p>A fixture that adds a test trip to DB and cleans it up:</p>
+  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.1em;">
+@pytest_asyncio.fixture
 async def sample_trip(db_session):
     trip = Trip(
         event_name="Sample Test Trip",
-        event_slug="sample-test-trip-fixture",
         start_time=datetime.fromisoformat("2025-06-01T10:00:00").date(),
         end_time=datetime.fromisoformat("2025-06-01T15:00:00").date(),
-        organizers=[
-            {"original": "Test Organizer", "normalized": "test organizer", "has_diacritics": False, "role": "guide"}
-        ],
-        approx_latitude=37.7749,
-        approx_longitude=-122.4194,
-        positional_accuracy_m=100,
-    )
+        organizers=[{"original": "Test Organizer", "role": "guide"}])
     db_session.add(trip)
     await db_session.commit()
     await db_session.refresh(trip)
@@ -674,7 +695,9 @@ async def sample_trip(db_session):
     await db_session.commit()
   </code></pre>
 
-  <!-- TODO: Simpler fixture first?-->
+  <p>🔗 See:
+    <a target="_blank" href="test_gen_runs/test_routes_final.py">Full tests file</a>
+  </p>
 </section>
 
 <section>
@@ -690,11 +713,17 @@ async def sample_trip(db_session):
   "organizers": [{"display_name": "Jane Smith"}],
   </code></pre>
 
-  <p>Those names don't encapsulate all the complexity of names in the real world,
-    so if your tests only use those names, you won't discover real issues.
-  </p>
-  <p>
-    <a target="_blank" href="https://github.com/kdeldycke/awesome-falsehood">See also: Falsehoods that Programmers Believe In</a>
+  <p>Those names don't encapsulate all the complexity of names in the real world.
+    <br>
+    What about..</p>
+  <ul>
+    <li>Names with non-ASCII characters
+    <li>Names with multiple middle names
+    <li>Names with accents
+    <li>Names with hyphens
+  </ul>
+  <p>🔗 See:
+    <a target="_blank" href="https://github.com/kdeldycke/awesome-falsehood">Falsehoods that Programmers Believe In</a>
   </p>
 </section>
 
@@ -702,15 +731,15 @@ async def sample_trip(db_session):
   <h3>Solution: Use Faker for real-world fake data</h3>
 
   <p>If your test is using test values for things like
-    names, phone numbers, credit cards, 
-    use <a target="_blank" href="https://faker.readthedocs.io/">Faker</a> to generate them instead.</p>
+    names, phone numbers, credit cards, etc., 
+    use <a target="_blank" href="https://faker.readthedocs.io/">Faker</a> to generate realistic values instead.</p>
 
-  <pre><code data-trim data-noescape class="python">from faker import Faker
-
-fake = Faker()
+  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.1em">
+from faker import Faker
 
 def test_create_trip_basic(self, test_client):
     event_name = f"Test Trip {uuid.uuid4().hex[:8]}"
+    fake = Faker()
     organizer_name = fake.name()
     response = test_client.post("/trips", json={
             "event_name": event_name,
@@ -720,10 +749,16 @@ def test_create_trip_basic(self, test_client):
         })
   </code></pre>
 
+  <p>🔗 See:
+    <a target="_blank" href="test_gen_runs/test_routes_final.py">Full tests file</a>
+  </p>
 </section>
 
 <section>
   <h3>Problem: Tests don't check full output</h3>
+
+  <p>LLM-generated tests check for existence of fields,
+    but typically do not understand the data enough to check full values:</p>
 
   <pre><code data-trim data-noescape class="python">def test_bees_active_basic(self, test_client):
         response = test_client.get(
@@ -743,23 +778,25 @@ def test_create_trip_basic(self, test_client):
 
   <p>Instead of checking specific fields,
     use <a target="_blank" href="https://pypi.org/project/pytest-snapshot/">pytest-snapshot</a> to store and compare full outputs.
+    Any changes will require explicit snapshot update.
   </p>
 
-    <pre><code data-trim data-noescape class="python">@freeze_time("2025-06-15")
-    def test_bees_active_basic(self, test_client, snapshot):
-        response = test_client.get(
-            "/bees/active",
-            params={"lat": 37.7749, "lon": -122.4194})
-        assert response.status_code == 200
-        data = response.json()
-        snapshot.assert_match(json.dumps(data, indent=4), "bees_active_basic.json")
+    <pre><code data-trim data-noescape class="python">
+@freeze_time("2025-06-15")
+def test_bees_active_basic(self, test_client, snapshot):
+    response = test_client.get(
+        "/bees/active",
+        params={"lat": 37.7749, "lon": -122.4194})
+    assert response.status_code == 200
+    data = response.json()
+    snapshot.assert_match(json.dumps(data, indent=4), "bees_active_basic.json")
     </code></pre>
 
-    <p>See the snapshot file <a target="_blank" href="bees_active_basic.json">bees_active_basic.json</a> for the expected output.</p>
+    <p>🔗 See: <a target="_blank" href="bees_active_basic.json">snapshot: bees_active_basic.json</a></p>
 </section>
 
 <section>
-  <h3>100% coverage isn't enough</h3>
+  <h3>Problem: 100% coverage isn't enough</h3>
   <p>Even with 100% coverage, tests may miss edge cases and unexpected inputs.  </p>
   <ul>
     <li>What if lat/lon are out of bounds?
@@ -787,7 +824,8 @@ def test_create_trip_basic(self, test_client):
 <section>
   <h3>Hypothesis for unit tests</h3>
 
-  <pre><code data-trim data-noescape class="python">from hypothesis import given, strategies as st
+  <pre style="height:600px;"><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.1em; ">
+from hypothesis import given, strategies as st
 
 @given(taxon_id=st.integers())
 def test_phenology_chart_any_integer(test_client, taxon_id: int):
@@ -822,9 +860,9 @@ def test_bees_active_scores(test_client, lat: float, lon: float, min_act: float)
 <section>
   <h3>Hypothesis results</h3>
 
-  <p>From the first test for <code>/bees/phenology-chart/{taxon_id}</code>,
-    Hypothesis found this failure case:</p>
-  <pre><code data-trim data-noescape class="shell">...
+  <p>From the first test for <code>/bees/phenology-chart/{taxon_id}</code>,<br>
+    hypothesis found this failure case:</p>
+  <pre><code data-trim data-noescape class="shell">
 sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error)
 &lt;class 'asyncpg.exceptions.DataError'&gt;: invalid input for query argument $1: 9223372036854775808 (value out of int64 range)
 [SQL: SELECT species.taxon_id, species.scientific_name, species.common_name, species.family, species.subfamily, species.tribe, species.genus, species.species_epithet, species.rank, species.total_observations, species.phenology_counts, species.phenology_normalized, species.peak_month, species.window_start, species.window_end, species.seasonality_index, species.insufficient_data, species.peak_prominence, species.total_observations_all, species.phenology_counts_all, species.phenology_normalized_all, species.peak_month_all, species.window_start_all, species.window_end_all, species.seasonality_index_all, species.insufficient_data_all, species.peak_prominence_all 
@@ -841,7 +879,10 @@ sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error)
 <section>
   <h3>Schemathesis for API tests</h3>
 
-  <pre><code data-trim data-noescape class="python">import pytest
+  <p>Schemathesis can generate tests for all API endpoints defined in an OpenAPI spec,
+  including edge cases for query parameters, request bodies, etc.</p>
+
+  <pre style="height:475px;"><code data-trim data-noescape class="python">import pytest
 import schemathesis
 
 @pytest.fixture
@@ -855,13 +896,14 @@ def test_openapi_specification(case):
     case.call_and_validate()
   </code></pre>
 
-  <p>This will generate tests for all API endpoints defined in the OpenAPI spec,
-    including edge cases for query parameters, request bodies, etc.</p>
 </section>
 
 <section>
   <h3>Schemathesis results</h3>
 
+  <p>When probing the <code>bees/phenology-chart/{taxon_id}</code> endpoint,<br>
+    schemathesis found the same error:
+  </p>
   <pre><code data-trim data-noescape class="shell">
   sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) &lt;class 'asyncpg.exceptions.DataError'&gt;:
   invalid input for query argument $1: 9223372036854775808 (value out of int64 range)
@@ -882,15 +924,19 @@ def test_openapi_specification(case):
 
   <p>It's up to you!</p>
 
-  <p>But if you do, you should <strong>seed</strong> the LLM with tips 
+  <p class="fragment">Everyone belongs in the Python community, whether or not they use AI.</p>
+
+  <p class="fragment">But if you do, you should <strong>seed</strong> the LLM with tips 
     for writing great tests, using the specialist tools from the amazing Python ecosystem.
   </p>
+
 </section>
 
 <section>
   <h3>A prompt for LLM-based test generation</h3>
 
-<pre><code data-trim data-noescape class="text">Write tests for routes.py that test each API endpoint, using the fixtures in conftest.py.
+<pre style="font-family:monospace; font-size: 0.8em; background-color: #eaeaea; padding: 8px; white-space: pre-wrap;">
+Write tests for routes.py that test each API endpoint, using the fixtures in conftest.py.
 
 The tests should test the local test database that is already seeded with data - so you shouldn't need any mocks.
 
@@ -910,9 +956,19 @@ For any lines not covered by tests, add additional tests to cover those lines.
 
   <p>We can keep using honeybees, but we also need to remember the specialists 
     from the amazing bees ecosystem.</p>
+  
+  <div>
+    <img src="fine_striped_sweat_bee.png" alt="Fine striped sweat bee" height="300">
+    <img src="red_belted_bumble_bee.png" alt="Red-belted bumble bee" height="300">
+    <img src="foothill_carpenter_bee.png" alt="Foothill carpenter bee" height="300">
+    <img src="black_tailed_bumble_bee.png" alt="Black-tailed bumble bee" height="300">
+  </div>
 
   <p>To encourage more native bees of all kinds, <strong>seed</strong>
    gardens with native plants!</p> 
+
+   <p>🔗 See: <a target="_blank" href="https://larnerseeds.com/">Larner Seeds</a></p>
+
 </section> 
   
 <section>
