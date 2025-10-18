@@ -82,7 +82,7 @@
 
 <section class="heading-only">
   <h2>But first...<br>
-    BEES!
+    BEES! 🐝
   </h2>
 </section>
 
@@ -447,7 +447,7 @@ async def bees_search(
 </section>
 
 <section>
-  <h3>LLM-written tests: Claude 4.5</h3>
+  <h3>LLM-written tests: Claude Sonnet 4.5</h3>
 
   <p>Example test to check the /bees/active endpoint:</p>
   <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.2em;">
@@ -547,9 +547,10 @@ async def bees_search(
 <section>
   <h3>Problem #1: Not enough coverage!</h3>
 
-  <p>How do humans get 100% coverage?
+  <p class="fragment">How do humans get 100% coverage?
     <br>By reviewing coverage reports! Let's see if the LLM can do that too...</p>
 
+  <div class="fragment">
   <p>The prompt addendum:</p>
   <pre style="font-family:monospace; font-size: 0.8em; background-color: #eaeaea; padding: 8px; white-space: pre-wrap;">
 The goal is for the tests to cover all lines of code.
@@ -563,6 +564,7 @@ For each file that has less than 100% test coverage, find the matching file in c
 If a line starts with a ! (exclamation mark), it means that the line is not covered by tests.
 Add tests to cover the missing lines.
 Keep running the tests and improving coverage until all lines are covered.</pre>
+  </div>
 </section>
 
 <section>
@@ -615,7 +617,10 @@ Keep running the tests and improving coverage until all lines are covered.</pre>
 </section>
 
 <section class="heading-only">
-  <h3>Let's bring in the specialists!</h3>
+  <h3>Let's bring in the specialists!
+   <br>🪰 🪲 🦟
+  </h3>
+
 </section>
 
 <section>
@@ -734,7 +739,7 @@ async def sample_trip(db_session):
     names, phone numbers, credit cards, etc., 
     use <a target="_blank" href="https://faker.readthedocs.io/">Faker</a> to generate realistic values instead.</p>
 
-  <pre><code data-trim data-noescape class="python" style="font-size:0.8em; line-height:1.1em">
+  <pre style="height:420px"><code data-trim data-noescape class="python" stylee="font-size:0.8em; line-height:1.1em">
 from faker import Faker
 
 def test_create_trip_basic(self, test_client):
@@ -742,11 +747,10 @@ def test_create_trip_basic(self, test_client):
     fake = Faker()
     organizer_name = fake.name()
     response = test_client.post("/trips", json={
-            "event_name": event_name,
-            "organizers": [{"display_name": organizer_name, "role": "guide"}],
-            "start_time": "2025-05-01T10:00:00",
-            "end_time": "2025-05-01T15:00:00",
-        })
+        "event_name": event_name,
+        "organizers": [{"display_name": organizer_name, "role": "guide"}],
+        "start_time": "2025-05-01T10:00:00",
+        "end_time": "2025-05-01T15:00:00"})
   </code></pre>
 
   <p>🔗 See:
@@ -761,15 +765,15 @@ def test_create_trip_basic(self, test_client):
     but typically do not understand the data enough to check full values:</p>
 
   <pre><code data-trim data-noescape class="python">def test_bees_active_basic(self, test_client):
-        response = test_client.get(
-            "/bees/active",
-            params={"lat": 37.7749, "lon": -122.4194})
-        assert response.status_code == 200
-        data = response.json()
-        assert "data" in data
-        assert "meta" in data
-        assert isinstance(data["data"], list)
-        assert "count" in data["meta"]
+    response = test_client.get(
+        "/bees/active",
+        params={"lat": 37.7749, "lon": -122.4194})
+    assert response.status_code == 200
+    data = response.json()
+    assert "data" in data
+    assert "meta" in data
+    assert isinstance(data["data"], list)
+    assert "count" in data["meta"]
   </code></pre>
 </section>
 
@@ -789,10 +793,14 @@ def test_bees_active_basic(self, test_client, snapshot):
         params={"lat": 37.7749, "lon": -122.4194})
     assert response.status_code == 200
     data = response.json()
-    snapshot.assert_match(json.dumps(data, indent=4), "bees_active_basic.json")
+    snapshot.assert_match(json.dumps(data), "bees_active_basic.json")
     </code></pre>
 
     <p>🔗 See: <a target="_blank" href="bees_active_basic.json">snapshot: bees_active_basic.json</a></p>
+</section>
+
+<section class="heading-only">
+  <h2>Is that enough??</h2>
 </section>
 
 <section>
@@ -815,8 +823,9 @@ def test_bees_active_basic(self, test_client, snapshot):
     use property-based testing to generate a wide range of inputs automatically:
   </p>
   <ul>
-    <li><a target="_blank" href="https://hypothesis.readthedocs.io/">Hypothesis</a> for unit tests
-    <li><a target="_blank" href="https://pypi.org/project/schemathesis/">Schemathesis</a> for API tests
+    <li><a target="_blank" href="https://hypothesis.readthedocs.io/">Hypothesis</a> for any program
+     <br><img src="https://hypothesis.readthedocs.io/en/latest/_static/dragonfly-rainbow-150w.svg" alt="hypothesis logo">
+    <li><a target="_blank" href="https://pypi.org/project/schemathesis/">Schemathesis</a> for APIs specifically
   </ul>
 
 </section>
@@ -924,8 +933,10 @@ def test_openapi_specification(case):
 
   <p>It's up to you!</p>
 
+  <br>
   <p class="fragment">Everyone belongs in the Python community, whether or not they use AI.</p>
-
+  
+  <br>
   <p class="fragment">But if you do, you should <strong>seed</strong> the LLM with tips 
     for writing great tests, using the specialist tools from the amazing Python ecosystem.
   </p>
@@ -974,10 +985,11 @@ For any lines not covered by tests, add additional tests to cover those lines.
 <section>
   <h3>Thank you!</h3>
 
-  <p>Grab the slides @ <a target="_blank" href="https://pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay">pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay</a> </p>
+  <img src="qrcode.png" alt="QR code for slides" style="float:right">
+  <p>Grab the slides @ <br> <a target="_blank" style="font-size:0.8em" href="https://pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay">pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay</a> </p>
 
-  <p>Example app @ <a target="_blank" href="https://github.com/pamelafox/ai-assisted-testing-example">github.com/pamelafox/ai-assisted-testing-example</a></p>
-
+  <p>Example app @ <br> <a target="_blank" style="font-size:0.8em" href="https://github.com/pamelafox/pybay-app-demo">github.com/pamelafox/pybay-app-demo</a></p>
+  
   <p>Find me online at:</p>
       <table style="width:60%; float: left; font-size:28px;">
         <tr>
@@ -1005,12 +1017,6 @@ For any lines not covered by tests, add additional tests to cover those lines.
           <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
         </tr>
       </table>
-</section>
-
-
-<section class="heading-only" data-background-image="background_headingonly.png">
-    <h2>Any questions?</h2>
-    <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
 </section>
 
 
