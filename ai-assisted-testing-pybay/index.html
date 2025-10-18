@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Just because AI can write your tests, ...should it?</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reset.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../static/a11y-dark.min.css">
+		<link rel="stylesheet" href="../static/slides.css">
+		<style>
+		/* Vertical centering for heading-only sections */
+		.reveal section.heading-only {
+			display: flex !important;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			min-height: 720px;
+		}
+		</style>
+	</head>
+    <body>
+    <div class="reveal">
+        <div class="slides">
+
+<section class="heading-only" style="padding-top:5%">
+    <h1 style="font-size:2.5em;">Just because AI
+      <br>can write your tests,
+      <br>...should it?
+    </h1>
+    <br>
+    <h3>Pamela Fox</h3>
+
+    <div class="no-print" style="text-align: left; margin-top: 20px; font-size: 70%; display:none;">
+        Tips for navigating the slides:<br>
+        <ul>
+            <li>Press O or Escape for overview mode.</li>
+            <li>Visit <a href="?print-pdf" target="_blank">this link</a> for a nice printable version</li>
+            <li>Press the copy icon on the upper right of code blocks to copy the code</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h3>About me</h3>
+
+    <img src="photo_pamela_olaf.jpg" alt="Photo of Pamela smiling with an Olaf statue" style="float:right; height:400px;">
+    <p>Python Cloud Advocate at Microsoft</p>
+    <p>Formerly: UC Berkeley, Coursera, Khan Academy, Google</p>
+    <br>
+    <p>Find me online at:</p>
+    <table style="width:60%; float: left; font-size:28px;">
+        <tr>
+          <td>Mastodon
+          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+        </tr>
+        <tr>
+          <td>BlueSky
+          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
+        </tr>
+        <tr>
+          <td>Twitter
+          <td><a target="_blank" href="https://www.twitter.com/pamelafox">@pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>LinkedIn
+          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
+        </tr>
+        <tr>
+            <td>GitHub
+            <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+          </tr>
+        <tr>
+            <td>Website
+            <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+          </tr>
+      </table>
+</section>
+
+<section class="heading-only">
+  <h2>But first...<br>
+    BEES!
+  </h2>
+</section>
+
+<section>
+    <h3>Everyone knows the honeybee</h3>
+
+    <img src="save_the_bees.png" alt="screenshot of Etsy search for save the bees" width="700px" style="border:1px solid #ccc">
+
+</section>
+
+<section>
+  <style>
+/* Marquee styles */
+.marquee {
+  --gap: 1rem;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--gap);
+}
+
+.marquee__content {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  gap: var(--gap);
+  min-width: 100%;
+  animation: scroll 300s linear infinite;
+}
+
+.marquee__content > * {
+  flex: 0 0 auto;
+  display: inline-block;
+  color: rgb(20, 20, 20);
+  background: rgb(255, 241, 40);
+  margin: 2px;
+  padding: 1rem 2rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  list-style: none;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+/* Pause animation when reduced-motion is set */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__content {
+    animation-play-state: paused !important;
+  }
+}
+
+</style>
+
+  <h3>Meet the <strong>Western Honey Bee</strong>, a generalist:</h3>
+
+  <figure style="display: flex; align-items: flex-start; gap: 32px; margin: 0;">
+    <img src="western_honey_bee.jpeg" alt="photo of honey bee in my garden" width="600px">
+    <figcaption style="font-size: 0.8em; max-width: 500px; margin-top: 20px;">
+      Western Honey Bee<br>
+      <em>Apis mellifera</em><br>
+      🪻 Ceanothus<br>
+      📍 El Cerrito, CA
+    </figcaption>
+  </figure>
+
+  <p>The honey bee can pollinate many plants:</p>
+
+  <div class="marquee">
+    <ul class="marquee__content">
+      <li>Okra</li>
+      <li>Kiwifruit</li>
+      <li>Onion</li>
+      <li>Cashew</li>
+      <li>Celery</li>
+      <li>Strawberry tree</li>
+      <li>Starfruit</li>
+      <li>Beet</li>
+      <li>Mustard</li>
+      <li>Rapeseed</li>
+      <li>Broccoli</li>
+      <li>Cauliflower</li>
+      <li>Cabbage</li>
+      <li>Brussels sprouts</li>
+      <li>Chinese cabbage</li>
+      <li>Turnip</li>
+      <li>Canola</li>
+      <li>Pigeon pea</li>
+      <li>Chili</li>
+      <li>Bell pepper</li>
+      <li>Papaya</li>
+      <li>Safflower</li>
+      <li>Caraway</li>
+      <li>Chestnut</li>
+      <li>Watermelon</li>
+      <li>Tangerine</li>
+      <li>Orange</li>
+      <li>Grapefruit</li>
+      <li>Tangelo</li>
+      <li>Coconut</li>
+      <li>Coffee</li>
+      <li>Coriander</li>
+      <li>Crownvetch</li>
+      <li>Azarole</li>
+      <li>Cantaloupe</li>
+      <li>Melon</li>
+      <li>Cucumber</li>
+      <li>Squash</li>
+      <li>Pumpkin</li>
+      <li>Gourd</li>
+      <li>Zucchini</li>
+      <li>Guar bean</li>
+      <li>Quince</li>
+      <li>Lemon</li>
+      <li>Lime</li>
+      <li>Carrot</li>
+      <li>Hyacinth bean</li>
+      <li>Longan</li>
+      <li>Persimmon</li>
+      <li>Cardamom</li>
+      <li>Loquat</li>
+      <li>Buckwheat</li>
+      <li>Feijoa</li>
+      <li>Fennel</li>
+      <li>Strawberry</li>
+      <li>Cotton</li>
+      <li>Sunflower</li>
+      <li>Flax</li>
+      <li>Lychee</li>
+      <li>Lupine</li>
+      <li>Macadamia</li>
+      <li>Acerola</li>
+      <li>Apple</li>
+      <li>Mango</li>
+      <li>Alfalfa</li>
+      <li>Rambutan</li>
+      <li>Sainfoin</li>
+      <li>Avocado</li>
+      <li>Lima bean</li>
+      <li>Kidney bean</li>
+      <li>Haricot bean</li>
+      <li>Mungo bean</li>
+      <li>String bean</li>
+      <li>Green bean</li>
+      <li>Scarlet runner bean</li>
+      <li>Allspice</li>
+      <li>Apricot</li>
+      <li>Sweet cherry</li>
+      <li>Sour cherry</li>
+      <li>Plum</li>
+      <li>Greengage</li>
+      <li>Mirabelle</li>
+      <li>Sloe</li>
+      <li>Almond</li>
+      <li>Peach</li>
+      <li>Nectarine</li>
+      <li>Guava</li>
+      <li>Pomegranate</li>
+      <li>Pear</li>
+      <li>Black currant</li>
+      <li>Red currant</li>
+      <li>Rose hips</li>
+      <li>Boysenberry</li>
+      <li>Raspberry</li>
+      <li>Blackberry</li>
+      <li>Elderberry</li>
+      <li>Sesame</li>
+      <li>Broad bean</li>
+      <li>Vetch</li>
+      <li>Cowpea</li>
+      <li>Black-eyed pea</li>
+      <li>Karite (Shea)</li>
+      <li>Grape</li>
+      <li>Jujube</li>
+      <li>Tamarind</li>
+      <li>Clover</li>
+      <li>White clover</li>
+      <li>Alsike clover</li>
+      <li>Crimson clover</li>
+      <li>Red clover</li>
+      <li>Arrowleaf clover</li>
+      <li>Blueberry</li>
+      <li>Cranberry</li>
+    </ul>
+  </div>
+
+  <p class="smaller">Source: <a target="_blank" href="https://en.wikipedia.org/wiki/List_of_crop_plants_pollinated_by_bees">
+    Wikipedia: List of crop plants pollinated by bees</a></p>
+
+  <aside class="notes">
+  https://www.inaturalist.org/observations?subview=table&user_id=buzzybumbler&verifiable=any&taxon_id=47219
+  </aside>
+</section>
+
+
+<section>
+  <h3>Sometimes a specialist is better...
+  </h3>
+
+  <figure style="display: flex; align-items: flex-start; gap: 32px; margin: 0;">
+    <img src="yellow_faced_bumble_bee.jpg" alt="photo of yellow-faced bumble bee on buckwheat flower" width="500px">
+    <figcaption style="font-size: 0.8em; max-width: 500px; margin-top: 20px;">
+      Yellow-faced Bumble Bee<br>
+      <em>Bombus vosnesenskii</em><br>
+      🌸 California Buckwheat<br>
+      📍 El Cerrito, CA
+    </figcaption>
+  </figure>
+
+  <p>According to <a target="_blank" href="https://bioone.org/journals/journal-of-economic-entomology/volume-108/issue-3/tov078/Bombus-huntii-Bombus-impatiens-and-Bombus-vosnesenskii-Hymenoptera--Apidae/10.1093/jee/tov078.short?tab=ArticleLinkReference">research</a>,
+    the Yellow-faced Bumble Bee is a more effective pollinator of tomatoes 🍅
+    than humans 🧑‍🔬 or honey bees 🐝.
+  </p>
+
+</section>
+
+<section>
+  <h3>Meet my favorite California specialist bee</h3>
+
+  <figure style="display: flex; align-items: flex-start; gap: 32px; margin: 0;">
+    <img src="california_mountain_digger_bee.jpeg" alt="photo of California Mountain Digger Bee on Salvia flower" width="500px">
+    <figcaption style="font-size: 0.8em; max-width: 500px; margin-top: 20px;">
+        California Mountain Digger Bee<br>
+        <em>Habropoda depressa</em><br>
+        🪻 Salvia Clevandii<br>
+        📍 El Cerrito, CA
+    </figcaption>
+  </figure>
+
+  <p>Digger bees use <strong>buzz pollination</strong> to shake pollen loose from flowers.
+  </p>
+
+  <p>Plants that require buzz pollination to release all pollen:</p>
+  <div class="marquee">
+    <ul class="marquee__content" style="animation: scroll 80s linear infinite;">
+      <li>Blueberries</li>
+      <li>Cranberries</li>
+      <li>Tomatoes</li>
+      <li>Eggplants</li>
+      <li>Manzanita</li>
+      <li>Sun Pitchers</li>
+      <li>Shooting Stars</li>
+      <li>Flax Lillies</li>
+      <li>Senna</li>
+    </ul>
+  </div>
+
+</section>
+
+<section>
+  <h3>Find specialist bees near you</h3>
+
+  <p>Use <a target="_blank" href="https://www.inaturalist.org/">iNaturalist</a>
+    to find and identify all the native bees in your area<br>
+  </p>
+
+  <p>OR use the data to build your own bee searching app!</p>
+
+  <img src="fastapi_api.png" alt="Diagram of FastAPI app with API endpoints for searching bees and observations" height="275px" style="border:1px solid #ccc">
+
+  <img src="yellow_faced_bumble_bee_phenology.png" alt="Phenology chart of yellow-faced bumble bee observations over time" height="275px" style="border:1px solid #ccc">
+  <p>My demo app: Python + FastAPI + PostgreSQL<br>
+    <a target="_blank" href="https://github.com/pamelafox/local-bee-finder">
+      https://github.com/pamelafox/local-bee-finder
+    </a>
+  </p>
+
+</section>
+
+
+<section class="heading-only">
+  <h2>What do bees have to do with AI?<br>
+     ...and testing?<br>
+  </h2>
+</section>
+
+<section>
+  <h3>Meet the LLM, a generalist</h3>
+
+  <p>An LLM is a ML model that is so large that it achieves
+    <strong>general-purpose</strong> language understanding & generation.</p>
+
+  <div style="display: flex; justify-content: center; align-items: flex-start; gap: 32px;">
+    <img src="llms_model_scale.png" alt="Graph of LLM achieving general-purpose understanding at certain FLOPs" style="border: 1px solid #ccc; margin-left: 0;" width="670px">
+    <img src="llm_sentiment_analysis.png" alt="Graph showing LLM performance on sentiment analysis tasks improving with model size" width="450px">
+  </div>
+
+  <p class="smaller">Source: Characterizing Emergent Phenomena in Large Language Models
+    <a target="_blank" href="https://research.google/blog/characterizing-emergent-phenomena-in-large-language-models/">https://research.google/blog/characterizing-emergent-phenomena-in-large-language-models/</a>
+  </p>
+</section>
+
+<section>
+  <h3>LLMs know how to write Python tests</h3>
+
+  <p>If we start off with code in a testless codebase, what tests will LLMs write?</p>
+
+  <pre><code data-trim data-noescape class="python">@router.get("/bees/search", response_model=SpeciesSearchResponse)
+async def bees_search(
+    database_session: DBSession,
+    q: str = Query(..., min_length=2, description="Keyword(s) to search in scientific or common name"),
+    limit: int = Query(25, gt=0, le=100, description="Maximum number of species to return"),
+) -> SpeciesSearchResponse:
+    ...
+  </code></pre>
+
+  <p class="padded">The prompt:</p>
+  <p style="font-family:monospace; font-size: 0.8em; background-color: #eaeaea; padding: 8px;">
+  Write tests for routes.py that test each API endpoint, using the fixtures in conftest.py.
+  The tests should test the local test database that is already seeded with data - so you shouldn't need any mocks.
+  </p>
+</section>
+
+<section>
+  <h3>LLM-written tests: GPT-5</h3>
+
+  <p>Example test to check the /bees/active endpoint:</p>
+
+  <pre><code data-trim data-noescape class="python">def test_bees_active_basic(test_client):
+    params = {
+        "lat": 37.7694, "lon": -122.4862, # Golden Gate Park
+        "start_date": "2012-03-01", "end_date": "2012-03-31",
+        "radius_km": 20, "limit": 10, "absolute_activity": True,
+    }
+    r = test_client.get("/bees/active", params=params)
+    assert r.status_code == 200
+    body = r.json()
+    assert "data" in body and isinstance(body["data"], list)
+    assert "meta" in body and isinstance(body["meta"], dict)
+    assert body["meta"].get("months") == [3]
+    assert body["meta"].get("candidate_cap") >= body["meta"].get("candidate_count", 0)
+    for item in body["data"]:
+        assert {"taxon_id", "scientific_name", "activity_score"}.issubset(item.keys())
+        assert item["activity_score"] >= 0
+    assert len(body["data"]) &lt;= params["limit"]
+  </code></pre>
+
+  <p>Test results:</p>
+  <p>9 tests passed, 1 test skipped</p>
+  <p>65% coverage of routes.py</p>
+  <p>Time taken: 1.0m 49.1s</p>
+  <p>Tokens used: 515,865</p>
+</section>
+
+<section>
+  <h3>LLM-written tests: Claude 4.5</h3>
+
+  <p>Example test to check the /bees/active endpoint:</p>
+  <pre><code data-trim data-noescape class="python">def test_bees_active_with_all_params(self, test_client):
+        """Test /bees/active with all optional parameters."""
+        today = date.today()
+        start = today - timedelta(days=15)
+        response = test_client.get(
+            f"/bees/active?lat=37.7749&lon=-122.4194&start_date={start}&end_date={today}"
+            "&radius_km=50&limit=10&min_activity=0.1&sort=activity_desc"
+            "&require_research_grade=true&absolute_activity=false"
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert "data" in data
+        assert len(data["data"]) &lt;= 10
+        assert data["meta"]["radius_km"] == 50
+        assert data["meta"]["sort"] == "activity_desc"
+        assert data["meta"]["require_research_grade"] is True
+        assert data["meta"]["absolute_activity"] is False
+  </code></pre>
+
+  <p>61/61 Tests passed!</p>
+  <p>96% coverage of routes.py</p>
+  <p>Time taken: 6.0m 29.0s</p>
+  <p>Tokens required: 1,326,619</p>
+</section>
+
+<section>
+  <h3>LLM-written tests: Local model</h3>
+
+  <p>❌ Tests failed</p>
+</section>
+
+<section>
+  <h3>LLM-written tests: Overall results</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>LLM</th>
+        <th>Tests</th>
+        <th>Coverage</th>
+        <th>Tokens</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GPT-5</td>
+        <td>9 passed, 1 skipped</td>
+        <td>65%</td>
+        <td>515,865</td>
+        <td>1.0m 49.1s</td>
+      </tr>
+      <tr>
+        <td>Claude 4.5</td>
+        <td>61/61 passed</td>
+        <td>96%</td>
+        <td>1,326,619</td>
+        <td>6.0m 29.0s</td>
+      </tr>
+      <tr>
+        <td>GPT-5-mini</td>
+        <td>4/4 passed</td>
+        <td>81%</td>
+        <td>493,132</td>
+        <td>1.0m 40.5s</td>
+      </tr>
+      <tr>
+        <td>GPT-5-codex</td>
+        <td>9/9 passed</td>
+        <td>85%</td>
+        <td>429,049</td>
+        <td>2.0m 57.0s</td>
+      </tr>
+      <tr>
+        <td>Gemini 2.5</td>
+        <td>7/7 passed</td>
+        <td>81%</td>
+        <td>374,071</td>
+        <td>2.0m 14.9s</td>
+      </tr>
+      <tr>
+        <td>Qwen 3 Max</td>
+        <td>20/23</td>
+        <td>51%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Is it good enough to use a powerful LLM to write our tests?</p>
+</section>
+
+<section>
+  <h3>Problem #1: Not enough coverage!</h3>
+
+  <p>LLM-generated tests often miss edge cases and have incomplete coverage.</p>
+
+  <p>How do humans get 100% coverage? By reviewing coverage reports! Let's see if the LLM can do that too.</p>
+
+  <p>Adding to the prompt:</p>
+  <pre><code data-trim data-noescape class="text">
+  The goal is for the tests to cover all lines of code.
+  Generate a coverage report with:
+
+  pytest --cov --cov-report=annotate:cov_annotate
+
+  Open the cov_annotate directory to view the annotated source code.
+  There will be one file per source file. If a file has 100% source coverage, it means all lines are covered by tests, so you do not need to open the file.
+  For each file that has less than 100% test coverage, find the matching file in cov_annotate and review the file.
+  If a line starts with a ! (exclamation mark), it means that the line is not covered by tests.
+  Add tests to cover the missing lines.
+  Keep running the tests and improving coverage until all lines are covered.
+  </code></pre>
+</section>
+
+<section>
+  <h3>Can LLMs achieve 100% coverage?</h3>
+
+  <p>After 7 calls to <code>pytest --cov</code> and 10 more tests, GPT-5 got to 100% coverage:</p>
+
+  <pre><code data-trim data-noescape class="shell">
+============================================ tests coverage =============================================
+___________________________ coverage: platform linux, python 3.12.11-final-0 ____________________________
+
+Name                                    Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------
+src/backend/fastapi_app/api/models.py      67      0   100%
+src/backend/fastapi_app/api/routes.py     190      0   100%
+---------------------------------------------------------------------
+TOTAL                                     257      0   100%
+========================================== 21 passed in 5.74s ===========================================
+  </code></pre>
+
+  <p>Full tests: gpt5_tests_100cov.py</p>
+</section>
+
+<section>
+  <h3>But those tests still have problems...</h3>
+
+  <ul>
+    <li>Redundant test code
+    <li>Fake data that doesn't reflect the real world
+    <li>Missing edge cases, deceptive coverage %
+  </ul>
+  <!--TODO: maybe delete this slide-->
+</section>
+
+<section>
+  <h3>Let's bring in the specialists!</h3>
+</section>
+
+<section>
+  <h3>Problem: Redundant test code</h3>
+
+  <p>These LLM-generated tests are highly repetitive:</p>
+
+  <pre><code data-trim data-noescape class="python">def test_bees_active_sort_activity_desc(self, test_client):
+        response = test_client.get("/bees/active",
+            params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_desc"})
+        assert response.status_code == 200
+        data = response.json()
+        scores = [item["activity_score"] for item in data["data"]]
+        assert scores == sorted(scores, reverse=True)
+
+    def test_bees_active_sort_activity_asc(self, test_client):
+        response = test_client.get("/bees/active",
+            params={"lat": 37.7749, "lon": -122.4194, "sort": "activity_asc"})
+        assert response.status_code == 200
+        data = response.json()
+        scores = [item["activity_score"] for item in data["data"]]
+        assert scores == sorted(scores)
+   </code></pre> 
+
+   <p>From claude45_tests_cov.py</p>
+</section>
+
+<section>
+  <h3>Solution: Parameterize variables</h3>
+
+  <p>When the only thing different in a test is a value, <strong>parameterize</strong> the value(s):</p>
+
+  <pre><code data-trim data-noescape class="python">@pytest.mark.parametrize(
+        "sort_param,reverse",
+        [
+            ("activity_desc", True),
+            ("activity_asc", False),
+        ],
+    )
+    def test_bees_active_sort(self, test_client, sort_param, reverse):
+        """Test bees/active with different sort parameters."""
+        response = test_client.get(
+            "/bees/active",
+            params={
+                "lat": 37.7749,
+                "lon": -122.4194,
+                "sort": sort_param,
+            },
+        )
+        assert response.status_code == 200
+        data = response.json()
+
+        values = [item["activity_score"] for item in data["data"]]
+        assert values == sorted(values, reverse=reverse)
+  </code></pre>
+</section>
+
+<section>
+  <h3>Solution: Use fixtures for common test components</h3>
+
+  <p>If multiple tests require the same object/mock/instance,
+    move that into a fixture and store in conftest.py</p>
+
+  <p>Example: A fixture that makes and cleans up a test trip:</p>
+  <pre><code data-trim data-noescape class="python">@pytest_asyncio.fixture
+async def sample_trip(db_session):
+    trip = Trip(
+        event_name="Sample Test Trip",
+        event_slug="sample-test-trip-fixture",
+        start_time=datetime.fromisoformat("2025-06-01T10:00:00").date(),
+        end_time=datetime.fromisoformat("2025-06-01T15:00:00").date(),
+        organizers=[
+            {"original": "Test Organizer", "normalized": "test organizer", "has_diacritics": False, "role": "guide"}
+        ],
+        approx_latitude=37.7749,
+        approx_longitude=-122.4194,
+        positional_accuracy_m=100,
+    )
+    db_session.add(trip)
+    await db_session.commit()
+    await db_session.refresh(trip)
+
+    yield trip
+
+    await db_session.delete(trip)
+    await db_session.commit()
+  </code></pre>
+
+  <!-- TODO: Simpler fixture first?-->
+</section>
+
+<section>
+  <h3>Problem: Fake data that isn't real enough</h3>
+
+  <p>LLMs often generate simplistic fake data, like for names:</p>
+
+  <pre><code data-trim data-noescape class="json">
+  "organizers": [{"display_name": "John Doe", "role": "guide"}],
+  </code></pre>
+
+  <pre><code data-trim data-noescape class="json">
+  "organizers": [{"display_name": "Jane Smith"}],
+  </code></pre>
+
+  <p>Those names don't encapsulate all the complexity of names in the real world,
+    so if your tests only use those names, you won't discover real issues.
+  </p>
+  <p>
+    <a target="_blank" href="https://github.com/kdeldycke/awesome-falsehood">See also: Falsehoods that Programmers Believe In</a>
+  </p>
+</section>
+
+<section>
+  <h3>Solution: Use Faker for real-world fake data</h3>
+
+  <p>If your test is using test values for things like
+    names, phone numbers, credit cards, 
+    use <a target="_blank" href="https://faker.readthedocs.io/">Faker</a> to generate them instead.</p>
+
+  <pre><code data-trim data-noescape class="python">from faker import Faker
+
+fake = Faker()
+
+def test_create_trip_basic(self, test_client):
+    event_name = f"Test Trip {uuid.uuid4().hex[:8]}"
+    organizer_name = fake.name()
+    response = test_client.post("/trips", json={
+            "event_name": event_name,
+            "organizers": [{"display_name": organizer_name, "role": "guide"}],
+            "start_time": "2025-05-01T10:00:00",
+            "end_time": "2025-05-01T15:00:00",
+        })
+  </code></pre>
+
+</section>
+
+<section>
+  <h3>Problem: Tests don't check full output</h3>
+
+  <pre><code data-trim data-noescape class="python">def test_bees_active_basic(self, test_client):
+        response = test_client.get(
+            "/bees/active",
+            params={"lat": 37.7749, "lon": -122.4194})
+        assert response.status_code == 200
+        data = response.json()
+        assert "data" in data
+        assert "meta" in data
+        assert isinstance(data["data"], list)
+        assert "count" in data["meta"]
+  </code></pre>
+</section>
+
+<section>
+  <h3>Solution: Snapshot testing</h3>
+
+  <p>Instead of checking specific fields,
+    use <a target="_blank" href="https://pypi.org/project/pytest-snapshot/">pytest-snapshot</a> to store and compare full outputs.
+  </p>
+
+    <pre><code data-trim data-noescape class="python">@freeze_time("2025-06-15")
+    def test_bees_active_basic(self, test_client, snapshot):
+        response = test_client.get(
+            "/bees/active",
+            params={"lat": 37.7749, "lon": -122.4194})
+        assert response.status_code == 200
+        data = response.json()
+        snapshot.assert_match(json.dumps(data, indent=4), "bees_active_basic.json")
+    </code></pre>
+
+    <p>See the snapshot file <a target="_blank" href="bees_active_basic.json">bees_active_basic.json</a> for the expected output.</p>
+</section>
+
+<section>
+  <h3>100% coverage isn't enough</h3>
+  <p>Even with 100% coverage, tests may miss edge cases and unexpected inputs.  </p>
+  <ul>
+    <li>What if lat/lon are out of bounds?
+    <li>What if dates are in the future?
+    <li>What if radius_km is negative?
+    <li>What if limit is zero?
+  </ul>
+
+  <p>These edge cases can cause unhandled exceptions,
+    leading to 500 errors when the app is used by real users.</p>
+</section>
+
+<section>
+  <h3>Solution: Property-based testing</h3>
+  <p>Instead of writing individual test cases for each edge case,
+    use property-based testing to generate a wide range of inputs automatically:
+  </p>
+  <ul>
+    <li><a target="_blank" href="https://hypothesis.readthedocs.io/">Hypothesis</a> for unit tests
+    <li><a target="_blank" href="https://pypi.org/project/schemathesis/">Schemathesis</a> for API tests
+  </ul>
+
+</section>
+
+<section>
+  <h3>Hypothesis for unit tests</h3>
+
+  <pre><code data-trim data-noescape class="python">from hypothesis import given, strategies as st
+
+@given(taxon_id=st.integers())
+def test_phenology_chart_any_integer(test_client, taxon_id: int):
+    response = test_client.get(f"/bees/phenology-chart/{taxon_id}")
+    assert response.status_code in (200, 404)
+
+@given(
+    lat=st.floats(min_value=-90, max_value=90, allow_nan=False, allow_infinity=False),
+    lon=st.floats(min_value=-180, max_value=180, allow_nan=False, allow_infinity=False),
+    min_act=st.floats(min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False),
+)
+def test_bees_active_scores(test_client, lat: float, lon: float, min_act: float) -> None:
+    response = test_client.get("/bees/active",
+        params={"lat": lat, "lon": lon, "absolute_activity": False, "min_activity": min_act})
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["meta"]["count"] == len(payload["data"])
+    for item in payload["data"]:
+        score = item["activity_score"]
+        assert 0.0 &lt;= score &lt;= 1.0
+        assert score >= min_act
+  </code></pre>
+
+  <aside class="notes">
+    Instead of writing multiple separate tests like “min_activity = 0.2”, “min_activity = 0.8”, etc.,
+    we declare what must always be true for all valid inputs.
+    Hypothesis will generate many combinations of lat, lon, and min_activity,
+    including edge cases like lat=90.0, lon=-180.0, min_activity=0.0
+  </aside>
+</section>
+
+<section>
+  <h3>Hypothesis results</h3>
+
+  <p>From the first test for <code>/bees/phenology-chart/{taxon_id}</code>,
+    Hypothesis found this failure case:</p>
+  <pre><code data-trim data-noescape class="shell">...
+sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error)
+&lt;class 'asyncpg.exceptions.DataError'&gt;: invalid input for query argument $1: 9223372036854775808 (value out of int64 range)
+[SQL: SELECT species.taxon_id, species.scientific_name, species.common_name, species.family, species.subfamily, species.tribe, species.genus, species.species_epithet, species.rank, species.total_observations, species.phenology_counts, species.phenology_normalized, species.peak_month, species.window_start, species.window_end, species.seasonality_index, species.insufficient_data, species.peak_prominence, species.total_observations_all, species.phenology_counts_all, species.phenology_normalized_all, species.peak_month_all, species.window_start_all, species.window_end_all, species.seasonality_index_all, species.insufficient_data_all, species.peak_prominence_all 
+ FROM species 
+ WHERE species.taxon_id = $1::BIGINT]
+ [parameters: (9223372036854775808,)]
+ (Background on this error at: https://sqlalche.me/e/20/dbapi)
+ Falsifying example: test_phenology_chart_any_integer(
+    test_client=,
+    taxon_id=9223372036854775808,
+ )</code></pre>
+</section>
+
+<section>
+  <h3>Schemathesis for API tests</h3>
+
+  <pre><code data-trim data-noescape class="python">import pytest
+import schemathesis
+
+@pytest.fixture
+def web_app(app):
+    return schemathesis.openapi.from_asgi("/openapi.json", app)
+
+schema = schemathesis.pytest.from_fixture("web_app")
+
+@schema.parametrize()
+def test_openapi_specification(case):
+    case.call_and_validate()
+  </code></pre>
+
+  <p>This will generate tests for all API endpoints defined in the OpenAPI spec,
+    including edge cases for query parameters, request bodies, etc.</p>
+</section>
+
+<section>
+  <h3>Schemathesis results</h3>
+
+  <pre><code data-trim data-noescape class="shell">
+  sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) &lt;class 'asyncpg.exceptions.DataError'&gt;:
+  invalid input for query argument $1: 9223372036854775808 (value out of int64 range)
+  [SQL: SELECT species.taxon_id, species.scientific_name, species.common_name, species.family, species.subfamily, species.tribe, species.genus, species.species_epithet, species.rank, species.total_observations, species.phenology_counts, species.phenology_normalized, species.peak_month, species.window_start, species.window_end, species.seasonality_index, species.insufficient_data, species.peak_prominence, species.total_observations_all, species.phenology_counts_all, species.phenology_normalized_all, species.peak_month_all, species.window_start_all, species.window_end_all, species.seasonality_index_all, species.insufficient_data_all, species.peak_prominence_all 
+  FROM species 
+  WHERE species.taxon_id = $1::BIGINT]
+  [parameters: (9223372036854775808,)]
+  (Background on this error at: https://sqlalche.me/e/20/dbapi)
+                   
+  Reproduce with:
+
+    curl -X GET http://localhost/bees/phenology-chart/9223372036854775808</code></pre>
+</section>
+
+
+<section>
+  <h3>Should you use LLMs to write your tests?</h3>
+
+  <p>It's up to you!</p>
+
+  <p>But if you do, you should <strong>seed</strong> the LLM with tips 
+    for writing great tests, using the specialist tools from the amazing Python ecosystem.
+  </p>
+</section>
+
+<section>
+  <h3>A prompt for LLM-based test generation</h3>
+
+<pre><code data-trim data-noescape class="text">Write tests for routes.py that test each API endpoint, using the fixtures in conftest.py.
+
+The tests should test the local test database that is already seeded with data - so you shouldn't need any mocks.
+
+Use the following guidelines when writing the tests:
+- Use parameterized tests to avoid redundant code, using pytest.mark.parametrize
+- Create fixtures for any common test components, using pytest.fixture
+- Use Faker to generate realistic fake data for names, dates, coordinates, etc.
+- Use snapshot testing for API responses, using the pytest-snapshot plugin and assert_match
+
+After writing the initial tests, run coverage analysis with pytest --cov and review the coverage report.
+For any lines not covered by tests, add additional tests to cover those lines.
+  </code></pre>
+</section>
+
+<section>
+  <h3>Should we use honeybees to pollinate our flowers?</h3>
+
+  <p>We can keep using honeybees, but we also need to remember the specialists 
+    from the amazing bees ecosystem.</p>
+
+  <p>To encourage more native bees of all kinds, <strong>seed</strong>
+   gardens with native plants!</p> 
+</section> 
+  
+<section>
+  <h3>Thank you!</h3>
+
+  <p>Grab the slides @ <a target="_blank" href="https://pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay">pamelafox.github.io/my-py-talks/ai-assisted-testing-pybay</a> </p>
+
+  <p>Example app @ <a target="_blank" href="https://github.com/pamelafox/ai-assisted-testing-example">github.com/pamelafox/ai-assisted-testing-example</a></p>
+
+  <p>Find me online at:</p>
+      <table style="width:60%; float: left; font-size:28px;">
+        <tr>
+          <td>Mastodon
+          <td><a target="_blank" href="https://fosstodon.org/@pamelafox">@pamelafox@fosstodon.org</a></td>
+        </tr>
+        <tr>
+          <td>BlueSky
+          <td><a target="_blank" href="https://bsky.app/profile/pamelafox.bsky.social">@pamelafox.bsky.social</a></td>
+        </tr>
+        <tr>
+          <td>Twitter
+          <td><a target="_blank" href="https://twitter.com/pamelafox">@pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>LinkedIn
+          <td><a target="_blank" href="https://www.linkedin.com/in/pamela-s-fox/">www.linkedin.com/in/pamela-s-fox/</a></td>
+        </tr>
+        <tr>
+          <td>GitHub
+          <td><a target="_blank" href="https://www.github.com/pamelafox">www.github.com/pamelafox</a></td>
+        </tr>
+        <tr>
+          <td>Website
+          <td><a target="_blank" href="https://www.pamelafox.org">pamelafox.org</a></td>
+        </tr>
+      </table>
+</section>
+
+
+<section class="heading-only" data-background-image="background_headingonly.png">
+    <h2>Any questions?</h2>
+    <img src="../media/BIT_STUDENTS.svg" alt="A bunch of raccoon students with computers" width="400">
+</section>
+
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1280,
+            height: 720,
+            hash: true,
+            center: false,
+            slideNumber: true,
+            showNotes: false,
+            margin: 0.1,
+            preloadIframes: true,
+            autoPlayMedia: true,
+            plugins: [ RevealHighlight, RevealMenu ],
+            pdfSeparateFragments: true
+        });
+        window.highlightJsBadge();
+
+
+    </script>
+    </body>
+</html>
