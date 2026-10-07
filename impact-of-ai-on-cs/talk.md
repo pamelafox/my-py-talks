@@ -1,5 +1,5 @@
 
-# The Impact of AI on Computer Science
+# The Impact of AI on Software Engineering
 
 Berkeley CS Teachers Association (CSTA)
 
@@ -26,7 +26,7 @@ Berkeley CS Teachers Association (CSTA)
 
 ### 1. Software is now built on top of probabilistic AI models
 
-Framing: traditional code is deterministic (same input, same output). AI-powered code calls models whose output is *sampled*, so AI engineering is mostly about constraining, grounding, and checking that output.
+Framing: traditional code is deterministic (same input, same output). AI-powered code calls models whose output is *sampled*, so AI engineering is mostly about constraining, grounding, and evaluating that output.
 
 Proposed sequence (each step builds on the previous one):
 
@@ -72,25 +72,27 @@ Show: a course syllabus Q&A bot: "When is the final project due?" answered with 
 Start from what teachers already know: unit tests.
 
 ```python
-def test_add():
-    assert add(2, 3) == 5
+def test_penalty():
+    assert penalty(0) == 0
+    assert penalty(1) == 10
+    assert penalty(2) == 20
 ```
 
-That doesn't work when the output is different every time. Instead, you run an *eval*: many inputs, each checked against criteria with a pass/fail and a reason, summarized as pass rates.
+That doesn't work when the output is different every time. Instead, use an LLM-as-a-judge to score the response as pass/fail with a reason.
 
 ```python
-for question in dataset:
-    answer, sources = rag_answer(question)
-    has_citation = "[" in answer
-    verdict = client.chat.completions.create(
-        model="gpt-5",
-        messages=[{"role": "user", "content":
-            f"Is every claim in this answer supported by the sources? Explain why, then end with PASS or FAIL.\n"
-            f"Question: {question}\nSources: {sources}\nAnswer: {answer}"}]).choices[0].message.content
-    grounded = "PASS" in verdict.strip().splitlines()[-1]
+question = "When is the final project due?"
+answer_text, sources = answer(question)
+verdict = client.chat.completions.create(
+    model=MODEL,
+    messages=[{"role": "user", "content":
+        "Is every claim in this answer supported by the sources? Start with PASS or FAIL, then give a one-sentence reason.\n"
+        f"Sources: {sources}\nAnswer: {answer_text}"}]).choices[0].message.content
 ```
 
-Show: pass rates before and after a prompt change, e.g. "cited: 82% to 96%, grounded: 78% to 94%".
+Then evaluate in bulk: one good answer doesn't mean the next one is good, so run the judge over a dataset of many realistic questions and summarize as a pass rate. In one run, 83% were grounded. The FAIL: asked "Can I use Copilot to debug my homework?", the bot said no, but the policy allows AI to explain error messages.
+
+Show: pass rates before and after a prompt change, e.g. "grounded: 78% to 94%".
 
 | Unit tests | Evaluations |
 |---|---|
@@ -102,9 +104,9 @@ Show: pass rates before and after a prompt change, e.g. "cited: 82% to 96%, grou
 
 Analogy for teachers: unit tests are an autograder, evals are grading with a rubric. LLM-as-judge is like a TA applying your rubric, so you still spot-check its grades.
 
-Segue to structured outputs: the judge's verdict is free text, formatted differently each time ("**PASS**" on its own line, or "...supported by the source. PASS"), so parsing it is fragile.
-
 #### Structured outputs
+
+LLMs are trained to output data that conforms to a typed schema, so your code gets back objects instead of free text.
 
 ```python
 class CodeFeedback(BaseModel):
@@ -119,7 +121,7 @@ completion = client.chat.completions.parse(
 feedback = completion.choices[0].message.parsed
 ```
 
-Show: the parsed Python object, e.g. `CodeFeedback(concepts_used=['for loop', 'list'], bugs=['off-by-one in range()'], hints=[...])`. Callback to evals: the judge could return `Grade(reason: str, passed: bool)` instead of free text.
+Show: the parsed Python object, e.g. `CodeFeedback(concepts_used=['for loop', 'list'], bugs=['off-by-one in range()'], hints=[...])`.
 
 #### Tool calling
 
@@ -163,15 +165,11 @@ Show: an agent is just a while loop around tool calling.
 
 ##### Image generation
 
-```python
-result = client.images.generate(
-    model="gpt-image-1",
-    prompt="A cat teaching a high school CS class, chalkboard full of Python")
-```
-
-Show: two different images from the same prompt, side by side.
+Only on the "Other kinds of models" overview slide: text prompt in, image out. Also probabilistic: the same prompt gives different images.
 
 ##### Embedding models
+
+Hidden in the deck for time (`data-visibility="hidden"`): only the "Other kinds of models" overview slide is shown. Notes kept here in case there's time.
 
 ```python
 response = client.embeddings.create(
@@ -204,20 +202,7 @@ Live demo: [vectors-comparison](https://pamelafox.github.io/vectors-comparison/)
 
 ##### Voice and transcription
 
-```python
-transcript = client.audio.transcriptions.create(
-    model="gpt-4o-transcribe",
-    file=open("lecture.mp3", "rb"))
-print(transcript.text)
-
-speech = client.audio.speech.create(
-    model="gpt-4o-mini-tts",
-    voice="alloy",
-    input="Welcome to CS 101!")
-speech.write_to_file("welcome.mp3")
-```
-
-Show: transcribe a short clip, then play back generated speech. Mention realtime speech-to-speech models, which power voice assistants. Probabilistic angle: transcription models can hallucinate text that was never said, e.g. reports of Whisper inventing sentences during pauses (find a source before the talk).
+Only on the "Other kinds of models" overview slide: speech to text, text to speech, and realtime voice. Mention realtime speech-to-speech models, which power voice assistants. Probabilistic angle: transcription models can hallucinate text that was never said, e.g. reports of Whisper inventing sentences during pauses (find a source before the talk).
 
 Segue to point #2: coding agents put all of this together. A coding agent is that same while loop, with tools for reading files, editing files, and running tests, and it often uses other models too, like embeddings for codebase search and transcription for voice input.
 
@@ -231,7 +216,7 @@ References:
 
 ### 2. Software is now being built largely BY those AI models
 
-#### What is a coding agent?
+#### AI coding agents
 
 Callback to the agent while loop from point #1: a coding agent is an LLM in that loop, with tools for software development:
 
@@ -239,18 +224,19 @@ Callback to the agent while loop from point #1: a coding agent is an LLM in that
 - Edit and create files
 - Run terminal commands: tests, linters, the app itself
 - Fetch web pages and docs
-- Plus context: instruction files (`AGENTS.md`, `.github/copilot-instructions.md`), skills, MCP servers
+- Plus context: the user's OS, settings, and memory
 
-Show: a diagram of the loop: task, then LLM, then tool call, then result, repeated until "done, tests pass".
+Show: a diagram of the loop: task, then LLM (with context), then tool calls and results, repeated until the code changes are done.
 
 Show: a real agent session. The demos for point #1 were written by a coding agent, which also ran them against Ollama and fixed what it saw. It noticed `qwen3.5:9b` leaking its reasoning into the haiku and switched models. It saw the agent demo skip a tool call 1 in 3 times, so it rewrote the question and re-ran it until it was reliable. That's the loop in action, including verification.
 
 #### Benchmarks: how capable are they?
 
-- [SWE-bench Verified](https://www.swebench.com/): real GitHub issues from popular Python repos. The agent must produce a patch that passes the project's hidden tests. Callback to evals: it's graded by unit tests!
-- [METR time horizons](https://metr.org/): the length of tasks (measured in human time) that agents can complete with 50% success. Their 2025 paper found it doubling roughly every 7 months.
+- [METR time horizons](https://metr.org/time-horizons/) (v1.1, updated May 2026): the length of software tasks (in human expert time) the best model can complete 50% of the time. Independent nonprofit, graded automatically (callback to evals!). Best model: GPT-4 4 min (Mar 2023), Claude 3.7 Sonnet 1 hr (Feb 2025), GPT-5 3.4 hr (Aug 2025), Claude Opus 4.6 12 hr (Feb 2026). Doubling about every 4 months since 2023, faster than the ~7 months in the original 2025 paper. Claude Mythos Preview (~17 hr) left off: METR says results above 16 hours are unreliable.
+- [Artificial Analysis Coding Agent Index](https://artificialanalysis.ai/agents/coding-agents) (v1.5): independent, runs every agent + model on the same tasks (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). Current snapshot only, no history. As of October 7, 2026: Claude Code + Sonnet 5.5 (68), Claude Code + Opus 5.5 (66), Antigravity CLI + Gemini 4 Argon (64, not public), Codex + GPT-6.1 Sol (63). Linked at the bottom of the slide.
+- Avoid vendor announcements: each lab self-reports with its own harness, so scores aren't comparable.
 
-Show: score-over-time charts for both. Pull the latest charts before the talk.
+Show: the METR time horizons chart (best model over time, linear scale) to tell the "good and getting better faster" story.
 
 #### GitHub activity
 
@@ -262,6 +248,10 @@ From [The state of the tech industry in 2026](https://newsletter.pragmaticengine
 - At Linear, agents have created more issues than humans since July.
 
 Show: the GitHub agent-authored PR chart and the commits/lines of code chart from that post.
+
+Newer GitHub data from Marlene Mhangami's [AGNTCon Europe 2026 keynote](https://github.com/marlenezw/agntcon-mcpcon-europe-2026) (citing the GitHub Blog post "The August 17 outage, and the work ahead"): merged PRs per month reached 130M, commits per month 2.9B (doubling from 1.4B in four months), and new repos per month 24M, as of August 2026. Agent-created PRs hit 17.8M in March 2026, quadrupling in six months.
+
+Her keynote also shows developers pulled in two directions: popular GitHub issues asking for more agent capability next to maintainers pushing for control (tldraw auto-closing external PRs, rsync removing LLM-generated commits, NixOS closing PRs without an AI disclosure). Cut from the deck as not crucial for a teacher audience.
 
 Note: the post also estimates 75M+ fully AI-generated PRs per month, vs. 25M human PRs in December 2023, but labels it "as of today (October 2025)", which looks like a typo for 2026. Verify before quoting.
 
@@ -513,5 +503,13 @@ https://techcommunity.microsoft.com/blog/educatordeveloperblog/level-up-your-pyt
 
 To add-
 triangle/stack of assembly language to NLP
-rag chat as example of personal software (between friends)
+r chat as example of personal software (between friends)
 stats from marlenes presentation
+
+To verify:
+
+Benchmarks: check https://metr.org/time-horizons/ for new measurements before the talk.
+Unconfirmed claims: the Pragmatic Engineer "October 2025" date that looks like a typo, a source for "PMs are expected to prototype," and a source for Whisper hallucinating text.
+Secondhand stats: the GitClear, Demirer, and Popescu figures, which I only saw summarized on GitClear's page.
+CSTA wording: the end of standard 3A-AP-23's text.
+Demo outputs: real outputs from the demo scripts to replace the placeholder numbers.

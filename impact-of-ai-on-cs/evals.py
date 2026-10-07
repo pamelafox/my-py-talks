@@ -6,23 +6,19 @@ dataset = [
     "Can I use ChatGPT to write my homework?",
     "When are office hours?",
     "How much is the midterm worth?",
-    "Is there a field trip this semester?",
+    "Can I use Copilot to debug my homework?",
 ]
 
-cited_count = 0
 grounded_count = 0
 for question in dataset:
     answer_text, sources = answer(question)
-    has_citation = "[" in answer_text
     verdict = client.chat.completions.create(
         model=MODEL,
         messages=[{"role": "user", "content":
-            f"Is every claim in this answer supported by the sources? Explain why, then end with PASS or FAIL.\n"
+            f"Is every claim in this answer supported by the sources? Start with PASS or FAIL, then give a one-sentence reason.\n"
             f"Question: {question}\nSources: {sources}\nAnswer: {answer_text}"}]).choices[0].message.content
-    grounded = "PASS" in verdict.strip().splitlines()[-1]
-    cited_count += has_citation
+    grounded = verdict.strip().strip("*").startswith("PASS")
     grounded_count += grounded
-    print(f"{question}\n  cited: {has_citation}, grounded: {grounded}\n  judge: {verdict}\n")
+    print(f"{question}\n  grounded: {grounded}\n  judge: {verdict}\n")
 
-print(f"Cited: {cited_count / len(dataset):.0%}")
 print(f"Grounded: {grounded_count / len(dataset):.0%}")

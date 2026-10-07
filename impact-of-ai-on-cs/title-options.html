@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Title slide style options</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+	<style>
+		body {
+			margin: 0;
+			padding: 40px;
+			background: #555;
+			font-family: 'Space Grotesk', sans-serif;
+		}
+
+		.option-label {
+			color: #fff;
+			font-size: 22px;
+			margin: 40px 0 12px;
+		}
+
+		.frame {
+			position: relative;
+			width: 1280px;
+			height: 720px;
+			overflow: hidden;
+			box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+		}
+
+		.bits {
+			position: absolute;
+			inset: 0;
+			font-family: 'IBM Plex Mono', monospace;
+			pointer-events: none;
+		}
+
+		.title-block {
+			position: absolute;
+			left: 72px;
+			top: 150px;
+			width: 640px;
+		}
+
+		.eyebrow {
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 600;
+			font-size: 20px;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			margin: 0 0 22px;
+		}
+
+		h1 {
+			font-size: 76px;
+			line-height: 1.02;
+			font-weight: 700;
+			margin: 0 0 22px;
+			letter-spacing: -0.01em;
+		}
+
+		.subtitle {
+			font-size: 25px;
+			line-height: 1.35;
+			margin: 0 0 46px;
+			font-weight: 500;
+		}
+
+		.name {
+			font-size: 30px;
+			font-weight: 700;
+			margin: 0 0 8px;
+		}
+
+		.role {
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 600;
+			font-size: 20px;
+			text-transform: uppercase;
+			margin: 0;
+		}
+
+		/* Option 1: Binary grid */
+		.o1 {
+			background-color: #f7f7f2;
+			background-image:
+				linear-gradient(#e2e2da 1px, transparent 1px),
+				linear-gradient(90deg, #e2e2da 1px, transparent 1px);
+			background-size: 40px 40px;
+			color: #1a1a1a;
+		}
+		.o1 .bits span {
+			position: absolute;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 17px;
+			color: #c4c4bb;
+		}
+		.o1 .eyebrow, .o1 .role { color: #6b6b63; }
+
+		/* Option 2: Dark binary rain */
+		.o2 {
+			background: #0d1117;
+			color: #f0f6fc;
+		}
+		.o2 .bits .col {
+			position: absolute;
+			top: 0;
+			width: 22px;
+			font-size: 18px;
+			line-height: 22px;
+			text-align: center;
+			color: #3fb950;
+			white-space: pre;
+		}
+		.o2 .fade {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(90deg, #0d1117 0%, #0d1117 50%, rgba(13, 17, 23, 0.3) 75%, rgba(13, 17, 23, 0) 100%);
+		}
+		.o2 .eyebrow, .o2 .role { color: #7ee787; }
+		.o2 .subtitle { color: #c9d1d9; }
+
+		/* Option 3: Bits becoming words */
+		.o3 {
+			background-color: #f7f7f2;
+			background-image:
+				linear-gradient(#e2e2da 1px, transparent 1px),
+				linear-gradient(90deg, #e2e2da 1px, transparent 1px);
+			background-size: 40px 40px;
+			color: #1a1a1a;
+		}
+		.o3 .bits {
+			left: 760px;
+			top: 120px;
+			right: 40px;
+			font-size: 22px;
+			line-height: 40px;
+			color: #8a8a80;
+			white-space: pre;
+		}
+		.o3 .bits .line:last-child {
+			color: #1f5fbf;
+			font-weight: 600;
+		}
+		.o3 .eyebrow, .o3 .role { color: #6b6b63; }
+
+		/* Option 4: Punch card */
+		.o4 {
+			background: #efe6cf;
+			color: #2b2116;
+		}
+		.o4 .card {
+			position: absolute;
+			left: 770px;
+			top: 120px;
+			width: 560px;
+			height: 470px;
+			background: #fbf6e6;
+			border: 2px solid #c9b98f;
+			transform: rotate(-4deg);
+			clip-path: polygon(48px 0, 100% 0, 100% 100%, 0 100%, 0 48px);
+			box-shadow: 0 8px 20px rgba(80, 60, 20, 0.2);
+		}
+		.o4 .card .grid {
+			position: absolute;
+			left: 30px;
+			top: 40px;
+			display: grid;
+			grid-template-columns: repeat(20, 22px);
+			row-gap: 8px;
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 15px;
+			color: #b3a27a;
+			text-align: center;
+		}
+		.o4 .card .punch {
+			display: inline-block;
+			width: 10px;
+			height: 22px;
+			background: #2b2116;
+			vertical-align: middle;
+		}
+		.o4 .eyebrow, .o4 .role { color: #7a6a4d; }
+
+		/* Option 5: Halftone of digits */
+		.o5 {
+			background: #ffffff;
+			color: #111;
+		}
+		.o5 .bits span {
+			position: absolute;
+			width: 28px;
+			height: 28px;
+			line-height: 28px;
+			text-align: center;
+			font-weight: 600;
+		}
+		.o5 .eyebrow, .o5 .role { color: #555; }
+		.o5 h1 span { color: #1f5fbf; }
+
+		/* Option 3 applied to other slide types */
+		.decode {
+			font-family: 'IBM Plex Mono', monospace;
+			white-space: pre;
+			color: #8a8a80;
+		}
+		.decode .line:last-child { color: #1f5fbf; font-weight: 600; }
+
+		.section-slide .decode {
+			position: absolute;
+			right: 72px;
+			top: 130px;
+			font-size: 26px;
+			line-height: 46px;
+			text-align: right;
+		}
+		.section-slide .section-text {
+			position: absolute;
+			left: 72px;
+			bottom: 90px;
+			width: 760px;
+		}
+		.section-slide .section-number {
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 600;
+			font-size: 120px;
+			line-height: 1;
+			color: #1f5fbf;
+			margin: 0 0 10px;
+		}
+		.section-slide h2 {
+			font-size: 54px;
+			line-height: 1.08;
+			margin: 0;
+		}
+
+		.content-slide {
+			padding: 44px 64px;
+			box-sizing: border-box;
+		}
+		.content-slide .header {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			border-bottom: 3px solid #1a1a1a;
+			padding-bottom: 10px;
+			margin-bottom: 30px;
+		}
+		.content-slide h3 {
+			font-size: 44px;
+			margin: 0;
+		}
+		.content-slide .header .decode {
+			font-size: 18px;
+		}
+		.content-slide .header .decode .line { display: inline; }
+		.content-slide .header .decode .bitpart { color: #b0b0a6; }
+		.content-slide .header .decode .wordpart { color: #1f5fbf; font-weight: 600; }
+		.content-slide .cards {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 24px;
+		}
+		.content-slide .card {
+			background: #fff;
+			border: 2px solid #1a1a1a;
+			border-radius: 4px;
+			padding: 20px 22px;
+			box-shadow: 6px 6px 0 #1a1a1a;
+		}
+		.content-slide .card .label {
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 600;
+			font-size: 16px;
+			text-transform: uppercase;
+			margin: 0 0 10px;
+		}
+		.content-slide .card .stat {
+			font-size: 64px;
+			font-weight: 700;
+			line-height: 1;
+			margin: 0 0 12px;
+		}
+		.content-slide .card p { font-size: 20px; line-height: 1.35; margin: 0; }
+		.content-slide .card.blue .label { color: #1f5fbf; }
+		.content-slide .card.orange .label { color: #a14f00; }
+		.content-slide .card.green .label { color: #1a7f37; }
+		.content-slide .source {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 14px;
+			color: #6b6b63;
+			margin-top: 34px;
+		}
+		.content-slide pre {
+			background: #fff;
+			border: 2px solid #1a1a1a;
+			box-shadow: 6px 6px 0 #1a1a1a;
+			padding: 22px 26px;
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 22px;
+			line-height: 1.5;
+			margin: 0 0 28px;
+		}
+		.content-slide pre .kw { color: #6f42c1; }
+		.content-slide pre .str { color: #1a7f37; }
+		.content-slide .output {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 20px;
+			line-height: 1.5;
+			color: #1f5fbf;
+			border-left: 4px solid #1f5fbf;
+			padding-left: 18px;
+			white-space: pre;
+		}
+
+		/* Quieter backgrounds for content slides */
+		.bg-plain { background: #f7f7f2; }
+		.bg-dots {
+			background-color: #f7f7f2;
+			background-image: radial-gradient(#d2d2c8 1.5px, transparent 1.6px);
+			background-size: 32px 32px;
+		}
+		.bg-faint-grid {
+			background-color: #fbfbf8;
+			background-image:
+				linear-gradient(#eeeee6 1px, transparent 1px),
+				linear-gradient(90deg, #eeeee6 1px, transparent 1px);
+			background-size: 80px 80px;
+		}
+		.bg-margin-grid {
+			background:
+				linear-gradient(#fff, #fff) 28px 28px / 1224px 664px no-repeat,
+				linear-gradient(#e2e2da 1px, transparent 1px) 0 0 / 40px 40px,
+				linear-gradient(90deg, #e2e2da 1px, transparent 1px) 0 0 / 40px 40px,
+				#f7f7f2;
+		}
+		.bg-footer-bits { background: #fff; }
+		.footer-bits {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 34px;
+			background: #f7f7f2;
+			border-top: 2px solid #1a1a1a;
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 14px;
+			line-height: 34px;
+			letter-spacing: 0.2em;
+			color: #c4c4bb;
+			white-space: nowrap;
+			overflow: hidden;
+			padding-left: 64px;
+		}
+		.footer-bits .wordpart { color: #1f5fbf; font-weight: 600; letter-spacing: 0.04em; }
+
+		/* F: light blue with halftone-colored footer */
+		.bg-blue { background: #f3f6fc; color: #14213d; }
+		.bg-blue .header {
+			border-bottom: 3px solid;
+			border-image: linear-gradient(90deg, #1f5fbf, #6f42c1) 1;
+		}
+		.bg-blue .card {
+			border-color: #14213d;
+			box-shadow: 6px 6px 0 #1f5fbf;
+		}
+		.bg-blue .source { color: #4a5a7a; }
+		.bg-blue .footer-bits {
+			background: #e3ebf9;
+			border-top: 2px solid #1f5fbf;
+			color: inherit;
+		}
+		.bg-blue .footer-bits .wordpart { color: #14213d; }
+	</style>
+</head>
+<body>
+
+	<p class="option-label">Option 1: Binary grid (closest to the parallelize deck)</p>
+	<div class="frame o1">
+		<div class="bits" id="bits1"></div>
+		<div class="title-block"></div>
+	</div>
+
+	<p class="option-label">Option 2: Dark binary rain (GitHub dark mode)</p>
+	<div class="frame o2">
+		<div class="bits" id="bits2"></div>
+		<div class="fade"></div>
+		<div class="title-block"></div>
+	</div>
+
+	<p class="option-label">Option 3: Bits becoming words (from code to plain English)</p>
+	<div class="frame o3">
+		<div class="bits" id="bits3"></div>
+		<div class="title-block"></div>
+	</div>
+
+	<p class="option-label">Option 4: Punch card (CS history)</p>
+	<div class="frame o4">
+		<div class="card"><div class="grid" id="bits4"></div></div>
+		<div class="title-block"></div>
+	</div>
+
+	<p class="option-label">Option 5: Halftone of 1s and 0s</p>
+	<div class="frame o5">
+		<div class="bits" id="bits5"></div>
+		<div class="title-block"></div>
+	</div>
+
+	<h2 style="color: #fff; margin-top: 70px;">Option 3 applied to other slides</h2>
+
+	<p class="option-label">Section divider: each section decodes its own phrase</p>
+	<div class="frame o3 section-slide">
+		<div class="decode" data-target="built by AI" data-lines="8" data-seed="21"></div>
+		<div class="section-text">
+			<p class="section-number">02</p>
+			<h2>Software is now being built largely BY those AI models</h2>
+		</div>
+	</div>
+
+	<p class="option-label">Content slide: one decoded line in the header as a running section marker</p>
+	<div class="frame o3 content-slide" id="content-sample">
+		<div class="header">
+			<h3>Where agents are weakest</h3>
+			<div class="decode"><span class="bitpart">0110 10 </span><span class="wordpart">02 · built by AI</span></div>
+		</div>
+		<div class="cards">
+			<div class="card blue">
+				<p class="label">Verification</p>
+				<p class="stat">0 of 15</p>
+				<p>agent PRs were mergeable as-is, even when they passed the tests</p>
+			</div>
+			<div class="card orange">
+				<p class="label">Security</p>
+				<p class="stat">45%</p>
+				<p>of AI-generated code samples failed security tests</p>
+			</div>
+			<div class="card green">
+				<p class="label">System design</p>
+				<p class="stat">+81%</p>
+				<p>more duplicated code blocks, and 70% less refactoring</p>
+			</div>
+		</div>
+		<p class="source">Sources: METR (Aug 2025), Veracode (July 2025), GitClear (June 2026)</p>
+	</div>
+
+	<p class="option-label">Code slide</p>
+	<div class="frame o3 content-slide">
+		<div class="header">
+			<h3>LLMs: same prompt, different output</h3>
+			<div class="decode"><span class="bitpart">1001 01 </span><span class="wordpart">01 · built on AI</span></div>
+		</div>
+<pre>response = client.chat.completions.create(
+    model=<span class="str">"gpt-5-mini"</span>,
+    messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>,
+               <span class="str">"content"</span>: <span class="str">"Write a haiku about recursion"</span>}])
+<span class="kw">print</span>(response.choices[0].message.content)</pre>
+		<div class="output">Self calls in quiet
+Loops echo like a wave through mind
+Code sings the loop on</div>
+	</div>
+
+	<h2 style="color: #fff; margin-top: 70px;">Quieter backgrounds for content slides</h2>
+
+	<p class="option-label">A: Plain warm off-white</p>
+	<div class="frame content-slide bg-plain" data-copy="content-sample"></div>
+
+	<p class="option-label">B: Dot grid</p>
+	<div class="frame content-slide bg-dots" data-copy="content-sample"></div>
+
+	<p class="option-label">C: Faint large grid</p>
+	<div class="frame content-slide bg-faint-grid" data-copy="content-sample"></div>
+
+	<p class="option-label">D: Grid only in the margin, content on white</p>
+	<div class="frame content-slide bg-margin-grid" data-copy="content-sample"></div>
+
+	<p class="option-label">E: White with a binary footer strip</p>
+	<div class="frame content-slide bg-footer-bits" data-copy="content-sample" data-footer="02 · built by AI"></div>
+
+	<p class="option-label">F: Light blue with a halftone-colored binary footer</p>
+	<div class="frame content-slide bg-blue" data-copy="content-sample" data-footer="02 · built by AI" data-halftone="true"></div>
+
+	<template id="title-content">
+		<p class="eyebrow">Berkeley CS Teachers Association · 2026</p>
+		<h1>The Impact of AI on Computer Science</h1>
+		<p class="subtitle">How AI is changing what software is, who builds it, and what our students need to learn</p>
+		<p class="name">Pamela Fox</p>
+		<p class="role">Principal Cloud Advocate · Microsoft / GitHub</p>
+	</template>
+
+	<script>
+		// Seeded so every reload draws the same pattern.
+		function makeRandom(seed) {
+			return () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+		}
+		const bit = (random) => (random() < 0.5 ? '0' : '1');
+
+		document.querySelectorAll('.title-block').forEach((block) => {
+			block.appendChild(document.getElementById('title-content').content.cloneNode(true));
+		});
+		document.querySelector('.o5 h1').innerHTML = 'The Impact of <span>AI</span> on Computer Science';
+
+		// Option 1: scattered digits in grid cells, a few in accent colors
+		(() => {
+			const random = makeRandom(7);
+			const layer = document.getElementById('bits1');
+			const accents = ['#e5534b', '#3b6fe0', '#e3a81c'];
+			for (let row = 0; row < 18; row++) {
+				for (let col = 0; col < 32; col++) {
+					if (col < 18 && row > 2 && row < 16) continue;
+					if (random() > 0.35) continue;
+					const span = document.createElement('span');
+					span.textContent = bit(random);
+					span.style.left = col * 40 + 'px';
+					span.style.top = row * 40 + 'px';
+					if (random() < 0.07) {
+						span.style.color = accents[Math.floor(random() * accents.length)];
+						span.style.fontWeight = '600';
+					}
+					layer.appendChild(span);
+				}
+			}
+		})();
+
+		// Option 2: vertical columns of digits that fade at the bottom
+		(() => {
+			const random = makeRandom(11);
+			const layer = document.getElementById('bits2');
+			for (let x = 0; x < 1280; x += 26) {
+				const col = document.createElement('div');
+				col.className = 'col';
+				col.style.left = x + 'px';
+				const length = 8 + Math.floor(random() * 26);
+				col.style.top = Math.floor(random() * 12) * 22 - 120 + 'px';
+				col.textContent = Array.from({ length }, () => bit(random)).join('\n');
+				col.style.opacity = (0.25 + random() * 0.6).toFixed(2);
+				col.style.maskImage = 'linear-gradient(transparent, black 30%, black 70%, transparent)';
+				layer.appendChild(col);
+			}
+		})();
+
+		// Option 3: lines of binary that turn into an English sentence
+		function decodeLines(layer, target, lines, seed) {
+			const random = makeRandom(seed);
+			for (let i = 0; i < lines; i++) {
+				const keepLetter = i / (lines - 1);
+				const text = [...target].map((ch) => (ch === ' ' || random() < keepLetter ? ch : bit(random))).join('');
+				const line = document.createElement('div');
+				line.className = 'line';
+				line.textContent = i === lines - 1 ? target : text;
+				layer.appendChild(line);
+			}
+		}
+		decodeLines(document.getElementById('bits3'), 'describe what you want', 12, 3);
+		document.querySelectorAll('.decode[data-target]').forEach((layer) => {
+			decodeLines(layer, layer.dataset.target, Number(layer.dataset.lines), Number(layer.dataset.seed));
+		});
+
+		document.querySelectorAll('[data-copy]').forEach((frame, index) => {
+			frame.innerHTML = document.getElementById(frame.dataset.copy).innerHTML;
+			if (frame.dataset.footer) {
+				frame.querySelector('.header .decode').remove();
+				const random = makeRandom(31 + index);
+				const footer = document.createElement('div');
+				footer.className = 'footer-bits';
+				footer.innerHTML = '<span class="wordpart">' + frame.dataset.footer + '</span>  '
+					+ Array.from({ length: 120 }, (_, i) => {
+						if (!frame.dataset.halftone) return bit(random);
+						// Fade in from left to right, shifting from blue to purple like option 5.
+						const strength = i / 119;
+						const color = ['#1f5fbf', '#3b6fe0', '#6f42c1'][Math.floor(strength * 2.99)];
+						const opacity = (0.2 + strength * 0.8 * random()).toFixed(2);
+						return '<span style="color:' + color + ';opacity:' + opacity + '">' + bit(random) + '</span>';
+					}).join('');
+				frame.appendChild(footer);
+			}
+		});
+
+		// Option 4: punch card with digit rows and punched holes
+		(() => {
+			const random = makeRandom(5);
+			const grid = document.getElementById('bits4');
+			for (let row = 0; row < 12; row++) {
+				for (let col = 0; col < 20; col++) {
+					const cell = document.createElement('span');
+					if (random() < 0.12) {
+						cell.innerHTML = '<span class="punch"></span>';
+					} else {
+						cell.textContent = row < 2 ? '' : String(row - 2);
+					}
+					grid.appendChild(cell);
+				}
+			}
+		})();
+
+		// Option 5: digits get denser and darker toward a point on the right
+		(() => {
+			const random = makeRandom(9);
+			const layer = document.getElementById('bits5');
+			const centerX = 1060;
+			const centerY = 360;
+			const colors = ['#1f5fbf', '#3b6fe0', '#6f42c1'];
+			for (let y = 0; y < 720; y += 28) {
+				for (let x = 0; x < 1280; x += 28) {
+					const distance = Math.hypot(x - centerX, y - centerY);
+					const strength = Math.max(0, 1 - distance / 560);
+					if (strength <= 0 || random() > 0.25 + strength * 0.75) continue;
+					if (x < 720 && y > 120 && y < 660) continue;
+					const span = document.createElement('span');
+					span.textContent = bit(random);
+					span.style.left = x + 'px';
+					span.style.top = y + 'px';
+					span.style.fontSize = (10 + strength * 16).toFixed(0) + 'px';
+					span.style.opacity = (0.15 + strength * 0.85).toFixed(2);
+					span.style.color = colors[Math.floor(strength * 2.99)];
+					layer.appendChild(span);
+				}
+			}
+		})();
+	</script>
+</body>
+</html>
