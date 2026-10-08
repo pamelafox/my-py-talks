@@ -255,6 +255,18 @@
 		.reveal .job-cards .card p.small { min-height: 4.5em; }
 		.reveal .job-cards .stat { font-size: 1.9em; white-space: nowrap; }
 
+		.reveal .ladder { display: grid; gap: 18px; margin-top: 30px; }
+		.reveal .ladder .rung { display: grid; grid-template-columns: 90px 1fr 300px; align-items: center; gap: 20px; }
+		.reveal .ladder .era { font-family: var(--mono); font-size: 0.55em; color: #4a5a7a; }
+		.reveal .ladder .layer { display: flex; align-items: baseline; gap: 20px; padding: 16px 20px; border: 2px solid #8a96b0; border-radius: 6px; background: #f2f4f8; color: #4a5a7a; font-size: 0.7em; }
+		.reveal .ladder .layer strong { flex: 0 0 210px; color: inherit; }
+		.reveal .ladder .layer code { font-family: var(--mono); background: transparent; padding: 0; color: inherit; white-space: nowrap; }
+		.reveal .ladder .layer.top code { font-family: inherit; }
+		.reveal .ladder .who { font-size: 0.6em; color: #4a5a7a; line-height: 1.25; }
+		.reveal .ladder .who.top { color: var(--purple); font-weight: 700; }
+		.reveal .ladder .layer.mid { border-color: var(--navy); background: #fff; color: var(--navy); }
+		.reveal .ladder .layer.top { border-color: var(--purple); background: var(--purple); color: #fff; box-shadow: 5px 5px 0 var(--navy); }
+
 		.reveal .surfaces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 10px; }
 		.reveal .surfaces figure { margin: 0; }
 		.reveal .surfaces img { display: block; width: 100%; height: 370px; object-fit: cover; object-position: left top; margin: 0; border: 2px solid var(--navy); }
@@ -1652,6 +1664,21 @@ vectors = [item.embedding for item in response.data]
 					<div class="section-text">
 						<h2>Now anyone can build software</h2>
 					</div>
+				</section>
+
+				<section>
+					<h3>Each layer lowered the barrier to building</h3>
+					<p class="small">“<a target="_blank" href="https://x.com/karpathy/status/1617979122625712128">The hottest new programming language is English</a>” — Andrej Karpathy, January 2023</p>
+					<div class="ladder">
+						<div class="rung"><span class="era">2020s</span><div class="layer top"><strong>English</strong><code>“Add up all the scores”</code></div><span class="who top">Anyone who can describe it</span></div>
+						<div class="rung"><span class="era">1990s</span><div class="layer mid" style="margin-right: 40px;"><strong>Python</strong><code>total = sum(scores)</code></div><span class="who">Students and hobbyists</span></div>
+						<div class="rung"><span class="era">1970s</span><div class="layer mid" style="margin-right: 80px;"><strong>C</strong><code>total += scores[i];</code></div><span class="who">Professional programmers</span></div>
+						<div class="rung"><span class="era">1950s</span><div class="layer" style="margin-right: 120px;"><strong>Assembly</strong><code>ADD EAX, [EBX]</code></div><span class="who">Trained specialists</span></div>
+						<div class="rung"><span class="era">1940s</span><div class="layer" style="margin-right: 160px;"><strong>Machine code</strong><code>00000011 00000011</code></div><span class="who">A handful of experts</span></div>
+					</div>
+					<aside class="notes">
+						Each layer hides the one below and lets more people program. Same task at every level: add a score to the total. Compilers are deterministic; this new layer isn't, which is why checking the result still matters.
+					</aside>
 				</section>
 
 				<section>
