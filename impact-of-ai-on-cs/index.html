@@ -1494,56 +1494,152 @@ vectors = [item.embedding for item in response.data]
 				</section>
 
 				<section>
-					<h3>Software formalizes a human desire</h3>
-					<div class="cols wide-left">
-						<div>
-							<blockquote><p>“I need to keep track of my orders.”</p><p class="attribution">— the owner of a small bakery</p></blockquote>
-							<ul class="tight small">
-								<li>Thousands of apps fit that sentence.</li>
-								<li>The right one depends on <em>her</em> bakery: custom cake orders, daily pickups, regulars who call in.</li>
-								<li>Only she knows that. It isn't in the training data.</li>
-								<li>“Good” doesn't transfer from one bakery to the next.</li>
-							</ul>
-						</div>
-						<svg class="diagram" viewBox="0 0 640 420" width="500" role="img" aria-label="A grid of 40 possible apps, all gray except one highlighted in blue: the one that's right for her bakery.">
-							<g fill="#eeeeee" stroke="#bbb" stroke-width="2">
-								<rect x="20" y="20" width="60" height="48" rx="6"/><rect x="98" y="20" width="60" height="48" rx="6"/><rect x="176" y="20" width="60" height="48" rx="6"/><rect x="254" y="20" width="60" height="48" rx="6"/><rect x="332" y="20" width="60" height="48" rx="6"/><rect x="410" y="20" width="60" height="48" rx="6"/><rect x="488" y="20" width="60" height="48" rx="6"/><rect x="566" y="20" width="60" height="48" rx="6"/>
-								<rect x="20" y="90" width="60" height="48" rx="6"/><rect x="98" y="90" width="60" height="48" rx="6"/><rect x="176" y="90" width="60" height="48" rx="6"/><rect x="254" y="90" width="60" height="48" rx="6"/><rect x="332" y="90" width="60" height="48" rx="6"/><rect x="410" y="90" width="60" height="48" rx="6"/><rect x="488" y="90" width="60" height="48" rx="6"/><rect x="566" y="90" width="60" height="48" rx="6"/>
-								<rect x="20" y="160" width="60" height="48" rx="6"/><rect x="98" y="160" width="60" height="48" rx="6"/><rect x="176" y="160" width="60" height="48" rx="6"/><rect x="254" y="160" width="60" height="48" rx="6"/><rect x="332" y="160" width="60" height="48" rx="6"/><rect x="488" y="160" width="60" height="48" rx="6"/><rect x="566" y="160" width="60" height="48" rx="6"/>
-								<rect x="20" y="230" width="60" height="48" rx="6"/><rect x="98" y="230" width="60" height="48" rx="6"/><rect x="176" y="230" width="60" height="48" rx="6"/><rect x="254" y="230" width="60" height="48" rx="6"/><rect x="332" y="230" width="60" height="48" rx="6"/><rect x="410" y="230" width="60" height="48" rx="6"/><rect x="488" y="230" width="60" height="48" rx="6"/><rect x="566" y="230" width="60" height="48" rx="6"/>
-								<rect x="20" y="300" width="60" height="48" rx="6"/><rect x="98" y="300" width="60" height="48" rx="6"/><rect x="176" y="300" width="60" height="48" rx="6"/><rect x="254" y="300" width="60" height="48" rx="6"/><rect x="332" y="300" width="60" height="48" rx="6"/><rect x="410" y="300" width="60" height="48" rx="6"/><rect x="488" y="300" width="60" height="48" rx="6"/><rect x="566" y="300" width="60" height="48" rx="6"/>
-							</g>
-							<rect x="410" y="160" width="60" height="48" rx="6" fill="#dbe9ff" stroke="#1f5fbf" stroke-width="5"/>
-							<text x="320" y="400" text-anchor="middle" font-size="22">Many apps fit the sentence. <tspan font-weight="700">One fits her bakery.</tspan></text>
-						</svg>
+					<h3>More software is being built than used</h3>
+					<div class="card" style="margin-top: 16px;">
+						<p class="small"><strong>iOS apps, relative to 2024 (2024 average = 100)</strong></p>
+						<div class="chart-box" style="height: 330px;"><canvas id="chart-built-used" role="img" aria-label="Line chart indexed to the 2024 average. New iOS apps released stay near 100 until early 2025, then climb to over 250 by April 2026. Ratings for each month's new apps stay at or below 100 throughout the agentic coding era."></canvas></div>
 					</div>
-					<p class="source">Laurie Voss, <a target="_blank" href="https://seldo.com/posts/we-are-all-product-engineers-now/">We are all Product Engineers now</a></p>
+					<p class="lead" style="margin-top: 20px; font-size: 1.45em; max-width: none;"><strong>Code is cheap. Knowing what to build isn't.</strong></p>
+					<p class="source">Source: <a target="_blank" href="https://www.nber.org/papers/w35275">Demirer, Musolff &amp; Yang, NBER w35275 (2026)</a></p>
 					<aside class="notes">
-						Opening: "Let's talk about what software engineering really is. Zoom out a bit." That's why software with a zillion config options still doesn't do what you need. When everyone can build the correct thing, the delightful thing is what's left to compete on.
+						Let's zoom out to what software engineering really is. Economists call this the Jevons paradox: when something gets cheaper to make, people make more of it. New iOS apps went from 33-45k a month to about 108k a month by April 2026. But ratings for each month's new apps stayed roughly flat, and the share that never reach even 10 ratings rose from 78% to 87%. Either the new apps are lower quality, or attention is the bottleneck. So what's scarce? Knowing what to build.
 					</aside>
 				</section>
 
 				<section>
-					<h3>Cheap code means more software</h3>
-					<p class="small" style="margin-top: 10px;">Economists call this the Jevons paradox:<br>when something gets cheaper to make, people make more of it.</p>
-					<div class="cols" style="margin-top: 20px;">
-						<div class="card">
-							<p class="small"><strong>New iOS apps per month</strong></p>
-							<div class="chart-box" style="height: 300px;"><canvas id="chart-ios" role="img" aria-label="Bar chart: new iOS apps per month roughly doubled from early 2025 to April 2026."></canvas></div>
+					<h3>Build software that people want</h3>
+					<div class="cols wide-left">
+						<div>
+							<svg class="diagram" viewBox="0 0 640 285" width="100%" style="height: 245px;" role="img" aria-label="A baker in a white hat and apron stands in front of her small bakery, saying in a speech bubble: I need to keep track of my orders.">
+								<line x1="0" y1="276" x2="640" y2="276" stroke="#bbb" stroke-width="3"/>
+								<rect x="590" y="14" width="20" height="26" fill="#a14f00" stroke="#14213d" stroke-width="2"/>
+								<path d="M600 12 C593 8, 607 5, 600 1" fill="none" stroke="#bbb" stroke-width="3" stroke-linecap="round"/>
+								<rect x="395" y="40" width="240" height="44" fill="#14213d"/>
+								<text x="515" y="71" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="4" style="fill: #fff;">BAKERY</text>
+								<g stroke="#a14f00" stroke-width="1.5">
+									<rect x="395" y="84" width="40" height="34" fill="#ffe7cc"/><rect x="435" y="84" width="40" height="34" fill="#e08a4f"/><rect x="475" y="84" width="40" height="34" fill="#ffe7cc"/><rect x="515" y="84" width="40" height="34" fill="#e08a4f"/><rect x="555" y="84" width="40" height="34" fill="#ffe7cc"/><rect x="595" y="84" width="40" height="34" fill="#e08a4f"/>
+								</g>
+								<rect x="403" y="118" width="224" height="158" fill="#fff7ec" stroke="#14213d" stroke-width="2"/>
+								<g stroke="#a14f00" stroke-width="1.5">
+									<path d="M395 118a20 10 0 0 0 40 0Z" fill="#ffe7cc"/><path d="M435 118a20 10 0 0 0 40 0Z" fill="#e08a4f"/><path d="M475 118a20 10 0 0 0 40 0Z" fill="#ffe7cc"/><path d="M515 118a20 10 0 0 0 40 0Z" fill="#e08a4f"/><path d="M555 118a20 10 0 0 0 40 0Z" fill="#ffe7cc"/><path d="M595 118a20 10 0 0 0 40 0Z" fill="#e08a4f"/>
+								</g>
+								<path d="M410 250h22M440 250h22M425 260h22M455 260h22M410 270h22M440 270h22M470 270h22M500 250h22M515 260h22" stroke="#e6cfa8" stroke-width="3"/>
+								<rect x="415" y="138" width="112" height="86" fill="#dbe9ff" stroke="#14213d" stroke-width="2"/>
+								<text x="471" y="156" text-anchor="middle" font-size="14" font-style="italic" font-weight="700" style="fill: #a14f00;">fresh daily</text>
+								<line x1="415" y1="198" x2="527" y2="198" stroke="#14213d" stroke-width="2"/>
+								<g fill="#d9a066" stroke="#a14f00" stroke-width="2">
+									<ellipse cx="440" cy="190" rx="20" ry="6" transform="rotate(-12 440 190)"/><ellipse cx="470" cy="189" rx="12" ry="8"/>
+									<path d="M432 220h12l-2 -8h-8Z M454 220h12l-2 -8h-8Z M476 220h12l-2 -8h-8Z M498 220h12l-2 -8h-8Z"/>
+								</g>
+								<g fill="#f6c6d0" stroke="#a14f00" stroke-width="2">
+									<circle cx="438" cy="210" r="6"/><circle cx="460" cy="210" r="6"/><circle cx="482" cy="210" r="6"/><circle cx="504" cy="210" r="6"/>
+									<rect x="492" y="174" width="26" height="22"/>
+								</g>
+								<line x1="505" y1="174" x2="505" y2="169" stroke="#a14f00" stroke-width="2"/>
+								<ellipse cx="505" cy="166" rx="2.5" ry="4" fill="#ffd23f"/>
+								<rect x="410" y="224" width="122" height="7" fill="#14213d"/>
+								<rect x="414" y="231" width="114" height="12" fill="#a14f00"/>
+								<g fill="#e5484d"><circle cx="424" cy="229" r="5"/><circle cx="452" cy="229" r="5"/><circle cx="480" cy="229" r="5"/><circle cx="508" cy="229" r="5"/></g>
+								<g fill="#ffd23f"><circle cx="438" cy="228" r="5"/><circle cx="466" cy="228" r="5"/><circle cx="494" cy="228" r="5"/><circle cx="520" cy="229" r="5"/></g>
+								<line x1="575" y1="128" x2="575" y2="134" stroke="#14213d" stroke-width="2"/>
+								<circle cx="575" cy="139" r="6" fill="#ffd23f" stroke="#14213d" stroke-width="2"/>
+								<rect x="545" y="150" width="60" height="126" fill="#6f42c1" stroke="#14213d" stroke-width="2"/>
+								<rect x="555" y="160" width="40" height="38" rx="3" fill="#dbe9ff" stroke="#14213d" stroke-width="2"/>
+								<rect x="556" y="208" width="38" height="16" rx="2" fill="#fff" stroke="#14213d" stroke-width="1.5"/>
+								<text x="575" y="221" text-anchor="middle" font-size="11" font-weight="700" style="fill: #1a7f37;">OPEN</text>
+								<circle cx="596" cy="240" r="4" fill="#fff"/>
+								<rect x="539" y="270" width="72" height="6" fill="#bbb"/>
+								<polygon points="232,276 241,226 281,226 290,276" fill="#2b2b2b" stroke="#14213d" stroke-width="2"/>
+								<text x="261" y="248" text-anchor="middle" font-size="12" font-weight="700" style="fill: #fff;">CAKES</text>
+								<text x="261" y="265" text-anchor="middle" font-size="11" style="fill: #fff;">to order</text>
+								<rect x="310" y="240" width="11" height="36" fill="#14213d"/><rect x="329" y="240" width="11" height="36" fill="#14213d"/>
+								<path d="M305 162 L345 162 L352 242 L298 242 Z" fill="#1f5fbf"/>
+								<line x1="345" y1="170" x2="357" y2="218" stroke="#1f5fbf" stroke-width="10" stroke-linecap="round"/>
+								<line x1="306" y1="170" x2="284" y2="148" stroke="#1f5fbf" stroke-width="10" stroke-linecap="round"/>
+								<rect x="311" y="176" width="28" height="62" rx="4" fill="#fff" stroke="#14213d" stroke-width="2"/>
+								<circle cx="325" cy="140" r="20" fill="#f2c9a0" stroke="#14213d" stroke-width="2"/>
+								<g fill="#fff" stroke="#14213d" stroke-width="2">
+									<circle cx="316" cy="105" r="9"/><circle cx="325" cy="99" r="10"/><circle cx="334" cy="105" r="9"/>
+									<rect x="311" y="106" width="28" height="15" rx="2"/>
+								</g>
+								<rect x="6" y="20" width="270" height="110" rx="18" fill="#fff" stroke="#14213d" stroke-width="3"/>
+								<polygon points="222,126 262,126 296,140" fill="#fff"/>
+								<polyline points="222,130 296,140 262,130" fill="none" stroke="#14213d" stroke-width="3" stroke-linejoin="round"/>
+								<text x="141" y="66" text-anchor="middle" font-size="24" font-style="italic">“I need to keep track</text>
+								<text x="141" y="100" text-anchor="middle" font-size="24" font-style="italic">of my orders.”</text>
+							</svg>
+							<ul class="tight small">
+								<li>Thousands of apps fit that sentence.</li>
+								<li>The right one depends on <em>her</em> bakery: custom cake orders, daily pickups, regulars who call in.</li>
+								<li>Only she knows the specifics. It isn't in the training data.</li>
+							</ul>
 						</div>
-						<div class="card">
-							<p class="small"><strong>New GitHub repositories per month</strong></p>
-							<div class="chart-box" style="height: 300px;"><canvas id="chart-repos-demand" role="img" aria-label="New GitHub repositories per month, rising from about 5 million in 2023 to 24 million in August 2026."></canvas></div>
-						</div>
+						<svg class="diagram" viewBox="-4 -4 498 578" width="100%" style="height: 480px;" role="img" aria-label="A grid of 42 different-looking apps: lists, calendars, charts, profiles, checklists, photos, and forms, captioned: Which one fits her bakery? All are gray except one order checklist highlighted in blue.">
+							<defs>
+								<rect id="tile" width="70" height="60" rx="8" fill="#eeeeee" stroke="#bbb" stroke-width="2"/>
+								<g id="app0" stroke="#c4c4c4" stroke-width="3" stroke-linecap="round"><use href="#tile"/><path d="M14 18H56M14 30H44M14 42H56"/></g>
+								<g id="app1" fill="#c4c4c4"><use href="#tile"/><rect x="14" y="12" width="42" height="8" rx="2"/><rect x="14" y="25" width="10" height="8"/><rect x="29" y="25" width="10" height="8"/><rect x="44" y="25" width="10" height="8"/><rect x="14" y="37" width="10" height="8"/><rect x="29" y="37" width="10" height="8"/><rect x="44" y="37" width="10" height="8"/></g>
+								<g id="app2" fill="#c4c4c4"><use href="#tile"/><rect x="16" y="34" width="9" height="14"/><rect x="30" y="18" width="9" height="30"/><rect x="44" y="26" width="9" height="22"/></g>
+								<g id="app3" stroke="#c4c4c4" stroke-width="3" stroke-linecap="round"><use href="#tile"/><circle cx="24" cy="24" r="9" fill="#c4c4c4" stroke="none"/><path d="M38 20H56M38 30H50M14 46H56"/></g>
+								<g id="app4" stroke="#c4c4c4" stroke-width="3" stroke-linecap="round" fill="none"><use href="#tile"/><rect x="14" y="12" width="9" height="9"/><rect x="14" y="25" width="9" height="9"/><rect x="14" y="38" width="9" height="9"/><path d="M29 16.5H56M29 29.5H56M29 42.5H56"/></g>
+								<g id="app5" stroke="#c4c4c4" stroke-width="3" fill="none"><use href="#tile"/><circle cx="35" cy="30" r="16"/><path d="M35 30V14A16 16 0 0 1 51 30Z" fill="#c4c4c4"/></g>
+								<g id="app6" stroke="#c4c4c4" stroke-width="3" stroke-linejoin="round" fill="none"><use href="#tile"/><path d="M12 48L28 26L38 38L46 30L58 48"/><circle cx="50" cy="16" r="5" fill="#c4c4c4" stroke="none"/></g>
+								<g id="app7" stroke="#c4c4c4" stroke-width="3" fill="none"><use href="#tile"/><rect x="12" y="12" width="46" height="9" rx="2"/><rect x="12" y="26" width="46" height="9" rx="2"/><rect x="34" y="40" width="24" height="10" rx="3" fill="#c4c4c4" stroke="none"/></g>
+							</defs>
+							<use href="#app0" x="0" y="0"/><use href="#app3" x="84" y="0"/><use href="#app6" x="168" y="0"/><use href="#app1" x="252" y="0"/><use href="#app4" x="336" y="0"/><use href="#app7" x="420" y="0"/>
+							<use href="#app5" x="0" y="74"/><use href="#app0" x="84" y="74"/><use href="#app3" x="168" y="74"/><use href="#app6" x="252" y="74"/><use href="#app1" x="336" y="74"/><use href="#app4" x="420" y="74"/>
+							<use href="#app2" x="0" y="148"/><use href="#app5" x="84" y="148"/><use href="#app0" x="168" y="148"/><use href="#app3" x="252" y="148"/><use href="#app1" x="420" y="148"/>
+							<use href="#app7" x="0" y="222"/><use href="#app2" x="84" y="222"/><use href="#app5" x="168" y="222"/><use href="#app0" x="252" y="222"/><use href="#app3" x="336" y="222"/><use href="#app6" x="420" y="222"/>
+							<use href="#app4" x="0" y="296"/><use href="#app7" x="84" y="296"/><use href="#app2" x="168" y="296"/><use href="#app5" x="252" y="296"/><use href="#app0" x="336" y="296"/><use href="#app3" x="420" y="296"/>
+							<use href="#app1" x="0" y="370"/><use href="#app4" x="84" y="370"/><use href="#app7" x="168" y="370"/><use href="#app2" x="252" y="370"/><use href="#app5" x="336" y="370"/><use href="#app0" x="420" y="370"/>
+							<use href="#app6" x="0" y="444"/><use href="#app1" x="84" y="444"/><use href="#app4" x="168" y="444"/><use href="#app7" x="252" y="444"/><use href="#app2" x="336" y="444"/><use href="#app5" x="420" y="444"/>
+							<g transform="translate(336 148)" stroke="#1f5fbf" stroke-width="3" stroke-linecap="round" fill="none">
+								<rect width="70" height="60" rx="8" fill="#dbe9ff" stroke-width="5"/>
+								<rect x="14" y="12" width="9" height="9"/><rect x="14" y="25" width="9" height="9"/><rect x="14" y="38" width="9" height="9"/><path d="M29 16.5H56M29 29.5H56M29 42.5H56"/>
+							</g>
+							<text x="245" y="564" text-anchor="middle" font-size="34" font-weight="700">Which one fits her bakery?</text>
+						</svg>
 					</div>
-					<p class="source">Sources: <a target="_blank" href="https://cepr.org/voxeu/columns/writing-code-versus-shipping-code-productivity-effects-across-generations-ai-coding">Demirer, Musolff &amp; Yang (VoxEU, June 2026)</a>; <a target="_blank" href="https://github.blog/news-insights/company-news/the-august-17-outage-and-the-work-ahead/">GitHub Blog</a></p>
+					<p class="source">Source: Laurie Voss, <a target="_blank" href="https://seldo.com/posts/we-are-all-product-engineers-now/">We are all Product Engineers now</a></p>
 					<aside class="notes">
-						Cheap code means more software, not fewer people building it. To be honest: usage hasn't caught up yet. Each month's new apps get flat or declining usage, and more of them never find an audience. The bottleneck is knowing what to build, which is the next slides.
+						Software formalizes a human desire. Knowing what to build means knowing the person. That's why software with a zillion config options still doesn't do what you need. When everyone can build the correct thing, the delightful thing is what's left to compete on.
 					</aside>
 				</section>
 
 				<section>
 					<h3>The software engineering lifecycle</h3>
+					<svg class="diagram" viewBox="0 0 1200 600" width="1000" role="img" aria-label="The software engineering lifecycle as a loop of ten steps: understand the problem, write the spec, design the system, write the code, write the tests, review the code, debug and maintain, ship it, scale and operate, user testing.">
+						<ellipse cx="600" cy="300" rx="450" ry="225" fill="none" stroke="#bbb" stroke-width="4"/>
+						<g font-size="20" text-anchor="middle">
+							<rect x="500" y="42" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="600" y="69">1. Understand</text><text x="600" y="95">the problem</text>
+							<rect x="765" y="85" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="865" y="112">2. Write</text><text x="865" y="138">the spec</text>
+							<rect x="928" y="197" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="1028" y="224">3. Design</text><text x="1028" y="250">the system</text>
+							<rect x="928" y="337" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="1028" y="364">4. Write</text><text x="1028" y="390">the code</text>
+							<rect x="765" y="449" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="865" y="476">5. Write</text><text x="865" y="502">the tests</text>
+							<rect x="500" y="492" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="600" y="519">6. Review</text><text x="600" y="545">the code</text>
+							<rect x="235" y="449" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="335" y="476">7. Debug &amp;</text><text x="335" y="502">maintain</text>
+							<rect x="72" y="337" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="172" y="377">8. Ship it</text>
+							<rect x="72" y="197" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="172" y="224">9. Scale &amp;</text><text x="172" y="250">operate</text>
+							<rect x="235" y="85" width="200" height="66" rx="10" fill="#fff" stroke="#333" stroke-width="2"/>
+							<text x="335" y="112">10. User</text><text x="335" y="138">testing</text>
+						</g>
+					</svg>
+					<aside class="notes">
+						Figuring out what the baker needs is step 1 of a bigger loop. Terms teachers already know: user stories, requirements, design docs, user testing.
+					</aside>
+				</section>
+
+				<section>
+					<h3>Writing code is only one step</h3>
 					<svg class="diagram" viewBox="0 0 1200 600" width="1000" role="img" aria-label="The software engineering lifecycle as a loop of ten steps: understand the problem, write the spec, design the system, write the code, write the tests, review the code, debug and maintain, ship it, scale and operate, user testing. Write the code is highlighted as the traditional core of software engineering.">
 						<ellipse cx="600" cy="300" rx="450" ry="225" fill="none" stroke="#bbb" stroke-width="4"/>
 						<g font-size="20" text-anchor="middle">
@@ -1572,12 +1668,12 @@ vectors = [item.embedding for item in response.data]
 						<line x1="782" y1="308" x2="922" y2="360" stroke="#a14f00" stroke-width="3" marker-end="url(#arr)"/>
 					</svg>
 					<aside class="notes">
-						Terms teachers already know: user stories, requirements, design docs, user testing.
+						Traditionally, software engineering (and CS classes) centered on step 4. That's the step agents now do.
 					</aside>
 				</section>
 
 				<section>
-					<h3>Where humans are most needed now</h3>
+					<h3>Which steps still need humans?</h3>
 					<svg class="diagram" viewBox="0 0 1200 600" width="1000" role="img" aria-label="The same lifecycle colored by who does it. Humans most needed: understand the problem, write the spec, user testing. Agents weakest: design the system. Agents getting there: write the tests, review the code, debug and maintain. Agents are next: ship it, scale and operate. Agents do it now: write the code.">
 						<ellipse cx="600" cy="300" rx="450" ry="225" fill="none" stroke="#bbb" stroke-width="4"/>
 						<g font-size="20" text-anchor="middle">
@@ -1615,44 +1711,40 @@ vectors = [item.embedding for item in response.data]
 							<text x="448" y="379">Agents do it now</text>
 						</g>
 					</svg>
-					<p class="source">Based on Laurie Voss, <a target="_blank" href="https://seldo.com/posts/we-are-all-product-engineers-now/">We are all Product Engineers now</a></p>
 					<aside class="notes">
 						What's left is the beginning and the end of the loop: figuring out what to build, and checking that what got built is what people meant. Defining "good" is evals from section 1.
 					</aside>
 				</section>
 
 				<section>
-					<h3>The future of CS careers</h3>
-					<svg class="diagram" viewBox="0 0 1200 440" width="1060" role="img" aria-label="Software engineers who write code from tickets are adding talking to users and defining problems. Product managers who write specs and mockups are adding prototyping with agents. Both converge on the product engineer. History: systems analyst in the 1960s, then separate product manager and software engineer roles, and now the product engineer.">
-						<rect x="20" y="40" width="290" height="110" rx="12" fill="#eeeeee" stroke="#333" stroke-width="2"/>
-						<text x="165" y="86" text-anchor="middle" font-size="26" font-weight="700">Software engineer</text>
-						<text x="165" y="120" text-anchor="middle" font-size="20">writes code from tickets</text>
-						<rect x="460" y="20" width="280" height="150" rx="14" fill="#dbe9ff" stroke="#1f5fbf" stroke-width="5"/>
-						<text x="600" y="78" text-anchor="middle" font-size="28" font-weight="700">Product engineer</text>
-						<text x="600" y="112" text-anchor="middle" font-size="20">figures out what to build,</text>
-						<text x="600" y="138" text-anchor="middle" font-size="20">then builds it</text>
-						<rect x="890" y="40" width="290" height="110" rx="12" fill="#eeeeee" stroke="#333" stroke-width="2"/>
-						<text x="1035" y="86" text-anchor="middle" font-size="26" font-weight="700">Product manager</text>
-						<text x="1035" y="120" text-anchor="middle" font-size="20">writes specs &amp; mockups</text>
-						<line x1="310" y1="95" x2="456" y2="95" stroke="#333" stroke-width="3" marker-end="url(#arr)"/>
-						<line x1="890" y1="95" x2="744" y2="95" stroke="#333" stroke-width="3" marker-end="url(#arr)"/>
-						<text x="383" y="196" text-anchor="middle" font-size="19">+ talks to users</text>
-						<text x="817" y="196" text-anchor="middle" font-size="19">+ prototypes with agents</text>
-						<text x="600" y="282" text-anchor="middle" font-size="22" font-weight="700">Not a new job: it's merging back together</text>
-						<line x1="100" y1="330" x2="1100" y2="330" stroke="#333" stroke-width="3"/>
-						<g font-size="20" text-anchor="middle">
-							<circle cx="200" cy="330" r="10" fill="#333"/>
-							<text x="200" y="370" font-weight="700">1960s</text>
-							<text x="200" y="396">Systems analyst</text>
-							<circle cx="600" cy="330" r="10" fill="#333"/>
-							<text x="600" y="370" font-weight="700">1980s–2020s</text>
-							<text x="600" y="396">Product manager + software engineer</text>
-							<circle cx="1000" cy="330" r="10" fill="#1f5fbf"/>
-							<text x="1000" y="370" font-weight="700">Now</text>
-							<text x="1000" y="396">Product engineer</text>
+					<h3>Software careers are evolving</h3>
+					<svg class="diagram" viewBox="0 0 1200 450" width="1160" style="margin-top: 50px;" role="img" aria-label="Software engineers who write code from tickets are adding talking to users. Product managers who write specs and mockups are adding prototyping with agents. Both lead to two growing roles in the middle: the product engineer, who figures out what to build and then builds it, and the forward deployed engineer, who sits with the customer and builds with them; forward deployed engineer postings grew about 800% in 2025.">
+						<rect x="10" y="130" width="260" height="160" rx="12" fill="#eeeeee" stroke="#333" stroke-width="2"/>
+						<text x="140" y="178" text-anchor="middle" font-size="26" font-weight="700">Software engineer</text>
+						<text x="140" y="212" text-anchor="middle" font-size="20">writes code from tickets</text>
+						<text x="140" y="250" text-anchor="middle" font-size="20" font-style="italic" style="fill: #1f5fbf;">now spends more time</text>
+						<text x="140" y="274" text-anchor="middle" font-size="20" font-style="italic" style="fill: #1f5fbf;">with users</text>
+						<rect x="930" y="130" width="260" height="160" rx="12" fill="#eeeeee" stroke="#333" stroke-width="2"/>
+						<text x="1060" y="178" text-anchor="middle" font-size="26" font-weight="700">Product manager</text>
+						<text x="1060" y="212" text-anchor="middle" font-size="20">writes specs &amp; mockups</text>
+						<text x="1060" y="250" text-anchor="middle" font-size="20" font-style="italic" style="fill: #1f5fbf;">now also prototypes</text>
+						<text x="1060" y="274" text-anchor="middle" font-size="20" font-style="italic" style="fill: #1f5fbf;">with agents</text>
+						<g stroke="#333" stroke-width="3" fill="none">
+							<path d="M270 195 C320 195, 330 115, 374 115" marker-end="url(#arr)"/>
+							<path d="M270 225 C320 225, 330 335, 374 335" marker-end="url(#arr)"/>
+							<path d="M930 195 C880 195, 870 115, 826 115" marker-end="url(#arr)"/>
+							<path d="M930 225 C880 225, 870 335, 826 335" marker-end="url(#arr)"/>
 						</g>
+						<rect x="380" y="20" width="440" height="190" rx="14" fill="#dbe9ff" stroke="#1f5fbf" stroke-width="5"/>
+						<text x="600" y="90" text-anchor="middle" font-size="30" font-weight="700">Product engineer</text>
+						<text x="600" y="134" text-anchor="middle" font-size="22">figures out what to build,</text>
+						<text x="600" y="164" text-anchor="middle" font-size="22">then builds it</text>
+						<rect x="380" y="240" width="440" height="190" rx="14" fill="#d6f5dd" stroke="#1a7f37" stroke-width="5"/>
+						<text x="600" y="296" text-anchor="middle" font-size="30" font-weight="700">Forward deployed engineer</text>
+						<text x="600" y="336" text-anchor="middle" font-size="22">sits with the customer,</text>
+						<text x="600" y="364" text-anchor="middle" font-size="22">builds with them</text>
+						<text x="600" y="406" text-anchor="middle" font-size="22" font-weight="700" style="fill: #1a7f37;">Job postings up ~800% in 2025</text>
 					</svg>
-					<p class="smaller">“Forward deployed engineer” postings grew <strong>~800%</strong> in nine months in 2025: sit with the customer, understand their problem, build it with them.</p>
 					<aside class="notes">
 						~1,000 open roles across 462 companies, ~$240K average pay (via Voss). IBM is redesigning its entry-level role around customer contact and specification. PMs are prototyping with agents (Pragmatic Engineer). For students: a CS career looks less like "write code from a ticket" and more like "figure out what someone needs, then build it."
 					</aside>
@@ -2063,26 +2155,58 @@ vectors = [item.embedding for item in response.data]
 			githubChart('chart-prs', [[0, 45], [12, 47], [24, 55], [30, 70], [36, 90], [40, 110], [43, 130]], 'M');
 			githubChart('chart-commits', [[0, 0.3], [12, 0.35], [24, 0.5], [30, 0.8], [36, 1.1], [39, 1.4], [43, 2.9]], 'B');
 			githubChart('chart-repos', [[0, 5], [12, 6], [24, 8], [30, 11], [36, 15], [40, 19], [43, 24]], 'M');
-			githubChart('chart-repos-demand', [[0, 5], [12, 6], [24, 8], [30, 11], [36, 15], [40, 19], [43, 24]], 'M');
 
-			// Demirer, Musolff & Yang (2026): new iOS apps per month "roughly double" from early 2025 to April 2026.
-			new Chart(document.getElementById('chart-ios'), {
-				type: 'bar',
+			// Demirer, Musolff & Yang (2026) Figure 11, read by eye and indexed to each series' 2024 average; x = months since Jan 2023.
+			const agenticEra = {
+				id: 'agenticEra',
+				beforeDatasetsDraw(chart) {
+					const { ctx, chartArea, scales } = chart;
+					const left = scales.x.getPixelForValue(25);
+					ctx.save();
+					ctx.fillStyle = 'rgba(31, 95, 191, 0.1)';
+					ctx.fillRect(left, chartArea.top, chartArea.right - left, chartArea.bottom - chartArea.top);
+					ctx.fillStyle = '#1f5fbf';
+					ctx.font = "600 14px 'Space Grotesk', sans-serif";
+					ctx.fillText('Agentic coding era', left + 8, chartArea.top + 18);
+					ctx.restore();
+				}
+			};
+			const releases = [[0, 33], [6, 37], [12, 38], [18, 40], [24, 41], [27, 47], [30, 53], [33, 56], [36, 58], [37, 66], [38, 108], [39, 102]];
+			const ratings = [[8, 1.47], [11, 1.2], [14, 1.5], [17, 1.45], [20, 1.75], [21, 1.8], [24, 1.1], [27, 1.25], [30, 1.18], [33, 1.45], [36, 1.1]];
+			const indexTo2024 = (points) => {
+				const in2024 = points.filter(([x]) => x >= 12 && x < 24).map(([, y]) => y);
+				const avg = in2024.reduce((a, b) => a + b, 0) / in2024.length;
+				return points.map(([x, y]) => ({ x, y: Math.round((y / avg) * 100) }));
+			};
+			new Chart(document.getElementById('chart-built-used'), {
+				type: 'line',
 				data: {
-					labels: ['Early 2025', 'April 2026'],
-					datasets: [{ data: [1, 2], backgroundColor: ['#8a96b0', '#1f5fbf'], borderRadius: 4 }]
+					datasets: [
+						{ label: 'New apps released', data: indexTo2024(releases), borderColor: '#1f5fbf', backgroundColor: '#1f5fbf', borderWidth: 4, pointRadius: 0, tension: 0.3 },
+						{ label: 'Ratings of new apps', data: indexTo2024(ratings), borderColor: '#a14f00', backgroundColor: '#a14f00', borderWidth: 4, pointRadius: 0, tension: 0.3 }
+					]
 				},
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
 					animation: false,
 					devicePixelRatio: 2,
-					plugins: { legend: { display: false }, tooltip: { enabled: false } },
+					plugins: {
+						legend: { position: 'bottom', labels: { font: { size: 15 }, boxWidth: 24, boxHeight: 4 } },
+						tooltip: { enabled: false }
+					},
 					scales: {
-						x: { grid: { display: false }, ticks: { font: { size: 16 } } },
-						y: { beginAtZero: true, max: 2.2, ticks: { stepSize: 1, font: { size: 14 }, callback: (value) => (Number.isInteger(value) ? value + '×' : '') } }
+						x: {
+							type: 'linear',
+							min: 0,
+							max: 40,
+							grid: { display: false },
+							ticks: { stepSize: 12, font: { size: 14 }, callback: (value) => (value % 12 === 0 ? String(2023 + value / 12) : '') }
+						},
+						y: { min: 0, ticks: { stepSize: 100, font: { size: 14 } } }
 					}
-				}
+				},
+				plugins: [agenticEra]
 			});
 
 			// METR time horizons v1.1 (benchmark_results_1_1.yaml): best model so far; x = months since Jan 2023, y = hours.

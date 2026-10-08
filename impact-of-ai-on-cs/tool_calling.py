@@ -29,7 +29,7 @@ tools = [{
 
 response = client.chat.completions.create(
     model=MODEL,
-    messages=[{"role": "user", "content": "Any weather alerts in California?"}],
+    messages=[{"role": "user", "content": "Any alertos en the state that has the golden gate bridge?"}],
     tools=tools)
 tool_call = response.choices[0].message.tool_calls[0]
 print(tool_call.function.name, tool_call.function.arguments)
