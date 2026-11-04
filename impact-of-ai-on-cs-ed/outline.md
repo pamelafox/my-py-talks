@@ -20,8 +20,10 @@ Follow-up to [The Impact of AI on Software Engineering](../impact-of-ai-on-cs/) 
 
 ## 1. Introduction
 
-- Hook: "Today's kindergartners graduate in 2043." Visual: a look-back timeline (2009: GitHub and Stack Overflow are about a year old; 2021-22: Copilot, ChatGPT; 2026: agents write more PRs than humans) above a 2026-2043 timeline of a kid growing through K-4, 5-8, 9-12, and college, fading into fog and question marks.
-- We can't see 2043, but we can see which way things are moving, so we start with the state of software engineering today.
+- Hook slide: "What will kindergartners need by 2043?" Built up with fragments:
+  1. A 2026-2043 timeline of a kid growing through K-4, 5-8, 9-12, and college, fading into fog and question marks: "What will software engineering look like?"
+  2. Click: a look-back timeline below it (2009: GitHub and Stack Overflow are about a year old; 2017: Transformers paper; 2021-22: Copilot, ChatGPT; 2026: AI writes much of the code).
+  3. Click: "To guess where we're going, start with where we are." Leads into the recap section.
 - Today: a quick recap of how software engineering is changing, then the skills that matter now, then what we'd teach at each grade level, then discussion. This talk is meant to be a conversation: you know your classrooms better than I do.
 - Framing quote (Jamie Maguire): "Syntax recall was never the goal." Code was always the means. The goal is to solve problems for people.
 
