@@ -189,7 +189,7 @@ One slide, two columns:
 - Design assignments that assume students use AI, and are still hard: the challenge is in deciding, designing, and verifying.
 - In class: be clear about when AI is expected, when it's not (building a mental model by hand), and how to disclose it.
 
-### Summary: a curriculum diff (change, add, drop)
+### Summary: a curriculum diff for CS teachers (change, add, drop)
 
 One slide, four quadrants:
 
@@ -258,7 +258,7 @@ Kids talk to voice assistants, get video recommendations, and see AI-generated i
 - **Code.org AI activities:** AI Discoveries (6-8, full year), Thinking Critically About AI (6-8, one month), AI and Machine Learning (6-12, CS Discoveries unit 7), How AI Works (6-12, video series).
 - **Standards:** 2-AP-15 (incorporate feedback from users to meet user needs), 2-AP-17 (test using a range of test cases), plus 2-AP-10 (flowcharts/pseudocode), 2-IC-23 (tradeoffs of public vs. private information).
 
-### 9-12: Build real software, and stand behind it
+### 9-12: Build real software for a real client
 
 - **Problem design:** specs for a real client: requirements, examples, constraints, what "done" looks like. Context engineering: what does the agent need to know?
 - **System design:** draw the architecture and data model before prompting. Ask the agent to explain the structure it built, and compare it against your design. Document design decisions.
@@ -275,7 +275,7 @@ Kids talk to voice assistants, get video recommendations, and see AI-generated i
 - **Code.org AI activities:** AI Foundations (9-12, full year or semester), Foundations of Generative AI (9-12, with an unplugged version), Coding with AI (6-12, using LLMs to write code), Computer Vision (6-12), AI and the Systems that Power It (9-12).
 - **Standards:** 3A-AP-19 (incorporate feedback from users), 3A-AP-21 (make artifacts more usable and accessible), 3A-AP-23 (document design decisions), 3A-IC-25 (test and refine to reduce bias), plus 3B-AP-21 (test cases against design specs), 3B-AP-08 and 3B-AP-09 (how AI drives systems, implement an AI algorithm). Practice P6: Testing and Refining Computational Artifacts.
 
-### College: Software you can stand behind
+### College: From users down to the CPU
 
 - **Problem design:** specs and tests from day one of the intro course (CACM). Product engineering: talk to users, decide what to build.
 - **System design:** architecture tradeoffs, design across many files and services. Old practices work great with agents: design up front, build a "tracer bullet" first.
