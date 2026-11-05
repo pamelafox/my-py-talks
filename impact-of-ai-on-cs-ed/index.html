@@ -713,6 +713,13 @@
 		.reveal .ap-table td.p { color: var(--orange); }
 		.reveal .ap-table td.n { color: #b0b8c8; }
 		.reveal .ap-table .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: var(--k); margin-right: 10px; vertical-align: 1px; }
+
+
+		.reveal .vc { border: 2px solid var(--green); border-radius: 8px; background: #fff; padding: 8px 14px; }
+		.reveal .vc-label { margin: 0 0 4px; font-family: var(--mono); font-size: 0.42em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--green); }
+		.reveal .vc-row { display: flex; gap: 12px; align-items: flex-start; font-size: 0.56em; line-height: 1.3; margin: 4px 0; }
+		.reveal .vc-row p { margin: 0; color: var(--slate); font-style: italic; }
+		.reveal .vc-icon { font-size: 1.4em; line-height: 1.1; }
 		</style>
 	</head>
 	<body>
@@ -1217,14 +1224,40 @@
 				</section>
 
 				<section>
-					<h3 style="font-size: 1.3em;"><span style="color: #4a5a7a; font-weight: 500;">Skills you still need:</span> understanding the machine</h3>
-					<div class="activities" style="grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 30px; font-size: 1.3em;">
-						<div class="activity k-ct">
-							<p class="icon">🧩</p>
-							<strong>Computational thinking</strong>
-							<p>Break big problems into pieces, spot patterns, and predict what a program should do.</p>
-							<p class="try">So you can steer an agent and spot when its approach is wrong.</p>
+					<h3 style="font-size: 1.3em;"><span style="color: #4a5a7a; font-weight: 500;">Skills you still need:</span> verification</h3>
+					<p class="small" style="margin: 0 0 4px;">For coding agents to produce quality software, every aspect must be verified. For a quiz app:</p>
+					<div class="cols" style="grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; margin-top: 10px;">
+						<div>
+						<svg class="diagram" viewBox="0 10 560 464" width="100%" style="max-height: 460px;" role="img" aria-label="The testing trophy. Base: static checks, a type checker catches typos. Stem: unit tests, check_answer() works. Large bowl: integration tests, the score saves to the database. Top: end-to-end tests, clicking through the quiz.">
+							<path d="M60 20 L500 20 C498 60, 492 90, 485 105 L75 105 C68 90, 62 60, 60 20 Z" fill="#ffe08a" stroke="#b8860b" stroke-width="4" stroke-linejoin="round"/>
+							<text x="280" y="60" text-anchor="middle" font-size="26" font-weight="700">👆 End-to-end</text><text x="280" y="88" text-anchor="middle" font-size="19" font-style="italic" style="fill: #4a5a7a;">Clicks through the quiz</text>
+							<path d="M75 111 L485 111 C480 220, 430 290, 405 300 L155 300 C130 290, 80 220, 75 111 Z" fill="#fff4cc" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/>
+							<text x="280" y="194" text-anchor="middle" font-size="26" font-weight="700">🔗 Integration</text><text x="280" y="222" text-anchor="middle" font-size="19" font-style="italic" style="fill: #4a5a7a;">Score saves to the database</text>
+							<path d="M155 306 L405 306 Q388 345, 420 385 L140 385 Q172 345, 155 306 Z" fill="#fff4cc" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/>
+							<text x="280" y="338" text-anchor="middle" font-size="26" font-weight="700">🧩 Unit</text><text x="280" y="366" text-anchor="middle" font-size="19" font-style="italic" style="fill: #4a5a7a;">check_answer() works</text>
+							<rect x="80" y="391" width="400" height="78" rx="18" fill="#fff4cc" stroke="#b8860b" stroke-width="2"/>
+							<text x="280" y="422" text-anchor="middle" font-size="26" font-weight="700">🔍 Static</text><text x="280" y="450" text-anchor="middle" font-size="19" font-style="italic" style="fill: #4a5a7a;">Type checker catches typos</text>
+						</svg>
+						<p class="source" style="margin-top: 6px; text-align: center;"><a target="_blank" href="https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications">The Testing Trophy, Kent C. Dodds</a></p>
 						</div>
+						<div style="display: grid; gap: 14px;">
+							<div class="vc"><p class="vc-label">Edge cases</p><div class="vc-row"><span class="vc-icon">🎲</span><div><strong>Property tests</strong><p>Score is always between 0 and 10, for any answers</p></div></div><div class="vc-row"><span class="vc-icon">💥</span><div><strong>Fuzz tests</strong><p>Answers with emoji, or 10,000 characters</p></div></div></div>
+							<div class="vc"><p class="vc-label">Safe and fast</p><div class="vc-row"><span class="vc-icon">🔒</span><div><strong>Security tests</strong><p>Can a student change their score in the URL?</p></div></div><div class="vc-row"><span class="vc-icon">⏱️</span><div><strong>Load tests</strong><p>300 students take the quiz at once</p></div></div></div>
+							<div class="vc"><p class="vc-label">Guaranteed correct</p><div class="vc-row"><span class="vc-icon">📐</span><div><strong>Formal proofs</strong><p>A Lean proof that scoring is right for every input</p></div></div></div>
+						</div>
+					</div>
+					<aside class="notes">
+						Verification is the skill that matters most when agents write the code, so let's unpack it, with a simple quiz app as the example (it comes back later in the classroom section).
+						Kent C. Dodds' testing trophy: static checks (types, linters) at the base, unit tests as the stem, integration tests as the big bowl (his advice: "Write tests. Not too many. Mostly integration."), and end-to-end tests on top. With agents, I'd push even further toward the top: agents happily write unit tests that pass while the app is still broken. An end-to-end test drives the real app the way a user would (for example with Playwright), so it checks what people actually care about.
+						Edge cases: property-based tests (like Hypothesis in Python) and fuzz tests find the inputs no one thought to write down.
+						Safe and fast: security and load tests catch what agents most often miss.
+						Guaranteed correct: formal proofs, like in the Lean language, prove code is correct for every possible input. They used to be too expensive for most software, but AI models are getting good at writing proofs, so they may become practical.
+					</aside>
+				</section>
+
+				<section>
+					<h3 style="font-size: 1.3em;"><span style="color: #4a5a7a; font-weight: 500;">Skills you still need:</span> understanding the machine</h3>
+					<div class="activities" style="grid-template-columns: repeat(2, 1fr); gap: 36px; margin-top: 30px; font-size: 1.4em;">
 						<div class="activity k-computers">
 							<p class="icon">🖥️</p>
 							<strong>How computers work</strong>
@@ -1239,7 +1272,7 @@
 						</div>
 					</div>
 					<aside class="notes">
-						Computational thinking: decomposition, abstraction, algorithms; how you break down problems, steer agents, and predict behavior. How computers work: you can't judge agent output, or know what's possible, if the machine is a black box. How AI works: everyone uses AI systems long before they build anything, so this is for every student, not just future engineers.
+						How computers work: you can't judge agent output, or know what's possible, if the machine is a black box. How AI works: everyone uses AI systems long before they build anything, so this is for every student, not just future engineers.
 					</aside>
 				</section>
 
@@ -1340,25 +1373,25 @@
 
 				<section>
 					<p class="kicker">Shift 2 of 5</p>
-					<h3 style="margin-top: 0; font-size: 1.3em;">From “it runs” to “it works for people”</h3>
+					<h3 style="margin-top: 0; font-size: 1.3em;">From “it runs” to “it’s verified”</h3>
 					<div class="shift k-verify">
 						<div class="from"><p class="label">Before AI</p><div class="mini-code">$ python quiz.py
 What is the capital of CA?
 ✓ It runs!</div></div>
 						<div class="arrow"><svg viewBox="0 0 60 40" width="60" aria-hidden="true"><line x1="4" y1="20" x2="50" y2="20" stroke="#14213d" stroke-width="5" marker-end="url(#arr)"/></svg></div>
-						<div class="to"><p class="label">After AI</p><ul class="checklist"><li>What if they type “sacramento”?</li><li>What happens on a wrong answer?</li><li>Does it work with a screen reader?</li><li>Is the student data safe?</li><li>Do Ms. Lee's students actually like it?</li></ul></div>
+						<div class="to"><p class="label">After AI</p><ul class="checklist"><li>What if they type “sacramento”?</li><li>What happens on a wrong answer?</li><li>Does it work with a screen reader?</li><li>Is the student data safe?</li><li>Is there an end-to-end test?</li></ul></div>
 					</div>
-					<div class="in-class k-verify"><strong>In class:</strong> tests, bug hunts, and accessibility checks on agent-built apps.</div>
+					<div class="in-class k-verify"><strong>In class:</strong> write the tests (especially end-to-end), run bug hunts, and check accessibility on agent-built apps.</div>
 					<aside class="notes">
-						Getting it to run used to be the finish line. Now it's the starting line. Does it work on the edge cases? Is it secure, usable, accessible? Is it what the user meant?
+						Getting it to run used to be the finish line. Now it's the starting line. Callback to the verification slide: edge cases, security, accessibility, and end-to-end tests that check the whole app works.
 					</aside>
 				</section>
 
 				<section>
 					<p class="kicker">Shift 3 of 5</p>
-					<h3 style="margin-top: 0; font-size: 1.3em;">From solo assignments to real users</h3>
+					<h3 style="margin-top: 0; font-size: 1.3em;">From the autograder to real users</h3>
 					<div class="shift k-users">
-						<div class="from"><p class="label">Before AI</p><p style="margin: 0 0 10px;">Student → assignment → autograder</p><p style="margin: 0;">Can only tell if it <em>runs</em>, not if it's <em>good</em>.</p></div>
+						<div class="from"><p class="label">Before AI</p><p style="margin: 0 0 10px;">Student → assignment → autograder</p><p style="margin: 0;">Built for the teacher's rubric, not for a real person.</p></div>
 						<div class="arrow"><svg viewBox="0 0 60 40" width="60" aria-hidden="true"><line x1="4" y1="20" x2="50" y2="20" stroke="#14213d" stroke-width="5" marker-end="url(#arr)"/></svg></div>
 						<div class="to"><p class="label">After AI</p><div class="steps" style="margin: 0;"><div class="s"><strong>Interview</strong>the user</div><div class="a">→</div><div class="s"><strong>Build</strong>with an agent</div><div class="a">→</div><div class="s"><strong>Test</strong>with the user</div><div class="a">→</div><div class="s"><strong>Iterate</strong></div></div><p style="margin: 10px 0 0;">Users: a classmate, a teacher, a school club, a family member.</p></div>
 					</div>
@@ -1397,12 +1430,12 @@ What is the capital of CA?
 				</section>
 
 				<section>
-					<h3>Keep, change, add, drop</h3>
-					<div class="quad">
-						<div class="keep"><h4>Keep</h4><ul><li>Computational thinking</li><li>How computers work</li><li>Collaboration</li></ul></div>
-						<div class="change"><h4>Change</h4><ul><li>When and how much students write code by hand</li><li>What we grade</li></ul></div>
-						<div class="add"><h4>Add</h4><ul><li>How AI works</li><li>Specs, verification, user testing</li></ul></div>
-						<div class="drop"><h4>Drop (or shrink)</h4><ul><li>Syntax drills</li><li>Memorizing APIs</li><li>Assignments that end at “it runs”</li></ul></div>
+					<h3>A curriculum diff</h3>
+					<p class="small" style="margin: 0 0 6px;">Most of what you teach stays. Here’s what shifts:</p>
+					<div class="quad" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; height: auto; min-height: 400px; margin-top: 16px;">
+						<div class="change"><h4>Change</h4><ul><li>When and how much students write code by hand</li><li>What we grade: decisions, not just code</li><li>Who students build for: real users, not the autograder</li></ul></div>
+						<div class="add"><h4>Add</h4><ul><li>How AI works</li><li>Writing specs</li><li>Verification</li><li>User testing</li><li>Product judgment</li><li>Agentic coding</li></ul></div>
+						<div class="drop"><h4>Drop (or shrink)</h4><ul><li>Syntax drills</li><li>Memorizing APIs</li><li>Multiple coding languages</li></ul></div>
 					</div>
 					<aside class="notes">
 						Summary of the shifts. Next: what this looks like at each age.
@@ -1458,14 +1491,12 @@ What is the capital of CA?
 				<section>
 					<h3>K-4: Say exactly what you mean</h3>
 					<div class="skill-grid">
-						<div class="skill k-problem"><strong>Problem design</strong><p>Give precise instructions, then watch someone follow them literally (the PB&amp;J activity)</p></div>
-						<div class="skill k-design"><strong>System design</strong><p>Break a daily task, like getting ready for school, into steps</p></div>
-						<div class="skill k-verify"><strong>Verification</strong><p>Predict, run, compare. Debugging is a normal part of building.</p></div>
-						<div class="skill k-users"><strong>User feedback</strong><p>Build something for a partner: is this what you wanted?</p></div>
-						<div class="skill k-ct"><strong>Computational thinking</strong><p>Sequences, loops, and events, often unplugged</p></div>
-						<div class="skill k-computers"><strong>How computers work</strong><p>Inputs, outputs, and stored information</p></div>
-						<div class="skill k-collab"><strong>Collaboration</strong><p>Pair programming with driver and navigator roles</p></div>
-						<div class="skill" style="--k: var(--slate); border-style: dashed;"><strong>In class</strong><p>Students describe a drawing; the teacher (or an agent) builds exactly what they said. Did it match?</p></div>
+						<div class="skill k-problem"><strong>Problem design</strong><p>Give precise instructions, then watch someone follow them literally.<br>Try CS Unplugged's <a target="_blank" href="https://www.csunplugged.org/en/topics/kidbots/">Kidbots</a>.</p></div>
+						<div class="skill k-verify"><strong>Verification</strong><p>Predict, run, compare.<br>Try CS Unplugged's <a target="_blank" href="https://www.csunplugged.org/en/topics/error-detection-and-correction/">Error detection</a>.</p></div>
+						<div class="skill k-users"><strong>User feedback</strong><p>Build something for a partner: is this what they wanted?<br>Try CS Unplugged's <a target="_blank" href="https://classic.csunplugged.org/activities/human-interface-design/">Chocolate Factory</a>.</p></div>
+						<div class="skill k-ct"><strong>Programming basics</strong><p>Sequences, loops, and conditionals.<br>Unplugged, or with robots like <a target="_blank" href="https://education.lego.com/en-us/products/lego-education-spike-essential-set/45345/">LEGO SPIKE Essential</a></p></div>
+						<div class="skill k-computers"><strong>How computers work</strong><p>Inputs, outputs, and stored information.<br>Try CS Unplugged's <a target="_blank" href="https://www.csunplugged.org/en/topics/binary-numbers/">Binary numbers</a>.</p></div>
+						<div class="skill k-collab"><strong>How the web works</strong><p>How messages travel between computers.<br>Try CS Unplugged's <a target="_blank" href="https://classic.csunplugged.org/activities/routing-and-deadlock/">Orange Game</a>.</p></div>
 					</div>
 					<div class="codeorg"><span class="label">CSTA</span><span>1A-AP-12 (develop plans), 1B-AP-13 (plan by considering user preferences), 1A-AP-08, 1A-AP-11, 1A-AP-14</span></div>
 				</section>
@@ -1490,14 +1521,13 @@ What is the capital of CA?
 				<section>
 					<h3>5-8: Look under the hood</h3>
 					<div class="skill-grid">
-						<div class="skill k-ai"><strong>How AI works</strong><p>Training data and bias. Why the same prompt gives different answers. Why AI makes things up, and how to check. Where your data goes.</p></div>
 						<div class="skill k-design"><strong>System design</strong><p>Plan with flowcharts or pseudocode. What data does it need to store?</p></div>
-						<div class="skill k-ct"><strong>Computational thinking</strong><p>Block-based, then early text. Predict what a program will do, then run it.</p></div>
-						<div class="skill k-computers"><strong>How computers work</strong><p>Hardware and software, binary, how the internet sends data</p></div>
+						<div class="skill k-ct"><strong>Programming basics</strong><p>Block-based or Python. Mostly <em>reading</em> code: predict what a program will do, then run it.</p></div>
 						<div class="skill k-verify"><strong>Verification</strong><p>Find the bugs in AI-built apps by testing them</p></div>
 						<div class="skill k-collab"><strong>Collaboration</strong><p>Team projects, giving kind and specific feedback</p></div>
+						<div class="skill k-ai"><strong>How AI works</strong><p>Training data and bias. Why AI makes things up, and how to check.<br>Try Code.org's <a target="_blank" href="https://code.org/en-US/curriculum/artificial-intelligence-discoveries">AI Discoveries</a> or <a target="_blank" href="https://code.org/en-US/curriculum/how-artificial-intelligence-works">How AI Works</a>.</p></div>
+						<div class="skill k-computers"><strong>How computers work</strong><p>Hardware and software, binary, how the internet sends data</p></div>
 					</div>
-					<div class="codeorg"><span class="label">Code.org</span><span>AI Discoveries (6-8) · Thinking Critically About AI (6-8) · AI and Machine Learning (6-12) · How AI Works (6-12)</span></div>
 					<div class="codeorg"><span class="label">CSTA</span><span>2-AP-10 (flowcharts/pseudocode), 2-IC-23 (public vs. private information)</span></div>
 					<aside class="notes">
 						AI tools: teacher-guided, on education platforms with age-appropriate terms. Hand-written code for core concepts.
@@ -1527,7 +1557,7 @@ What is the capital of CA?
 					<div class="skill-grid">
 						<div class="skill k-problem"><strong>Problem design</strong><p>Context engineering: what does the agent need to know to do this well?</p></div>
 						<div class="skill k-design"><strong>System design</strong><p>Ask the agent to explain the structure it built, and compare it to your design</p></div>
-						<div class="skill k-ct"><strong>Computational thinking</strong><p>Data structures and algorithms. Some code by hand, to build a mental model.</p></div>
+						<div class="skill k-ct"><strong>Data structures &amp; algorithms</strong><p>Some code by hand, to build a mental model.</p></div>
 						<div class="skill k-computers"><strong>How computers work</strong><p>Memory, networks, how an app talks to a server and database</p></div>
 						<div class="skill k-collab"><strong>Collaboration</strong><p>Team roles, reviewing each other's (and agents') work</p></div>
 						<div class="skill" style="--k: var(--navy);"><strong>Judgment &amp; prioritization</strong><p>What do we build first, and what shouldn't we build at all?</p></div>
@@ -1549,7 +1579,7 @@ What is the capital of CA?
 							<tr><th><span class="dot k-design"></span>System design</th><td class="p">◐</td><td class="y">✓</td></tr>
 							<tr><th><span class="dot k-verify"></span>Verification</th><td class="y">✓</td><td class="p">◐</td></tr>
 							<tr><th><span class="dot k-users"></span>User feedback</th><td class="y">✓</td><td class="n">–</td></tr>
-							<tr><th><span class="dot k-ct"></span>Computational thinking</th><td class="y">✓</td><td class="y">✓</td></tr>
+							<tr><th><span class="dot k-ct"></span>Data structures &amp; algorithms</th><td class="p">◐</td><td class="y">✓</td></tr>
 							<tr><th><span class="dot k-computers"></span>How computers work</th><td class="y">✓</td><td class="p">◐</td></tr>
 							<tr><th><span class="dot k-ai"></span>How AI works</th><td class="p">◐</td><td class="n">–</td></tr>
 							<tr><th><span class="dot k-collab"></span>Collaboration</th><td class="y">✓</td><td class="n">–</td></tr>
@@ -1597,7 +1627,7 @@ What is the capital of CA?
 						<div class="skill k-design"><strong>System design</strong><p>Architecture tradeoffs across many files and services. Design up front, build a thin end-to-end path first.</p></div>
 						<div class="skill k-verify"><strong>Verification</strong><p>Review agent output at scale, by its behavior rather than line by line</p></div>
 						<div class="skill k-users"><strong>User feedback</strong><p>HCI, usability studies, accessibility, iterating on real user data</p></div>
-						<div class="skill k-ct"><strong>Computational thinking</strong><p>Algorithms, complexity, and theory</p></div>
+						<div class="skill k-ct"><strong>Algorithms &amp; theory</strong><p>Algorithms, complexity, and theory</p></div>
 						<div class="skill k-ai"><strong>How AI works</strong><p>Machine learning, neural networks, how LLMs are trained</p></div>
 						<div class="skill k-collab"><strong>Collaboration</strong><p>Team projects throughout, review norms, technical writing</p></div>
 						<div class="skill" style="--k: #0e7490;"><strong>Managing agents</strong><p>Running many agents in parallel, and giving each one what it needs</p></div>

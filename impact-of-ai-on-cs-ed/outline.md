@@ -108,6 +108,7 @@ Takeaway: each tool freed us up for harder problems.
 Each title starts with "Skills you still need:" (lighter color), then:
 
 1. "building software": the lifecycle loop with 10 steps (no "debug & maintain"), including a new "4. Manage the agents" step. Human-led steps are all blue with a 🧑🏽 badge; steps mostly done by agents (write the code, write the tests) are gray with a 🤖 badge. "Review the work", "Ship it", and "Scale & operate" are shared: half blue, half gray, with both badges. Legend at the bottom: "🧑🏽 = humans lead", "🤖 = mostly done by agents".
+1b. "verification": Kent C. Dodds' testing trophy (static base, unit stem, big integration bowl, end-to-end on top, which matters even more with agents since agent-written unit tests can pass while the app is broken), plus three clusters: edge cases (property + fuzz tests), safe and fast (security + load tests), and guaranteed correct (formal proofs in Lean). Each with a quiz-app example.
 2. "understanding the machine": three cards (computational thinking, how computers work, how AI works), each with what it is and why it matters.
 3. "product judgment": judgment, prioritization, agency, taste.
 4. "working with people": collaboration, communication, feedback.
@@ -127,7 +128,6 @@ The lifecycle skills:
 
 The foundations:
 
-5. **Computational thinking:** decomposition, abstraction, and algorithms. How you break down problems, steer agents, and predict what a program should do.
 6. **How computers work:** from code down to memory, networks, and the CPU/GPU. You can't judge agent output, or know what's possible, if the machine is a black box.
 7. **How AI works:** AI models are probabilistic: same question, different answers. They learn from training data, so they inherit its gaps and biases, and they can sound confident while being wrong. Everyone uses AI systems now, long before they build anything, so this is for every student, not just future engineers.
 
@@ -165,13 +165,13 @@ One slide, two columns:
 - Natural language is ambiguous, so vague descriptions get vague results. Precision is the skill.
 - In class: write the spec and examples before anyone (human or agent) writes code.
 
-### Shift 2: From "it runs" to "it works for people"
+### Shift 2: From "it runs" to "it's verified"
 
 - Getting it to run used to be the finish line. Now it's the starting line.
 - Does it work on the edge cases? Is it secure, usable, accessible? Is it what the user meant?
 - In class: tests, bug hunts, and accessibility checks on agent-built apps.
 
-### Shift 3: From solo assignments to real users
+### Shift 3: From the autograder to real users
 
 - An assignment with no user has no way to tell if it's good, only if it runs.
 - Build for a real person: a classmate, a teacher, a school club, a family member.
@@ -189,7 +189,7 @@ One slide, two columns:
 - Design assignments that assume students use AI, and are still hard: the challenge is in deciding, designing, and verifying.
 - In class: be clear about when AI is expected, when it's not (building a mental model by hand), and how to disclose it.
 
-### Summary: keep, change, add, drop
+### Summary: a curriculum diff (change, add, drop)
 
 One slide, four quadrants:
 
@@ -215,7 +215,7 @@ Start with one slide showing how each skill builds across the grades, then go th
 | System design | Break a task into steps | Plan with flowcharts, decide what data to store | Draw the architecture and data model before prompting, refactor agent output | Architecture tradeoffs, design across many files and services |
 | Verification | Predict, run, compare | Write test cases and edge cases first, find bugs in AI-built apps by testing them | Write tests for agent code, evals for AI features, security basics | Test suites, CI, monitoring, security, performance, reviewing agent output at scale |
 | User feedback and usability | "Did my partner get what they wanted?" | Peer review: does it work for the person it's for? | User testing with a real client, accessibility audits | Usability studies, iterating on real user data |
-| Computational thinking | Sequences, loops, patterns | Predict what a program will do, variables, conditions, loops | Data structures, algorithms, enough hand-coding for a mental model | Algorithms, complexity, theory |
+| Programming basics | Sequences, loops, patterns | Predict what a program will do, variables, conditions, loops | Data structures, algorithms, enough hand-coding for a mental model | Algorithms, complexity, theory |
 | How computers work | Inputs, outputs, and stored information | Hardware, binary, how the internet sends data | Memory, networks, how an app talks to a server and a database | Systems from code down to the CPU/GPU/NPU: OS, networks, databases |
 | How AI works | AI learns from examples, guesses, and can be wrong or unfair | Training data and bias, why answers vary, AI makes things up, privacy | Build on AI models: prompts, context, embeddings, evals, bias testing | Machine learning, neural networks, LLMs, building AI-powered systems |
 | Collaboration and communication | Pair programming, taking turns | Team projects, giving kind and specific feedback | Peer review, team roles, presenting and defending decisions | Team-based projects, review norms, technical writing |
@@ -233,15 +233,14 @@ Kids talk to voice assistants, get video recommendations, and see AI-generated i
   - AI can be unfair. If we only trained it on pictures of one kind of dog, what happens with other dogs? Who gets left out?
   - People decide what to trust, and when to ask a grown-up.
 - **Problem design:** give precise instructions, and notice what happens when someone follows them literally (the PB&J sandwich activity).
-- **System design:** break a daily task (getting ready for school) into steps.
 - **Verification:** predict what a program will do, run it, compare. Debugging is a normal part of building.
 - **User feedback:** build something for a partner, then ask: is this what you wanted?
-- **Computational thinking:** sequences, loops, and events, often unplugged.
+- **Programming basics:** sequences, loops, and conditionals, only unplugged or with robots like LEGO SPIKE Essential.
 - **How computers work:** inputs, outputs, and how computers store information.
-- **Collaboration:** pair programming with driver and navigator roles, taking turns.
 - **In class:** students describe a drawing or a dance, and the teacher (or a teacher-run agent) builds exactly what they said. Did it match?
 - **AI tools:** teacher-led, whole-class demos only.
 - **Code.org AI activities:** [AI for Oceans](https://code.org/oceans) (grades 3+, train a model to sort fish from trash, then see where it goes wrong), How AI Makes Decisions (grades 3-5, one-week unit).
+- **CS Unplugged:** [Kidbots](https://www.csunplugged.org/en/topics/kidbots/) (precise instructions), [Error detection](https://www.csunplugged.org/en/topics/error-detection-and-correction/) (verification), [Chocolate Factory](https://classic.csunplugged.org/activities/human-interface-design/) (user feedback), [Binary numbers](https://www.csunplugged.org/en/topics/binary-numbers/) (how computers work), [Orange Game](https://classic.csunplugged.org/activities/routing-and-deadlock/) (how the web works).
 - **Standards:** AI4K12 Five Big Ideas (perception, representation and reasoning, learning, natural interaction, societal impact). CSTA: 1A-AP-12 (develop plans), 1B-AP-13 (plan by considering user preferences), plus 1A-AP-08 (model daily processes as algorithms), 1A-AP-11 (decompose steps), 1A-AP-14 (debug).
 
 ### 5-8: Build for someone else
@@ -250,7 +249,7 @@ Kids talk to voice assistants, get video recommendations, and see AI-generated i
 - **System design:** plan with flowcharts or pseudocode. What data does the program need to store?
 - **Verification:** write test cases, including edge cases, before building. Find the bugs in AI-written code.
 - **User feedback and usability:** peer review and quick user tests. Is it easy to use? Can everyone use it?
-- **Computational thinking:** block-based, then early text programming. Predict what a program will do, then run it to check.
+- **Programming basics:** block-based or Python. Mostly reading code: predict what a program will do, then run it.
 - **How computers work:** hardware and software, binary, how the internet sends data.
 - **Collaboration:** team projects, giving kind and specific feedback on each other's work.
 - **How AI works:** training data and where bias comes from. Why the same prompt gives different answers. Why AI makes things up, and how to check. What happens to the data you give an AI tool, and what data your own program collects.
@@ -324,6 +323,7 @@ Thank-you slide with links to the slides and resources, as the backdrop once dis
 - [CSTA K-12 Computer Science Standards](https://csteachers.org/k12standards/interactive/)
 - [Code.org AI curriculum catalog](https://studio.code.org/catalog?topic=artificial_intelligence) and [Code.org AI hub](https://code.org/artificial-intelligence)
 - [AI4K12 Five Big Ideas in AI](https://ai4k12.org/)
+- [CS Unplugged](https://www.csunplugged.org/)
 - [The Impact of AI on Software Engineering](https://pamelafox.github.io/my-py-talks/impact-of-ai-on-cs/), the first talk
 
 ## To verify
