@@ -107,7 +107,7 @@ Takeaway: each tool freed us up for harder problems.
 
 Each title starts with "Skills you still need:" (lighter color), then:
 
-1. "building software": the lifecycle loop with 10 steps (no "debug & maintain"), including a new "4. Manage the agents" step. Human-led steps are all blue with a 🧑🏽 badge; steps mostly done by agents (write the code, write the tests, ship it, scale & operate) are gray with a 🤖 badge. "Review the work" has both badges. Legend at the bottom: "🧑🏽 = humans lead", "🤖 = mostly done by agents".
+1. "building software": the lifecycle loop with 10 steps (no "debug & maintain"), including a new "4. Manage the agents" step. Human-led steps are all blue with a 🧑🏽 badge; steps mostly done by agents (write the code, write the tests) are gray with a 🤖 badge. "Review the work", "Ship it", and "Scale & operate" are shared: half blue, half gray, with both badges. Legend at the bottom: "🧑🏽 = humans lead", "🤖 = mostly done by agents".
 2. "understanding the machine": three cards (computational thinking, how computers work, how AI works), each with what it is and why it matters.
 3. "product judgment": judgment, prioritization, agency, taste.
 4. "working with people": collaboration, communication, feedback.
